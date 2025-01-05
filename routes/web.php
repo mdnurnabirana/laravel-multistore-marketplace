@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Frontend\FlashSaleController;
+use App\Http\Controllers\Frontend\FrontendProductController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\UserDashboardController;
 use App\Http\Controllers\Frontend\UserProfileController;
@@ -24,6 +25,9 @@ Route::get('/admin/login', [AdminController::class, 'login'])->name('admin.login
 
 // Flash Sale
 Route::get('flash-sale', [FlashSaleController::class, 'index'])->name('flash-sale');
+
+// Product Details
+Route::get('product-detai/{slug}', [FrontendProductController::class, 'showProduct'])->name('product-detail');
 
 Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 'user.'], function () {
     Route::get('dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
