@@ -74,10 +74,9 @@
                         @endphp
                         <div class="col-xl-3 col-sm-6 col-lg-4">
                             <div class="wsus__product_item">
-                                <span class="wsus__new">{{ productType($product->product_type) }}</span>
+                                <span class="wsus__new">{{ productType( $product-> product_type) }}</span>
                                 @if (checkDiscount($product))
-                                    <span
-                                        class="wsus__minus">-{{ calculateDiscountPercent($product->price, $product->offer_price) }}%</span>
+                                    <span class="wsus__minus">-{{ calculateDiscountPercent($product->price, $product->offer_price) }}%</span>
                                 @endif
                                 <a class="wsus__pro_link" href="product_details.html">
                                     <img src="{{ asset($product->thumb_image) }}" alt="product"

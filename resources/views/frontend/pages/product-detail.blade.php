@@ -2,8 +2,8 @@
 
 @section('content')
     <!--==========================
-          PRODUCT MODAL VIEW START
-        ===========================-->
+              PRODUCT MODAL VIEW START
+            ===========================-->
     <section class="product_popup_modal">
         <div class="modal fade" id="exampleModal2" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog">
@@ -141,13 +141,13 @@
         </div>
     </section>
     <!--==========================
-          PRODUCT MODAL VIEW END
-        ===========================-->
+              PRODUCT MODAL VIEW END
+            ===========================-->
 
 
     <!--============================
-            BREADCRUMB START
-        ==============================-->
+                BREADCRUMB START
+            ==============================-->
     <section id="wsus__breadcrumb">
         <div class="wsus_breadcrumb_overlay">
             <div class="container">
@@ -165,13 +165,13 @@
         </div>
     </section>
     <!--============================
-            BREADCRUMB END
-        ==============================-->
+                BREADCRUMB END
+            ==============================-->
 
 
     <!--============================
-            PRODUCT DETAILS START
-        ==============================-->
+                PRODUCT DETAILS START
+            ==============================-->
     <section id="wsus__product_details">
         <div class="container">
             <div class="wsus__details_bg">
@@ -180,19 +180,20 @@
                         <div id="sticky_pro_zoom">
                             <div class="exzoom hidden" id="exzoom">
                                 <div class="exzoom_img_box">
-                                    <a class="venobox wsus__pro_det_video" data-autoplay="true" data-vbtype="video"
-                                        href="https://youtu.be/7m16dFI1AF8">
-                                        <i class="fas fa-play"></i>
-                                    </a>
+                                    @if ($product->video_link)
+                                        <a class="venobox wsus__pro_det_video" data-autoplay="true" data-vbtype="video"
+                                            href="{{ $product->video_link }}">
+                                            <i class="fas fa-play"></i>
+                                        </a>
+                                    @endif
+
                                     <ul class='exzoom_img_ul'>
-                                        <li><img class="zoom ing-fluid w-100" src="images/zoom1.jpg" alt="product"></li>
-                                        <li><img class="zoom ing-fluid w-100" src="images/zoom2.jpg" alt="product"></li>
-                                        <li><img class="zoom ing-fluid w-100" src="images/zoom3.jpg" alt="product"></li>
-                                        <li><img class="zoom ing-fluid w-100" src="images/zoom4.jpg" alt="product"></li>
-                                        <li><img class="zoom ing-fluid w-100" src="images/zoom1.jpg" alt="product"></li>
-                                        <li><img class="zoom ing-fluid w-100" src="images/zoom2.jpg" alt="product"></li>
-                                        <li><img class="zoom ing-fluid w-100" src="images/zoom1.jpg" alt="product"></li>
-                                        <li><img class="zoom ing-fluid w-100" src="images/zoom2.jpg" alt="product"></li>
+                                        <li><img class="zoom ing-fluid w-100" src="{{ asset($product->thumb_image) }}"
+                                                alt="product"></li>
+                                        @foreach ($product->productImageGalleries as $productImage)
+                                            <li><img class="zoom ing-fluid w-100" src="{{ asset($productImage->image) }}"
+                                                    alt="product"></li>
+                                        @endforeach
                                     </ul>
                                 </div>
                                 <div class="exzoom_nav"></div>
@@ -207,9 +208,13 @@
                     </div>
                     <div class="col-xl-5 col-md-7 col-lg-7">
                         <div class="wsus__pro_details_text">
-                            <a class="title" href="#">Electronics Black Wrist Watch</a>
+                            <a class="title" href="javascript:;">{{$product->name}}</a>
                             <p class="wsus__stock_area"><span class="in_stock">in stock</span> (167 item)</p>
-                            <h4>$50.00 <del>$60.00</del></h4>
+                            @if (checkDiscount($product))
+                                <h4>${{$product->offer_price}} <del>${{$product->price}}</del></h4>
+                            @else
+                                <h4>${{$product->price}}</del></h4>
+                            @endif
                             <p class="review">
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
@@ -219,32 +224,28 @@
                                 <span>20 review</span>
                             </p>
                             <!-- <p class="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia
-                                    neque
-                                    sint obcaecati asperiores dolor cumque. ad voluptate dolores reprehenderit hic adipisci
-                                    Similique eaque illum.</p> -->
+                                        neque
+                                        sint obcaecati asperiores dolor cumque. ad voluptate dolores reprehenderit hic adipisci
+                                        Similique eaque illum.</p> -->
 
                             <div class="wsus_pro_hot_deals">
                                 <h5>offer ending time : </h5>
                                 <div class="simply-countdown simply-countdown-one"></div>
                             </div>
-                            <div class="wsus_pro_det_color">
-                                <h5>color :</h5>
-                                <ul>
-                                    <li><a class="blue" href="#"><i class="far fa-check"></i></a></li>
-                                    <li><a class="orange" href="#"><i class="far fa-check"></i></a></li>
-                                    <li><a class="yellow" href="#"><i class="far fa-check"></i></a></li>
-                                    <li><a class="black" href="#"><i class="far fa-check"></i></a></li>
-                                    <li><a class="red" href="#"><i class="far fa-check"></i></a></li>
-                                </ul>
-                            </div>
-                            <div class="wsus_pro__det_size">
-                                <h5>size :</h5>
-                                <ul>
-                                    <li><a href="#">S</a></li>
-                                    <li><a href="#">M</a></li>
-                                    <li><a href="#">L</a></li>
-                                    <li><a href="#">XL</a></li>
-                                </ul>
+                            <div class="wsus__selectbox">
+                                <div class="row">
+                                    @foreach ($product->variants as $variant)
+                                        <div class="col-xl-6 col-sm-6">
+                                            <h5 class="mb-2">{{$variant->name}}</h5>
+                                            <select class="select_2" name="state">
+                                                @foreach ($variant->productVariantItems as $variantItem)
+                                                    <option {{$variantItem->is_default == 1 ? 
+                                                        'selected' : ''}}>{{$variantItem->name}} ($ {{$variantItem->price}} )</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    @endforeach
+                                </div>
                             </div>
                             <div class="wsus__quentity">
                                 <h5>quentity :</h5>
@@ -253,30 +254,6 @@
                                         value="1" />
                                 </form>
                                 <h3>$50.00</h3>
-                            </div>
-                            <div class="wsus__selectbox">
-                                <div class="row">
-                                    <div class="col-xl-6 col-sm-6">
-                                        <h5 class="mb-2">select:</h5>
-                                        <select class="select_2" name="state">
-                                            <option>default select</option>
-                                            <option>select 1</option>
-                                            <option>select 2</option>
-                                            <option>select 3</option>
-                                            <option>select 4</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-xl-6 col-sm-6">
-                                        <h5 class="mb-2">select:</h5>
-                                        <select class="select_2" name="state">
-                                            <option>default select</option>
-                                            <option>select 1</option>
-                                            <option>select 2</option>
-                                            <option>select 3</option>
-                                            <option>select 4</option>
-                                        </select>
-                                    </div>
-                                </div>
                             </div>
                             <ul class="wsus__button_area">
                                 <li><a class="add_cart" href="#">add to cart</a></li>
@@ -1029,13 +1006,13 @@
         </div>
     </section>
     <!--============================
-            PRODUCT DETAILS END
-        ==============================-->
+                PRODUCT DETAILS END
+            ==============================-->
 
 
     <!--============================
-            RELATED PRODUCT START
-        ==============================-->
+                RELATED PRODUCT START
+            ==============================-->
     <section id="wsus__flash_sell">
         <div class="container">
             <div class="row">
@@ -1199,6 +1176,6 @@
         </div>
     </section>
     <!--============================
-            RELATED PRODUCT END
-        ==============================-->
+                RELATED PRODUCT END
+            ==============================-->
 @endsection

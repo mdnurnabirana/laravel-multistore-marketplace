@@ -27,7 +27,7 @@ Route::get('/admin/login', [AdminController::class, 'login'])->name('admin.login
 Route::get('flash-sale', [FlashSaleController::class, 'index'])->name('flash-sale');
 
 // Product Details
-Route::get('product-detai/{slug}', [FrontendProductController::class, 'showProduct'])->name('product-detail');
+Route::get('product-detail/{slug}', [FrontendProductController::class, 'showProduct'])->name('product-detail');
 
 Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 'user.'], function () {
     Route::get('dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
