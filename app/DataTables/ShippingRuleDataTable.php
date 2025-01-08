@@ -22,7 +22,45 @@ class ShippingRuleDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'shippingrule.action')
+            ->addColumn('action', function($query)
+            {
+                $editBtn = "<a href='".route('admin.shipping-rule.edit', $query->id)."' class='btn btn-primary'><i class='far fa-edit'></i></a>";
+                $dltBtn = "<a href='".route('admin.shipping-rule.destroy', $query->id)."' class='btn btn-danger ml-2 delete-item'><i class='far fa-trash-alt'></i></a>";
+
+                return $editBtn . $dltBtn;
+            })
+            ->addColumn('status', function($query) {
+                if($query->status == 1)
+                {
+                    $button = '<label class="custom-switch mt-2">
+                        <input type="checkbox" checked name="custom-switch-checkbox" data-id="'.$query->id.'" class="custom-switch-input change-status">
+                        <span class="custom-switch-indicator"></span>
+                        </label>';
+                }
+                else{
+                    $button = '<label class="custom-switch mt-2">
+                        <input type="checkbox" name="custom-switch-checkbox" data-id="'.$query->id.'" class="custom-switch-input change-status">
+                        <span class="custom-switch-indicator"></span>
+                        </label>';
+                }
+
+                return $button;
+            })
+            ->addColumn('type', function($query){
+                if($query->type == 'min_cost'){
+                    return '<i class="badge badge-success">Minimum Order Ammount</i>';
+                }else{
+                    return '<i class="badge badge-primary">Flat Ammount</i>';
+                }
+            })
+            ->addColumn('min_cost', function($query){
+                if($query->type == 'min_cost'){
+                    return $query->min_cost;
+                }else{
+                    return '0';
+                }
+            })
+            ->rawColumns(['action', 'status', 'type'])
             ->setRowId('id');
     }
 
@@ -44,7 +82,7 @@ class ShippingRuleDataTable extends DataTable
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')
-                    ->orderBy(1)
+                    ->orderBy(0)
                     ->selectStyleSingle()
                     ->buttons([
                         Button::make('excel'),
@@ -62,15 +100,17 @@ class ShippingRuleDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
             Column::make('id'),
-            Column::make('add your columns'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
+            Column::make('name'),
+            Column::make('type'),
+            Column::make("min_cost"),
+            Column::make('cost'),
+            Column::make('status'),
+            Column::computed('action')
+            ->exportable(false)
+            ->printable(false)
+            ->width(200)
+            ->addClass('text-center'),
         ];
     }
 
