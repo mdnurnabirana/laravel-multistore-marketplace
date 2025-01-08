@@ -16,6 +16,7 @@ use App\Http\Controllers\Backend\ProductVariantController;
 use App\Http\Controllers\Backend\ProductVariantItemController;
 use App\Http\Controllers\Backend\SellerProductController;
 use App\Http\Controllers\Backend\SettingController;
+use App\Http\Controllers\Backend\ShippingRuleController;
 
 Route::middleware(['auth', 'role:admin'])->prefix('admin') ->as('admin.') ->group(function () {
         Route::get('dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
@@ -84,6 +85,10 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin') ->as('admin.') ->grou
         // Coupon Routes
         Route::put('coupons/change-status', [CouponController::class, 'changeStatus'])->name('coupons.change-status');
         Route::resource('coupons', CouponController::class);
+
+        // Shipping Rule
+        Route::put('shipping-rule/change-status', [ShippingRuleController::class, 'changeStatus'])->name('shipping-rule.change-status');
+        Route::resource('shipping-rule', ShippingRuleController::class);
 
         // Settings Routes
         Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
