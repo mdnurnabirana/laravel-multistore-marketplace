@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\DataTables\CouponDataTable;
 use App\Http\Controllers\Controller;
+use App\Models\Coupon;
 use Illuminate\Http\Request;
 use PhpOffice\PhpSpreadsheet\Calculation\Financial\Coupons;
 
@@ -22,7 +23,7 @@ class CouponController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.coupon.create');
     }
 
     /**
@@ -30,7 +31,34 @@ class CouponController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => ['required', 'max:255'],
+            'code' => ['required', 'max:255'],
+            'quantity' => ['required', 'integer'],
+            'max_use' => ['required', 'integer'],
+            'start_date' => ['required'],
+            'end_date' => ['required'],
+            'discount_type' => ['required', 'max:255'],
+            'discount' => ['required', 'integer'],
+            'status' => ['required'],
+        ]);
+        $coupon = new Coupon();
+
+        $coupon->name = $request->name;
+        $coupon->code = $request->code;
+        $coupon->quantity = $request->quantity;
+        $coupon->max_use = $request->max_use;
+        $coupon->start_date = $request->start_date;
+        $coupon->end_date = $request->end_date;
+        $coupon->discount_type = $request->discount_type;
+        $coupon->discount = $request->discount;
+        $coupon->total_used = 0;
+        $coupon->status = $request->status;
+        
+        $coupon->save();
+
+        toastr('Created Successfully!', 'success');
+        return redirect()->route('admin.coupons.index');
     }
 
     /**
