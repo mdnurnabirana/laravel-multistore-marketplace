@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\Models\Coupon;
+use App\Models\GeneralSetting;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -22,7 +23,37 @@ class CouponDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'coupon.action')
+        ->addColumn('action', function($query) {
+            // Edit Button
+            $editBtn = "<a href='".route('admin.coupons.edit', $query->id)."' class='btn btn-primary'><i class='far fa-edit'></i></a>";
+            
+            // Delete Button
+            $dltBtn = "<a href='".route('admin.coupons.destroy', $query->id)."' class='btn btn-danger ml-2 delete-item'><i class='far fa-trash-alt'></i></a>";
+        
+            // Return the combined action buttons
+            return $editBtn . $dltBtn ;
+        })
+        ->addColumn('discount', function($query){
+            return GeneralSetting::first()->currency_icon.$query->discount;
+        })
+        ->addColumn('status', function($query) {
+                if($query->status == 1)
+                {
+                    $button = '<label class="custom-switch mt-2">
+                        <input type="checkbox" checked name="custom-switch-checkbox" data-id="'.$query->id.'" class="custom-switch-input change-status">
+                        <span class="custom-switch-indicator"></span>
+                        </label>';
+                }
+                else{
+                    $button = '<label class="custom-switch mt-2">
+                        <input type="checkbox" name="custom-switch-checkbox" data-id="'.$query->id.'" class="custom-switch-input change-status">
+                        <span class="custom-switch-indicator"></span>
+                        </label>';
+                }
+
+                return $button;
+            })
+            ->rawColumns(['action', 'status'])
             ->setRowId('id');
     }
 
@@ -44,7 +75,7 @@ class CouponDataTable extends DataTable
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')
-                    ->orderBy(1)
+                    ->orderBy(00)
                     ->selectStyleSingle()
                     ->buttons([
                         Button::make('excel'),
@@ -62,15 +93,18 @@ class CouponDataTable extends DataTable
     public function getColumns(): array
     {
         return [
+            Column::make('id'),
+            Column::make('name'),
+            Column::make('discount_type'),
+            Column::make('discount'),
+            Column::make('start_date'),
+            Column::make('end_date'),
+            Column::make('status'),
             Column::computed('action')
                   ->exportable(false)
                   ->printable(false)
-                  ->width(60)
+                  ->width(200)
                   ->addClass('text-center'),
-            Column::make('id'),
-            Column::make('add your columns'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
         ];
     }
 
