@@ -82,6 +82,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin') ->as('admin.') ->grou
         Route::delete('flash-sale/{id}', [FlashSaleController::class, 'destroy'])->name('flash-sale.destroy');
 
         // Coupon Routes
+        Route::put('coupons/change-status', [CouponController::class, 'changeStatus'])->name('coupons.change-status');
         Route::resource('coupons', CouponController::class);
 
         // Settings Routes
