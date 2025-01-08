@@ -15,44 +15,44 @@
                 <div class="col-12 col-md-6 col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Create Coupon</h4>
+                            <h4>Update Coupon</h4>
 
                         </div>
                         <div class="card-body">
-                            <form action="{{ route('admin.coupons.store') }}" method="POST">
+                            <form action="{{ route('admin.coupons.update', $coupon->id) }}" method="POST">
                                 @csrf
-
+                                @method('PUT')
                                 <div class="form-group">
                                     <label>Name</label>
-                                    <input type="text" class="form-control" name="name">
+                                    <input type="text" class="form-control" name="name" value="{{$coupon->name}}">
                                 </div>
 
                                 <div class="form-group">
                                     <label>Coupon Code</label>
-                                    <input type="text" class="form-control" name="code">
+                                    <input type="text" class="form-control" name="code" value="{{$coupon->code}}">
                                 </div>
 
                                 <div class="form-group">
                                     <label>Quantity</label>
-                                    <input type="text" class="form-control" name="quantity">
+                                    <input type="text" class="form-control" name="quantity" value="{{$coupon->quantity}}">
                                 </div>
 
                                 <div class="form-group">
                                     <label>Max Use Per Person</label>
-                                    <input type="text" class="form-control" name="max_use">
+                                    <input type="text" class="form-control" name="max_use" value="{{$coupon->max_use}}">
                                 </div>
 
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Start Date</label>
-                                            <input type="text" class="form-control datepicker" name="start_date">
+                                            <input type="text" class="form-control datepicker" name="start_date" value="{{$coupon->start_date}}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>End Date</label>
-                                            <input type="text" class="form-control datepicker" name="end_date">
+                                            <input type="text" class="form-control datepicker" name="end_date" value="{{$coupon->end_date}}">
                                         </div>
                                     </div>
                                 </div>
@@ -62,15 +62,15 @@
                                         <div class="form-group">
                                             <label for="inputState">Category</label>
                                             <select id="inputState" class="form-control main-category" name="discount_type">
-                                                <option value="percent">Percentage (%)</option>
-                                                <option value="ammount">Amount ({{$settings->currency_icon}})</option>
+                                                <option {{$coupon->discount_type == 'percent' ? 'selected' : ' '}} value="percent">Percentage (%)</option>
+                                                <option {{$coupon->discount_type == 'ammount' ? 'selected' : ' '}} value="ammount">Amount ({{$settings->currency_icon}})</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-md-8">
                                         <div class="form-group">
                                             <label>Discount Value</label>
-                                            <input type="text" class="form-control" name="discount">
+                                            <input type="text" class="form-control" name="discount" value="{{$coupon->discount}}">
                                         </div>
                                     </div>
                                 </div>
@@ -78,12 +78,12 @@
                                 <div class="form-group">
                                     <label for="inputState">Status</label>
                                     <select id="inputState" class="form-control" name="status">
-                                        <option value="1">Active</option>
-                                        <option value="0">Inactive</option>
+                                        <option {{$coupon->status == '1' ? 'selected' : ' '}} value="1">Active</option>
+                                        <option {{$coupon->status == '0' ? 'selected' : ' '}} value="0">Inactive</option>
                                     </select>
                                 </div>
 
-                                <button type="submit" class="btn btn-primary">Create</button>
+                                <button type="submit" class="btn btn-primary">Update</button>
                             </form>
                         </div>
 
