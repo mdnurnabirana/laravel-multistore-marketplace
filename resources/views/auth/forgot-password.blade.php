@@ -1,10 +1,11 @@
-@extends('frontend.layouts.master') 
-
+@extends('frontend.layouts.master')
+@section('title')
+    {{ $settings->site_name }} || Forgot Password
+@endsection
 @section('content')
-    
     <!--============================
-        BREADCRUMB START
-    ==============================-->
+            BREADCRUMB START
+        ==============================-->
     <section id="wsus__breadcrumb">
         <div class="wsus_breadcrumb_overlay">
             <div class="container">
@@ -12,7 +13,7 @@
                     <div class="col-12">
                         <h4>forget password</h4>
                         <ul>
-                            <li><a href="{{route('login')}}">login</a></li>
+                            <li><a href="{{ route('login') }}">login</a></li>
                             <li><a href="#">forget password</a></li>
                         </ul>
                     </div>
@@ -21,13 +22,13 @@
         </div>
     </section>
     <!--============================
-        BREADCRUMB END
-    ==============================-->
+            BREADCRUMB END
+        ==============================-->
 
 
     <!--============================
-        FORGET PASSWORD START
-    ==============================-->
+            FORGET PASSWORD START
+        ==============================-->
     <section id="wsus__login_register">
         <div class="container">
             <div class="row">
@@ -41,19 +42,19 @@
                                 @csrf
                                 <div class="wsus__login_input">
                                     <i class="fal fa-envelope"></i>
-                                    <input id="email" type="email" placeholder="Your Email" name="email" value="{{old('email')}}">
+                                    <input id="email" type="email" placeholder="Your Email" name="email"
+                                        value="{{ old('email') }}">
                                 </div>
                                 <button class="common_btn" type="submit">send</button>
                             </form>
                         </div>
-                        <a class="see_btn mt-4" href="{{route('login')}}">go to login</a>
+                        <a class="see_btn mt-4" href="{{ route('login') }}">go to login</a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
     <!--============================
-        FORGET PASSWORD END
-    ==============================-->
-
+            FORGET PASSWORD END
+        ==============================-->
 @endsection)
