@@ -114,6 +114,9 @@ class UserAddressController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $address = UserAddress::findOrFail($id);
+        $address->delete();
+
+        return response(['message' => 'Deleted Successfully!', 'status' => 'success']);
     }
 }
