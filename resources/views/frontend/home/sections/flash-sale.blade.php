@@ -109,7 +109,7 @@
                                             </div>
                                         }
                                         @endif
-                                        
+
                                         @foreach ($product->productImageGalleries as $productImage)
                                             <div class="col-xl-12">
                                                 <div class="modal_slider_img">
@@ -125,7 +125,11 @@
                                 <div class="wsus__pro_details_text">
                                     <a class="title" href="#">{{$product->name}}</a>
                                     <p class="wsus__stock_area"><span class="in_stock">in stock</span> (167 item)</p>
-                                    <h4>$50.00 <del>$60.00</del></h4>
+                                    @if (checkDiscount($product))
+                                        <h4>{{$settings->currency_icon}}{{$product->offer_price}} <del>{{$settings->currency_icon}}{{$product->price}}</del></h4>
+                                    @else
+                                        <h4>{{$settings->currency_icon}}{{$product->price}}</del></h4>
+                                    @endif
                                     <p class="review">
                                         <i class="fas fa-star"></i>
                                         <i class="fas fa-star"></i>
@@ -134,92 +138,47 @@
                                         <i class="fas fa-star-half-alt"></i>
                                         <span>20 review</span>
                                     </p>
-                                    <p class="description">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                                    <p class="description">{!! $product->short_description !!}</p>
 
-                                    <div class="wsus_pro_hot_deals">
+                                    {{-- <div class="wsus_pro_hot_deals">
                                         <h5>offer ending time : </h5>
                                         <div class="simply-countdown simply-countdown-one"></div>
+                                    </div> --}}
+
+                                    <div class="wsus__selectbox">
+                                        <div class="row">
+                                            <input  type="hidden" name="product_id" value="{{$product->id}}">
+                                            @foreach ($product->variants as $variant)
+                                                <div class="col-xl-6 col-sm-6">
+                                                    <h5 class="mb-2">{{$variant->name}}</h5>
+                                                    <select class="select_2" name="variants_items[]">
+                                                        @foreach ($variant->productVariantItems as $variantItem)
+                                                            <option value="{{$variantItem->id}}" {{$variantItem->is_default == 1 ? 
+                                                                'selected' : ''}}>{{$variantItem->name}} ({{$settings->currency_icon}} {{$variantItem->price}} )</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            @endforeach
+                                        </div>
                                     </div>
-                                    <div class="wsus_pro_det_color">
-                                        <h5>color :</h5>
-                                        <ul>
-                                            <li><a class="blue" href="#"><i class="far fa-check"></i></a>
-                                            </li>
-                                            <li><a class="orange" href="#"><i class="far fa-check"></i></a>
-                                            </li>
-                                            <li><a class="yellow" href="#"><i class="far fa-check"></i></a>
-                                            </li>
-                                            <li><a class="black" href="#"><i class="far fa-check"></i></a>
-                                            </li>
-                                            <li><a class="red" href="#"><i class="far fa-check"></i></a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="wsus_pro__det_size">
-                                        <h5>size :</h5>
-                                        <ul>
-                                            <li><a href="#">S</a></li>
-                                            <li><a href="#">M</a></li>
-                                            <li><a href="#">L</a></li>
-                                            <li><a href="#">XL</a></li>
-                                        </ul>
-                                    </div>
+
                                     <div class="wsus__quentity">
                                         <h5>quentity :</h5>
                                         <form class="select_number">
                                             <input class="number_area" type="text" min="1" max="100"
                                                 value="1" />
                                         </form>
-                                        <h3>$50.00</h3>
+                                        
                                     </div>
-                                    <div class="wsus__selectbox">
-                                        <div class="row">
-                                            <div class="col-xl-6 col-sm-6">
-                                                <h5 class="mb-2">select:</h5>
-                                                <select class="select_2" name="state">
-                                                    <option>default select</option>
-                                                    <option>select 1</option>
-                                                    <option>select 2</option>
-                                                    <option>select 3</option>
-                                                    <option>select 4</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-xl-6 col-sm-6">
-                                                <h5 class="mb-2">select:</h5>
-                                                <select class="select_2" name="state">
-                                                    <option>default select</option>
-                                                    <option>select 1</option>
-                                                    <option>select 2</option>
-                                                    <option>select 3</option>
-                                                    <option>select 4</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    
                                     <ul class="wsus__button_area">
                                         <li><a class="add_cart" href="#">add to cart</a></li>
                                         <li><a class="buy_now" href="#">buy now</a></li>
                                         <li><a href="#"><i class="fal fa-heart"></i></a></li>
                                         <li><a href="#"><i class="far fa-random"></i></a></li>
                                     </ul>
-                                    <p class="brand_model"><span>model :</span> 12345670</p>
-                                    <p class="brand_model"><span>brand :</span> The Northland</p>
-                                    <div class="wsus__pro_det_share">
-                                        <h5>share :</h5>
-                                        <ul class="d-flex">
-                                            <li><a class="facebook" href="#"><i
-                                                        class="fab fa-facebook-f"></i></a>
-                                            </li>
-                                            <li><a class="twitter" href="#"><i class="fab fa-twitter"></i></a>
-                                            </li>
-                                            <li><a class="whatsapp" href="#"><i
-                                                        class="fab fa-whatsapp"></i></a>
-                                            </li>
-                                            <li><a class="instagram" href="#"><i
-                                                        class="fab fa-instagram"></i></a>
-                                            </li>
-                                        </ul>
-                                    </div>
+                                    <p class="brand_model"><span>brand :</span> {{ $product->brand->name}}</p>
+                                    
                                 </div>
                             </div>
                         </div>
