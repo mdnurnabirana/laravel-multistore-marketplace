@@ -56,8 +56,9 @@ class CartController extends Controller
     }
 
     // Show Cart Page
-    public function cartDeatils()
+    public function cartDetails()
     {
-        return view('frontend.pages.cart-detail');
+        $cartItems = Cart::content();
+        return view('frontend.pages.cart-detail', compact('cartItems'));
     }
 }
