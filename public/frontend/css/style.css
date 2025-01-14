@@ -9571,3 +9571,15 @@ a:not([href]):not([class]):hover {
 #sticky_pro_zoom {
   z-index: 9999 !important;
 }
+
+.product_qty_wrapper {
+  display: flex;
+}
+
+.product-qty {
+  width: 50px;
+  height: 40px;
+  padding-left: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
