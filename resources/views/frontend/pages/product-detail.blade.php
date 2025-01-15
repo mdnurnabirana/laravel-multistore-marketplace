@@ -237,7 +237,7 @@
                                                 <select class="select_2" name="variants_items[]">
                                                     @foreach ($variant->productVariantItems as $variantItem)
                                                         <option value="{{$variantItem->id}}" {{$variantItem->is_default == 1 ? 
-                                                            'selected' : ''}}>{{$variantItem->name}} ($ {{$variantItem->price}} )</option>
+                                                            'selected' : ''}}>{{$variantItem->name}} ({{$settings->currency_icon}} {{$variantItem->price}} )</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -1035,7 +1035,7 @@
                     data: formData,
                     url: '{{route('add-to-cart')}}',
                     success: function(data){
-
+                        toastr.success(data.message);
                     },
                     error: function(data){
 
