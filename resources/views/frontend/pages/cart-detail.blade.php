@@ -4,8 +4,8 @@
 @endsection
 @section('content')
     <!--============================
-                    BREADCRUMB START
-                ==============================-->
+                        BREADCRUMB START
+                    ==============================-->
     <section id="wsus__breadcrumb">
         <div class="wsus_breadcrumb_overlay">
             <div class="container">
@@ -23,13 +23,13 @@
         </div>
     </section>
     <!--============================
-                    BREADCRUMB END
-                ==============================-->
+                        BREADCRUMB END
+                    ==============================-->
 
 
     <!--============================
-                    CART VIEW PAGE START
-                ==============================-->
+                        CART VIEW PAGE START
+                    ==============================-->
     <section id="wsus__cart_view">
         <div class="container">
             <div class="row">
@@ -60,7 +60,7 @@
                                         </th>
 
                                         <th class="wsus__pro_icon">
-                                            <a href="#" class="common_btn">clear cart</a>
+                                            <a href="#" class="common_btn clear_cart">clear cart</a>
                                         </th>
                                     </tr>
 
@@ -84,7 +84,8 @@
                                             </td>
 
                                             <td class="wsus__pro_tk">
-                                                <h6 id="{{ $item->rowId }}">{{ $settings->currency_icon.($item->price + $item->options->variants_total) * $item->qty}}
+                                                <h6 id="{{ $item->rowId }}">
+                                                    {{ $settings->currency_icon . ($item->price + $item->options->variants_total) * $item->qty }}
                                                 </h6>
                                             </td>
 
@@ -92,18 +93,26 @@
                                                 <div class="product_qty_wrapper">
                                                     <button class="btn btn-danger product-decrement">-</button>
                                                     <input class="product-qty" data-rowid="{{ $item->rowId }}"
-                                                        type="text" min="1" max="100" value="{{$item->qty}}" readonly/>
+                                                        type="text" min="1" max="100"
+                                                        value="{{ $item->qty }}" readonly />
                                                     <button class="btn btn-success product-increment">+</button>
                                                 </div>
                                             </td>
 
 
                                             <td class="wsus__pro_icon">
-                                                <a href="#"><i class="far fa-times"></i></a>
+                                                <a href="{{route('cart.remove-product', $item->rowId)}}"><i class="far fa-times"></i></a>
                                             </td>
                                         </tr>
                                     @endforeach
 
+                                    @if (count($cartItems) == 0)
+                                        <tr class="d-flex">
+                                            <td class="wsus__pro_icon" rowspan="2" style="width:100%">
+                                                Cart is Empty!
+                                            </td>
+                                        </tr>
+                                    @endif
 
                                 </tbody>
                             </table>
@@ -161,8 +170,8 @@
         </div>
     </section>
     <!--============================
-                      CART VIEW PAGE END
-                ==============================-->
+                          CART VIEW PAGE END
+                    ==============================-->
 @endsection
 
 @push('scripts')
@@ -190,14 +199,15 @@
                     },
                     success: function(data) {
                         if (data.status === 'success') {
-                            let productId = '#'+rowId;
-                            let totalAmount = "{{$settings->currency_icon}}"+ data.product_total;
-                            $(productId).text(totalAmount); 
-                            toastr.success(data.message); 
+                            let productId = '#' + rowId;
+                            let totalAmount = "{{ $settings->currency_icon }}" + data
+                                .product_total;
+                            $(productId).text(totalAmount);
+                            toastr.success(data.message);
                         }
                     },
                     error: function(data) {
-                        
+
                     }
                 });
             });
@@ -208,7 +218,7 @@
                 let quantity = parseInt(input.val()) - 1;
                 let rowId = input.data('rowid');
 
-                if(quantity < 1){
+                if (quantity < 1) {
                     quantity = 1;
                 }
                 input.val(quantity);
@@ -222,17 +232,47 @@
                     },
                     success: function(data) {
                         if (data.status === 'success') {
-                            let productId = '#'+rowId;
-                            let totalAmount = "{{$settings->currency_icon}}"+ data.product_total;
-                            $(productId).text(totalAmount); 
-                            toastr.success(data.message); 
+                            let productId = '#' + rowId;
+                            let totalAmount = "{{ $settings->currency_icon }}" + data
+                                .product_total;
+                            $(productId).text(totalAmount);
+                            toastr.success(data.message);
                         }
                     },
                     error: function(data) {
-                        
+
                     }
                 });
             });
+
+            // Clear Cart
+            $('.clear_cart').on('click', function(e) {
+                e.preventDefault();
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "This action will clear your Cart!!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, Clear it!"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: 'GET',
+                            url: "{{ route('clear.cart') }}",
+                            success: function(data) {
+                                if(data.status === 'success'){
+                                    window.location.reload();
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                                console.error(error);
+                            }
+                        });
+                    }
+                });
+            })
         });
     </script>
 @endpush
