@@ -1030,6 +1030,7 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
+            // add cart items
             $('.shopping-cart-form').on('submit', function(e) {
                 e.preventDefault();
                 let formData = $(this).serialize();
@@ -1041,6 +1042,7 @@
                     success: function(data) {
                         getCartCount()
                         fetchSidebarCartProducts()
+                        $('.mini_cart_actions').removeClass('d-none')
                         toastr.success(data.message);
                     },
                     error: function(data) {
@@ -1093,6 +1095,8 @@
                                         ${product.name}
                                     </a>
                                     <p>{{ $settings->currency_icon }}${product.price}</p>
+                                    <small>Variants Total: {{$settings->currency_icon}}${product.options.variants_total}</small><br>
+                                    <small>Quantity: ${product.qty}</small>
                                 </div>
                             </li>
                             `;
@@ -1100,6 +1104,7 @@
 
                         // Append the generated HTML to the mini cart wrapper
                         $(".mini_cart_wrapper").html(html);
+                        getSidebarCartSubtotal();
                     },
                     error: function() {
                         console.error("Failed to fetch cart products");
@@ -1107,6 +1112,7 @@
                 });
             }
 
+            // Remove Product From Sidebar
             $('body').on('click', '.remove_sidebar_product', function(e) {
                 e.preventDefault();
 
@@ -1124,15 +1130,32 @@
                         let productId = '#mini_cart_'+rowId;
                         $(productId).remove();
 
+                        getSidebarCartSubtotal();
+
+                        if($('.mini_cart_wrapper').find('li').length === 0){
+                            $('.mini_cart_actions').addClass('d-none');
+                            $('.mini_cart_wrapper').html('<li class="text-center">Cart is Empty!</li>')
+                        }
                         toastr.success(data.message);
                     },
-                    error: function() {
-                        // Log the error or display a notification for debugging
-                        toastr.error("Failed to remove product. Please try again.");
+                    error: function(data) {
+                        
                     }
-                });
-            });
+                })
+            })
+            // get mini cart subtotal
+            function getSidebarCartSubtotal(){
+                $.ajax({
+                    method: 'GET',
+                    url: "{{ route('cart.sidebar-product-total') }}",
+                    success: function(data) {
+                        $('#mini_cart_subtotal').text("{{$settings->currency_icon}}"+data);
+                    },
+                    error: function(data) {
 
+                    }
+                })
+            }
         })
     </script>
 @endpush

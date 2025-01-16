@@ -1,6 +1,9 @@
 <?php
 
 /* Sidebar Activation Part */
+
+use Gloudemans\Shoppingcart\Facades\Cart;
+
 function setActive(array $route){
     if(is_array($route)){
         foreach($route as $r){
@@ -56,4 +59,14 @@ function productType($type)
             return '';
             break;
     }
+}
+
+// Get Total Cart Amount
+function getCartTotal()
+{
+    $total = 0;
+    foreach(Cart::content() as $product){
+        $total += ($product->price + $product->options->variants_total) * ($product->qty);
+    }
+    return $total;
 }
