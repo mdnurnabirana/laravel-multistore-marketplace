@@ -19,7 +19,7 @@ class CartController extends Controller
         $variants = [];
         $variantTotalAmount = 0;
 
-        if($request->has('variant_items'))
+        if($request->has('variants_items'))
         {
             foreach($request->variants_items as $item_id)
             {
@@ -88,11 +88,17 @@ class CartController extends Controller
         return response(['status' => 'success', 'message' => 'Cleared Successfully!']);
     }
 
+    // Clear single Cart Product!
     public function removeCartProduct($rowId)
     {
         Cart::remove($rowId);
 
-        toastr('Cart Item Clearead', 'success');
+        // toastr('Cart Item Clearead', 'success');
         return redirect()->back();
+    }
+
+    public function getCartCount()
+    {
+        return Cart::content()->count();
     }
 }
