@@ -4,8 +4,8 @@
 @endsection
 @section('content')
     <!--==========================
-                      PRODUCT MODAL VIEW START
-                    ===========================-->
+                          PRODUCT MODAL VIEW START
+                        ===========================-->
     <section class="product_popup_modal">
         <div class="modal fade" id="exampleModal2" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog">
@@ -143,13 +143,13 @@
         </div>
     </section>
     <!--==========================
-                      PRODUCT MODAL VIEW END
-                    ===========================-->
+                          PRODUCT MODAL VIEW END
+                        ===========================-->
 
 
     <!--============================
-                        BREADCRUMB START
-                    ==============================-->
+                            BREADCRUMB START
+                        ==============================-->
     <section id="wsus__breadcrumb">
         <div class="wsus_breadcrumb_overlay">
             <div class="container">
@@ -167,13 +167,13 @@
         </div>
     </section>
     <!--============================
-                        BREADCRUMB END
-                    ==============================-->
+                            BREADCRUMB END
+                        ==============================-->
 
 
     <!--============================
-                        PRODUCT DETAILS START
-                    ==============================-->
+                            PRODUCT DETAILS START
+                        ==============================-->
     <section id="wsus__product_details">
         <div class="container">
             <div class="wsus__details_bg">
@@ -848,13 +848,13 @@
         </div>
     </section>
     <!--============================
-                        PRODUCT DETAILS END
-                    ==============================-->
+                            PRODUCT DETAILS END
+                        ==============================-->
 
 
     <!--============================
-                        RELATED PRODUCT START
-                    ==============================-->
+                            RELATED PRODUCT START
+                        ==============================-->
     {{-- <section id="wsus__flash_sell">
         <div class="container">
             <div class="row">
@@ -1018,8 +1018,8 @@
         </div>
     </section> --}}
     <!--============================
-                        RELATED PRODUCT END
-                    ==============================-->
+                            RELATED PRODUCT END
+                        ==============================-->
 @endsection
 
 @push('scripts')
@@ -1079,12 +1079,12 @@
                         for (let item in data) {
                             let product = data[item];
                             html += `
-                            <li>
+                            <li id="mini_cart_${product.rowId}">
                                 <div class="wsus__cart_img">
                                     <a href="{{ url('product-detail') }}/${product.options.slug}">
                                         <img src="{{ asset('/') }}${product.options.image}" alt="product" class="img-fluid w-100">
                                     </a>
-                                    <a class="wsis__del_icon" href="javascript:void(0)">
+                                    <a class="wsis__del_icon remove_sidebar_product" data-id="${product.rowId}" href="">
                                         <i class="fas fa-minus-circle"></i>
                                     </a>
                                 </div>
@@ -1092,7 +1092,7 @@
                                     <a class="wsus__cart_title" href="{{ url('product-detail') }}/${product.options.slug}">
                                         ${product.name}
                                     </a>
-                                    <p>{{ $settings->currency_icon }}${product.price} <del>$150</del></p>
+                                    <p>{{ $settings->currency_icon }}${product.price}</p>
                                 </div>
                             </li>
                             `;
@@ -1106,6 +1106,32 @@
                     }
                 });
             }
+
+            $('body').on('click', '.remove_sidebar_product', function(e) {
+                e.preventDefault();
+
+                // Retrieve the row ID from the button's data attribute
+                let rowId = $(this).data('id');
+
+                $.ajax({
+                    method: 'POST',
+                    url: "{{ route('cart.remove-sidebar-product') }}",
+                    data: {
+                        rowId: rowId
+                    },
+                    success: function(data) {
+                        // Select the product row in the mini cart and remove it
+                        let productId = '#mini_cart_'+rowId;
+                        $(productId).remove();
+
+                        toastr.success(data.message);
+                    },
+                    error: function() {
+                        // Log the error or display a notification for debugging
+                        toastr.error("Failed to remove product. Please try again.");
+                    }
+                });
+            });
 
         })
     </script>

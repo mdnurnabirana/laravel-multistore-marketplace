@@ -46,10 +46,10 @@
         <h4>shopping cart <span class="wsus_close_mini_cart"><i class="far fa-times"></i></span></h4>
         <ul class="mini_cart_wrapper">
             @foreach (Cart::content() as $sidebarProduct)
-                <li>
+                <li id="mini_cart_{{$sidebarProduct->rowId}}">
                     <div class="wsus__cart_img">
                         <a href="#"><img src="{{asset($sidebarProduct->options->image)}}" alt="product" class="img-fluid w-100"></a>
-                        <a class="wsis__del_icon remove_sidebar_product" data-rowId="{{$sidebarProduct->rowId}}" href="#"><i class="fas fa-minus-circle"></i></a>
+                        <a class="wsis__del_icon remove_sidebar_product" data-id="{{$sidebarProduct->rowId}}" href="#"><i class="fas fa-minus-circle"></i></a>
                     </div>
                     <div class="wsus__cart_text">
                         <a class="wsus__cart_title" href="{{route('product-detail', $sidebarProduct->options->slug)}}">{{$sidebarProduct->name}}</a>
