@@ -9583,3 +9583,8 @@ a:not([href]):not([class]):hover {
   margin-left: 5px;
   margin-right: 5px;
 }
+
+.wsus__mini_cart .wsus__cart_img img {
+  height: 70px;
+  object-fit: cover;
+}
