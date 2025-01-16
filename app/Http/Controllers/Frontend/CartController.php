@@ -101,4 +101,10 @@ class CartController extends Controller
     {
         return Cart::content()->count();
     }
+
+    // Get Cart Products List
+    public function getCartProducts()
+    {
+        return Cart::content();
+    }
 }
