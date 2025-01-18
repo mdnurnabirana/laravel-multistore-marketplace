@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Coupon;
 use App\Models\Product;
 use App\Models\ProductVarientItem;
 use Gloudemans\Shoppingcart\Facades\Cart;
@@ -147,5 +148,23 @@ class CartController extends Controller
         Cart::remove($request->rowId);
 
         return response(['status' => 'success', 'message' => 'Item Removed Successfully!']);
+    }
+
+    // Apply Coupon
+    public function applyCoupon(Request $request)
+    {
+        if($request->coupon_code == null){
+            return response(['status' => 'error', 'message' => 'Coupon field is required!']);
+        }
+
+        $coupon = Coupon::where(['code' => $request->coupon_code, 'status' => 1])->first();
+        
+        if($coupon == null){
+            return response(['status' => 'error', 'message' => 'Coupon does not Exist!']);
+        }elseif($coupon->start_date < date('Y-m-d')){
+            return response(['status' => 'error', 'message' => 'Coupon does not Exist!']);
+        }elseif($coupon->end_date < date('Y-m-d')){
+            return response(['status' => 'error', 'message' => 'Coupon has been Expired!']);
+        }
     }
 }

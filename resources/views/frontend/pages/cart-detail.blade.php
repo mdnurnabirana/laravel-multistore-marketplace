@@ -127,8 +127,8 @@
                         <p>discount: <span>$10.00</span></p>
                         <p class="total"><span>total:</span> <span>$134.00</span></p>
 
-                        <form>
-                            <input type="text" placeholder="Coupon Code">
+                        <form id="coupon_form">
+                            <input type="text" placeholder="Coupon Code" name="coupon_code">
                             <button type="submit" class="common_btn">apply</button>
                         </form>
                         <a class="common_btn mt-4 w-100 text-center" href="check_out.html">checkout</a>
@@ -287,10 +287,28 @@
                     $('#sub_total').text("{{$settings->currency_icon}}"+data)
                 },
                 error: function(data) {
-
+                    console.log(data)
                 }
             })
             }
+            // Apply Coupon Features
+            $('#coupon_form').on('submit', function(e){
+                e.preventDefault();
+                let formData = $(this).serialize();
+                $.ajax({
+                    method: 'GET',
+                    url: "{{ route('apply-coupon') }}",
+                    data: formData,
+                    success: function(data) {
+                        if(data.status == 'error'){
+                            toastr.error(data.message);
+                        }
+                    },
+                    error: function(data) {
+                        console.log(data);
+                    }
+                });
+            });
         });
     </script>
 @endpush
