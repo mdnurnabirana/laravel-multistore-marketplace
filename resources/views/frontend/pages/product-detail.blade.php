@@ -214,7 +214,7 @@
                             @if ($product->qty > 0)
                                 <p class="wsus__stock_area"><span class="in_stock">in stock</span> ({{$product->qty}} Item)</p>
                             @elseif ($product->qty == 0)
-                            <p class="wsus__stock_area"><span class="stock_out"> stock out</span> ({{$product->qty}} Item)</p>
+                            <p class="wsus__stock_area"><span class="in_stock"> stock out</span> ({{$product->qty}} Item)</p>
                             @endif
                             @if (checkDiscount($product))
                                 <h4>{{ $settings->currency_icon }}{{ $product->offer_price }}

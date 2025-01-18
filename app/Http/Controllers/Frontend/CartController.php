@@ -11,6 +11,18 @@ use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
+    // Show Cart Page
+    public function cartDetails()
+    {
+        $cartItems = Cart::content();
+
+        if(count($cartItems)==0){
+            toastr('Please Add Cart Product to view this page!!', 'warning', ['title' => 'Cart is Empty!']);
+            return redirect()->route('home');
+        }
+        return view('frontend.pages.cart-detail', compact('cartItems'));
+    }
+
     // Add Item To Cart
     public function addToCart(Request $request)
     {
@@ -62,18 +74,11 @@ class CartController extends Controller
         return response(['message' => 'Added to Cart Successfully!', 'status'=>'success']);
     }
 
-    // Show Cart Page
-    public function cartDetails()
-    {
-        $cartItems = Cart::content();
-        return view('frontend.pages.cart-detail', compact('cartItems'));
-    }
-
     public function updateProductQty(Request $request)
     {   
         $productId = Cart::get($request->rowId)->id;
         $product = Product::findOrFail($productId);
-        
+
         // Check Product Quantity
         if( $product->qty == 0){
             return response(['status' => 'error', 'message' => 'Product stock Out!!']);
@@ -120,8 +125,7 @@ class CartController extends Controller
     public function removeCartProduct($rowId)
     {
         Cart::remove($rowId);
-
-        // toastr('Cart Item Clearead', 'success');
+        toastr('Item removed from Cart!!', 'success', ['title' => 'Success!!']);
         return redirect()->back();
     }
 
