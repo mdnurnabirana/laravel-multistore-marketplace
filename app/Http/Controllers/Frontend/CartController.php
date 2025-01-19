@@ -9,6 +9,7 @@ use App\Models\ProductVarientItem;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use PhpParser\Node\Stmt\Else_;
 
 class CartController extends Controller
 {
@@ -18,6 +19,7 @@ class CartController extends Controller
         $cartItems = Cart::content();
 
         if(count($cartItems)==0){
+            Session::forget('coupon');
             toastr('Please Add Cart Product to view this page!!', 'warning', ['title' => 'Cart is Empty!']);
             return redirect()->route('home');
         }
@@ -182,7 +184,7 @@ class CartController extends Controller
     {
         if (Session::has('coupon')) {
             $coupon = Session::get('coupon');
-            $subTotal = $this->cartTotal();
+            $subTotal = getCartTotal();
     
             if ($coupon['discount_type'] == 'amount') {
                 $discount = $coupon['discount'];
@@ -197,8 +199,11 @@ class CartController extends Controller
                 'cart_total' => $total,
                 'discount' => $discount
             ]);
+        } else {
+            // If no coupon is applied, just return the cart total with no discount
+            $total = getCartTotal();
+            return response(['status' => 'success', 'cart_total' => $total, 'discount' => 0]);
         }
-    
-        return response(['status' => 'error', 'message' => 'No coupon applied!']);
-    }    
+    }
+        
 }
