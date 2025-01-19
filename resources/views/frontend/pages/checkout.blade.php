@@ -70,8 +70,8 @@
                             @foreach ($shippingMethods as $method)
                                 @if ($method->type == 'min_cost' && getCartTotal() >= $method->min_cost)
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2"
-                                            value="option2">
+                                        <input class="form-check-input shipping_method" type="radio" name="exampleRadios" id="exampleRadios2"
+                                            value="{{$method->id}}" data-id="{{$method->cost}}">
                                         <label class="form-check-label" for="exampleRadios2">
                                             {{$method->name}}
                                             <span>cost: ({{$settings->currency_icon}}{{$method->cost}})</span>
@@ -79,8 +79,8 @@
                                     </div>
                                 @elseif ($method->type == 'flat_cost')
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2"
-                                            value="option2">
+                                        <input class="form-check-input shipping_method" type="radio" name="exampleRadios" id="exampleRadios2"
+                                            value="{{$method->id}}" data-id="{{$method->cost}}">
                                         <label class="form-check-label" for="exampleRadios2">
                                             {{$method->name}}
                                             <span>cost: ({{$settings->currency_icon}}{{$method->cost}})</span>
@@ -90,9 +90,9 @@
                             @endforeach
                             <div class="wsus__order_details_summery">
                                 <p>subtotal: <span>{{$settings->currency_icon}}{{getCartTotal()}}</span></p>
-                                <p>shipping fee(+): <span>{{$settings->currency_icon}}0</span></p>
-                                <p>coupon(-): <span><b>{{$settings->currency_icon}}{{getCartDiscount()}}</b></span></p>
-                                <p><b>total:</b> <span><b>{{$settings->currency_icon}}{{getMainCartTotal()}}</b></span></p>
+                                <p>shipping fee(+): <span id="shipping_fee">{{$settings->currency_icon}}0</span></p>
+                                <p>coupon(-): <span>{{$settings->currency_icon}}{{getCartDiscount()}}</span></p>
+                                <p><b>total:</b> <span><b id="total_amount" data-id="{{getMainCartTotal()}}">{{$settings->currency_icon}}{{getMainCartTotal()}}</b></span></p>
                             </div>
                             <div class="terms_area">
                                 <div class="form-check">
@@ -103,6 +103,10 @@
                                     </label>
                                 </div>
                             </div>
+                            <form action="" id="checkOutForm">
+                                <input type="hidden" name="shipping_method_id" value="shipping_method_id">
+                                <input type="hidden" name="shipping_address_id" value="shipping_address_id">
+                            </form>
                             <a href="payment.html" class="common_btn">Place Order</a>
                         </div>
                     </div>
@@ -187,3 +191,18 @@
             CHECK OUT PAGE END
         ==============================-->
 @endsection
+
+@push('scripts')
+    <script>
+        $(document).ready(function(){
+            $('.shipping_method').on('click', function(){
+                let shippingFee = $(this).data('id')
+                let currentTotalAmount = $('#total_amount').data('id')
+                let totalAmount = currentTotalAmount + shippingFee;
+                $('#shipping_method_id').val($(this).val());
+                $('#shipping_fee').text("{{$settings->currency_icon}}"+shippingFee);
+                $('#total_amount').text("{{$settings->currency_icon}}"+totalAmount);
+            })
+        })
+    </script>   
+@endpush
