@@ -243,6 +243,8 @@
                         success: function(data){
                             if(data.status == 'success'){
                                 $('#submitCheckoutForm').html('Plcae Order')
+                                // redirect to the payment page
+                                window.location.href = data.redirect_url;
                             }
                         },
                         error: function(data){
