@@ -3,6 +3,7 @@
 /* Sidebar Activation Part */
 
 use Gloudemans\Shoppingcart\Facades\Cart;
+use Illuminate\Support\Facades\Session;
 
 function setActive(array $route){
     if(is_array($route)){
@@ -69,4 +70,42 @@ function getCartTotal()
         $total += ($product->price + $product->options->variants_total) * ($product->qty);
     }
     return $total;
+}
+
+// Get Payable Total Amount
+function getMainCartTotal()
+{
+    if (Session::has('coupon')) {
+        $coupon = Session::get('coupon');
+        $subTotal = getCartTotal();
+        $total = 0;
+        if ($coupon['discount_type'] == 'amount') {
+            $discount = $coupon['discount'];
+            $total = $subTotal - $discount;
+        } elseif ($coupon['discount_type'] == 'percent') {
+            $discount = $subTotal * $coupon['discount'] / 100;
+            $total = $subTotal - $discount;
+        }
+
+        return $total;
+    }else{
+        return getCartTotal();
+    }
+}
+// Get Cart Discount
+function getCartDiscount()
+{
+    if (Session::has('coupon')) {
+        $coupon = Session::get('coupon');
+        $subTotal = getCartTotal();
+        $total = 0;
+        if ($coupon['discount_type'] == 'amount') {
+            return $coupon['discount'];
+        } elseif ($coupon['discount_type'] == 'percent') {
+            $discount = $subTotal * $coupon['discount'] / 100;
+            return $discount;
+        }
+    }else{
+        return 0;
+    }
 }

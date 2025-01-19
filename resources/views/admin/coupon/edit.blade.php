@@ -63,7 +63,7 @@
                                             <label for="inputState">Category</label>
                                             <select id="inputState" class="form-control main-category" name="discount_type">
                                                 <option {{$coupon->discount_type == 'percent' ? 'selected' : ' '}} value="percent">Percentage (%)</option>
-                                                <option {{$coupon->discount_type == 'ammount' ? 'selected' : ' '}} value="ammount">Amount ({{$settings->currency_icon}})</option>
+                                                <option {{$coupon->discount_type == 'amount' ? 'selected' : ' '}} value="amount">Amount ({{$settings->currency_icon}})</option>
                                             </select>
                                         </div>
                                     </div>

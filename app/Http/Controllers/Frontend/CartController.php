@@ -150,34 +150,55 @@ class CartController extends Controller
         return response(['status' => 'success', 'message' => 'Item Removed Successfully!']);
     }
 
-    // Apply Coupon
     public function applyCoupon(Request $request)
     {
-        if($request->coupon_code == null){
+        if ($request->coupon_code == null) {
             return response(['status' => 'error', 'message' => 'Coupon field is required!']);
         }
 
         $coupon = Coupon::where(['code' => $request->coupon_code, 'status' => 1])->first();
-        
-        if($coupon == null){
+
+        if ($coupon == null) {
             return response(['status' => 'error', 'message' => 'Coupon does not Exist!']);
-        }elseif($coupon->start_date > date('Y-m-d')){
-            return response(['status' => 'error', 'message' => 'Coupon does not Exist!']);
-        }elseif($coupon->end_date < date('Y-m-d')){
+        } elseif ($coupon->start_date > date('Y-m-d')) {
+            return response(['status' => 'error', 'message' => 'Coupon is not yet valid!']);
+        } elseif ($coupon->end_date < date('Y-m-d')) {
             return response(['status' => 'error', 'message' => 'Coupon has been Expired!']);
         } elseif ($coupon->total_used >= $coupon->quantity) {
             return response(['status' => 'error', 'message' => 'This coupon has reached its usage limit and cannot be applied.']);
         }
 
-        if($coupon->discount_type == 'amount'){
-            Session::put('coupon', [
-                'coupon_name' => $coupon->name,
-                'coupon_code' => $coupon->code,
-                'discount_type' => 'percent',
-                'discount' => $coupon->discount
-            ]);
+        Session::put('coupon', [
+            'coupon_name' => $coupon->name,
+            'coupon_code' => $coupon->code,
+            'discount_type' => $coupon->discount_type,
+            'discount' => $coupon->discount
+        ]);
 
-        }
         return response(['status' => 'success', 'message' => 'Coupon Applied']);
     }
+
+    public function couponCalculation()
+    {
+        if (Session::has('coupon')) {
+            $coupon = Session::get('coupon');
+            $subTotal = $this->cartTotal();
+    
+            if ($coupon['discount_type'] == 'amount') {
+                $discount = $coupon['discount'];
+                $total = $subTotal - $discount;
+            } elseif ($coupon['discount_type'] == 'percent') {
+                $discount = $subTotal * $coupon['discount'] / 100;
+                $total = $subTotal - $discount;
+            }
+    
+            return response([
+                'status' => 'success',
+                'cart_total' => $total,
+                'discount' => $discount
+            ]);
+        }
+    
+        return response(['status' => 'error', 'message' => 'No coupon applied!']);
+    }    
 }
