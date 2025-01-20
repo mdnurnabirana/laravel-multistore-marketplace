@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\PaypalSetting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx\Rels;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
 
 class PaymentController extends Controller
@@ -16,6 +17,12 @@ class PaymentController extends Controller
             return redirect()->route('user.checkout');
         }
         return view('frontend.pages.payment');
+    }
+
+    // Payment Success Redirect
+    public function paymentSuccess()
+    {
+        return view('frontend.pages.payment-success');
     }
 
     public function paypalConfig()
@@ -48,8 +55,9 @@ class PaymentController extends Controller
     {
         $config = $this->paypalConfig();
         $paypalSetting = PaypalSetting::first();
+
         $provider = new PayPalClient($config);
-        // $provider->setApiCredentials($config);
+        $provider->getAccessToken(); // Ensure this returns a token or handle appropriately.
 
         // Calculate payable amount dependent on currency rate!
         $total = getPayableAmount();
@@ -62,11 +70,48 @@ class PaymentController extends Controller
                 "cancel_url" => route('user.paypal.cancel')
             ],
             "purchase_units" => [
-                "amount" => [
-                "currency_code" => $config['currency'],
-                "value" => $payableAmount
+                [
+                    "amount" => [
+                        "currency_code" => $config['currency'],
+                        "value" => $payableAmount
+                    ]
                 ]
             ]
         ]);
+
+        if (isset($response['id']) && $response['id'] != null) {
+            foreach ($response['links'] as $link) {
+                if ($link['rel'] == 'approve') {
+                    return redirect()->away($link['href']);
+                }
+            }
+        }
+        
+        // Redirect to cancel route if no approval link is found
+        return redirect()->route('user.paypal.cancel');
+    }
+
+    // Paypal Success
+    public function paypalSuccess(Request $request)
+    {
+        $config = $this->paypalConfig();
+
+        $provider = new PayPalClient($config);
+        $provider->getAccessToken();
+
+        $response = $provider->capturePaymentOrder($request->token);
+
+        if (isset($response['status']) && $response['status'] == 'COMPLETED') {
+            return redirect()->route('user.payment.success');
+        }
+
+        return redirect()->route('user.paypal.cancel');
+    }
+
+    // Payment Cancel
+    public function paypalCancel()
+    {
+        toastr('Something went wrong! Try Again Later!', 'error',  ['title' => 'Error']);
+        return redirect()->route('user.payment');
     }
 }

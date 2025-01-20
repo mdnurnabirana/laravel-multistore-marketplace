@@ -21,13 +21,15 @@
                 </div>
                 <div class="form-group">
                     <label>Default Currency Name</label>
-                    <select name="time_zone" class="form-control select2">
+                    <select name="currency_name" class="form-control select2">
                         <option value="">Select</option>
                         @foreach (config('settings.currency_list') as $currency)
-                            <option {{@$generalSettings->currency_name == $currency ? 'selected' : ''}} value="{{$currency}}">{{$currency}}</option>
+                            <option value="{{ $currency }}" {{ (isset($generalSettings->currency_name) && $generalSettings->currency_name == $currency) ? 'selected' : '' }}>
+                                {{ $currency }}
+                            </option>
                         @endforeach
                     </select>
-                </div>
+                </div>                
                 <div class="form-group">
                     <label>Currency Symbol</label>
                     <input type="text" name="currency_icon" class="form-control" value="{{@$generalSettings->currency_icon}}">
