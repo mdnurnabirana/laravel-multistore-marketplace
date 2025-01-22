@@ -19,7 +19,7 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>Account Mode</label>
+                    <label>Country Name</label>
                     <select name="country_name" class="form-control select2">
                         <option value="">Select</option>
                         @foreach (config('settings.country_list') as $country)
