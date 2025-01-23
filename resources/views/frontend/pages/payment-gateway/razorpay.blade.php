@@ -12,12 +12,12 @@
                     @csrf
                     <script src="https://checkout.razorpay.com/v1/checkout.js"
                         data-key="{{$razorpaySetting->razorpay_key}}"
-                        data-account="{{$payableAmount * 100}}"
-                        data-buttontext="Pay With RazorPay"
-                        data-name="test payment"
-                        data-description="Payment"
-                        data-prefill.name="user"
-                        data-prefill.email="user@gmail.com"
+                        data-amount="{{$payableAmount * 100}}"
+                        data-buttontext="Pay With Razorpay"
+                        data-name="payment"
+                        data-description="Payment for product"
+                        data-prefill.name="{{Auth::user()->name}}"
+                        data-prefill.email="{{Auth::user()->email}}"
                         data-theme.color="#ff7529"
                     >
                     

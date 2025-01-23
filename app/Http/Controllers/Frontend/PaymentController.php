@@ -229,18 +229,22 @@ class PaymentController extends Controller
         // Amount Calculation
         $total = getPayableAmount();
         $payableAmount = round($total * $razorPaySetting->currency_rate, 2);
-        $payableAmount = $payableAmount * 100;
+        $payableAmountInPaisa = $payableAmount * 100;
         $payment = $api->payment->fetch($request->razorpay_payment_id);
 
         if($request->has('razorpay_payment_id') && $request->filled('razorpay_payment_id')){
             try{
-                $response = $api->payment->fetch($request->razorpay_payment_id)->capture(['amount' => $payableAmount]);
+                $response = $api->payment->fetch($request->razorpay_payment_id)->capture(['amount' => $payableAmountInPaisa]);
             }catch(\Exception $e){
                 toastr($e->getMessage(), 'error', ['title' => 'Error!']);
                 return redirect()->back();
             }
             if($response['status'] == 'captured'){
-                toastr('error', 'Already Completed Payment!', ['title' => 'Error!']);
+                $this->storeOrder('razorpay', 1, $response->id, $payableAmount, $razorPaySetting->currency_name);
+            
+                // Clear Session 
+                $this->clearSession();
+                return redirect()->route('user.payment.success');
             }
         }
     }
