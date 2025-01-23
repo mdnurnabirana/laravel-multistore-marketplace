@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Models\OrderProduct;
 use App\Models\PaypalSetting;
 use App\Models\Product;
+use App\Models\RazorpaySetting;
 use App\Models\StripeSetting;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
@@ -17,6 +18,7 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx\Rels;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
 use Stripe\Charge;
 use Stripe\Stripe;
+use Razorpay\Api\Api;
 
 class PaymentController extends Controller
 {
@@ -216,5 +218,30 @@ class PaymentController extends Controller
             toastr('Something went wrong! Try Again Later!', 'error',  ['title' => 'Error']);
             return redirect()->route('user.payment');
         }   
+    }
+
+    // razorPay Indian Payment Gateway
+    public function payWithRazorPay(Request $request)
+    {
+        $razorPaySetting = RazorpaySetting::first();
+        $api = new Api($razorPaySetting->razorpay_key, $razorPaySetting->razorpay_secret_key);
+
+        // Amount Calculation
+        $total = getPayableAmount();
+        $payableAmount = round($total * $razorPaySetting->currency_rate, 2);
+        $payableAmount = $payableAmount * 100;
+        $payment = $api->payment->fetch($request->razorpay_payment_id);
+
+        if($request->has('razorpay_payment_id') && $request->filled('razorpay_payment_id')){
+            try{
+                $response = $api->payment->fetch($request->razorpay_payment_id)->capture(['amount' => $payableAmount]);
+            }catch(\Exception $e){
+                toastr($e->getMessage(), 'error', ['title' => 'Error!']);
+                return redirect()->back();
+            }
+            if($response['status'] == 'captured'){
+                toastr('error', 'Already Completed Payment!', ['title' => 'Error!']);
+            }
+        }
     }
 }

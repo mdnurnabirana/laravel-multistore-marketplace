@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('rajorpay_settings', function (Blueprint $table) {
+        Schema::create('razorpay_settings', function (Blueprint $table) {
             $table->id();
             $table->boolean('status');
             $table->string('country_name');
             $table->string('currency_name');
             $table->double('currency_rate');
-            $table->text('rajorpay_key');
-            $table->text('rajorpay_secret_key');
+            $table->text('razorpay_key');
+            $table->text('razorpay_secret_key');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('rajorpay_settings');
+        Schema::dropIfExists('razorpay_settings');
     }
 };

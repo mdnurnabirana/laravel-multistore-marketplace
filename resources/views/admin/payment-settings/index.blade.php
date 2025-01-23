@@ -23,8 +23,8 @@
                                             data-toggle="list" href="#list-home" role="tab">Paypal</a>
                                         <a class="list-group-item list-group-item-action" id="list-stripe-list"
                                             data-toggle="list" href="#list-stripe" role="tab">Stripe</a>
-                                        <a class="list-group-item list-group-item-action" id="list-rajorpay-list"
-                                            data-toggle="list" href="#list-rajorpay" role="tab">RajorPay</a>
+                                        <a class="list-group-item list-group-item-action" id="list-Razorpay-list"
+                                            data-toggle="list" href="#list-Razorpay" role="tab">RazorPay</a>
                                         <a class="list-group-item list-group-item-action" id="list-settings-list"
                                             data-toggle="list" href="#list-settings" role="tab">Settings</a>
                                     </div>
@@ -33,7 +33,7 @@
                                     <div class="tab-content" id="nav-tabContent">
                                         @include('admin.payment-settings.sections.paypal-setting')
                                         @include('admin.payment-settings.sections.stripe-setting')
-                                        @include('admin.payment-settings.sections.rajorpay-setting')
+                                        @include('admin.payment-settings.sections.Razorpay-setting')
                                         <div class="tab-pane fade" id="list-settings" role="tabpanel"
                                             aria-labelledby="list-settings-list">
                                             Lorem ipsum culpa in ad velit dolore anim labore incididunt do aliqua sit veniam

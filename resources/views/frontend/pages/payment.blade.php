@@ -45,8 +45,8 @@
                                     aria-controls="v-pills-stripe" aria-selected="false">Stripe</button>
 
                                 <button class="nav-link common_btn" id="v-pills-profile-tab" data-bs-toggle="pill"
-                                    data-bs-target="#v-pills-rajorpay" type="button" role="tab"
-                                    aria-controls="v-pills-rajorpay" aria-selected="false">Rajorpay</button>
+                                    data-bs-target="#v-pills-razorpay" type="button" role="tab"
+                                    aria-controls="v-pills-razorpay" aria-selected="false">RazorPay</button>
                             </div>
                         </div>
                     </div>
@@ -63,16 +63,7 @@
                                 </div>
                             </div>
                             @include('frontend.pages.payment-gateway.stripe')
-                            <div class="tab-pane fade" id="v-pills-rajorpay" role="tabpanel"
-                                aria-labelledby="v-pills-home-tab">
-                                <div class="row">
-                                    <div class="col-xl-12 m-auto">
-                                        <div class="wsus__payment_area">
-                                            <a class="nav-link common_btn text-center" href="{{route('user.paypal.payment')}}">Pay With RajorPay</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            @include('frontend.pages.payment-gateway.razorpay')
                             <div class="tab-pane fade" id="v-pills-profile" role="tabpanel"
                                 aria-labelledby="v-pills-profile-tab">
                                 <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Libero, tempora cum optio

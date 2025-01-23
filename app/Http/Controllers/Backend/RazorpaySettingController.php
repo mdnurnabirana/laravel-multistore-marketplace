@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Models\RajorpaySetting;
+use App\Models\RazorpaySetting;
 use Illuminate\Http\Request;
 
-class RajorpaySettingController extends Controller
+class RazorpaySettingController extends Controller
 {
     public function update(Request $request, string $id)
     {
@@ -15,19 +15,19 @@ class RajorpaySettingController extends Controller
             'country_name' => ['required', 'max: 200'],
             'currency_name' => ['required', 'max: 200'],
             'currency_rate' => ['required'],
-            'rajorpay_key' => ['required'],
-            'rajorpay_secret_key' => ['required']
+            'razorpay_key' => ['required'],
+            'razorpay_secret_key' => ['required']
         ]);
 
-        RajorpaySetting::updateOrCreate(
+        RazorpaySetting::updateOrCreate(
             ['id' => $id],
             [
             'status' => $request->status,
             'country_name' => $request->country_name,
             'currency_name' => $request->currency_name,
             'currency_rate' => $request->currency_rate,
-            'rajorpay_key' => $request->rajorpay_key,
-            'rajorpay_secret_key' => $request->rajorpay_secret_key
+            'razorpay_key' => $request->razorpay_key,
+            'razorpay_secret_key' => $request->razorpay_secret_key
             ]
         );
         toastr('Updated Successfully!', 'success');

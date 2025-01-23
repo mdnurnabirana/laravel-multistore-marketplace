@@ -16,7 +16,7 @@ use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\ProductImageGalleryController;
 use App\Http\Controllers\Backend\ProductVariantController;
 use App\Http\Controllers\Backend\ProductVariantItemController;
-use App\Http\Controllers\Backend\RajorpaySettingController;
+use App\Http\Controllers\Backend\RazorpaySettingController;
 use App\Http\Controllers\Backend\SellerProductController;
 use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\Backend\ShippingRuleController;
@@ -104,8 +104,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin') ->as('admin.') ->grou
 
         // Stripe Settings Routes
         Route::put('stripe-settings/{id}', [StripeSettingController::class, 'update'])->name('stripe-setting.update');
-        Route::put('rajorpay-settings/{id}', [RajorpaySettingController::class, 'update'])->name('rajorpay-setting.update');
-
+        Route::put('razorpay-settings/{id}', [RazorpaySettingController::class, 'update'])->name('razorpay-setting.update');
 
 
 });
