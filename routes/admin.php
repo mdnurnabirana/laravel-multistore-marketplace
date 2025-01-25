@@ -10,6 +10,7 @@ use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\AdminVendorProfileController;
 use App\Http\Controllers\Backend\CouponController;
 use App\Http\Controllers\Backend\FlashSaleController;
+use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\PaymentSettingController;
 use App\Http\Controllers\Backend\PaypalSettingController;
 use App\Http\Controllers\Backend\ProductController;
@@ -98,14 +99,16 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin') ->as('admin.') ->grou
         Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
         Route::put('general-setting-update', [SettingController::class, 'generalSettingUpdate'])->name('general-setting-update');
 
-        // Payment Settings Routes
+        // Paypal Payment Settings Routes
         Route::get('payment-settings', [PaymentSettingController::class, 'index'])->name('payment-settings.index');
         Route::resource('paypal-setting', PaypalSettingController::class);
 
-        // Stripe Settings Routes
+        // Stripe & RazorPay Settings Routes
         Route::put('stripe-settings/{id}', [StripeSettingController::class, 'update'])->name('stripe-setting.update');
         Route::put('razorpay-settings/{id}', [RazorpaySettingController::class, 'update'])->name('razorpay-setting.update');
 
+        // Order Related Routes
+        Route::resource('order', OrderController::class);
 
 });
 
