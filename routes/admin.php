@@ -108,6 +108,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin') ->as('admin.') ->grou
         Route::put('razorpay-settings/{id}', [RazorpaySettingController::class, 'update'])->name('razorpay-setting.update');
 
         // Order Related Routes
+        Route::get('payment-status', [OrderController::class, 'changePaymentStatus'])->name('payment.status');
         Route::get('order-status', [OrderController::class, 'changeOrderStatus'])->name('order.status');
         Route::resource('order', OrderController::class);
 
