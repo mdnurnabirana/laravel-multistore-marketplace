@@ -46,7 +46,32 @@ class OrderDataTable extends DataTable
                 
             })
             ->addColumn('order_status', function($query){
-                return "<span class='badge bg-warning'>$query->order_status</span>";
+                switch ($query->order_status) {
+                    case 'pending':
+                        return "<span class='badge bg-warning'>Pending</span>";
+                        break;
+                    case 'processed_and_ready_to_ship':
+                        return "<span class='badge bg-info'>Ready To Ship</span>";
+                        break;
+                    case 'dropped_off':
+                        return "<span class='badge bg-primary'>Dropped Off</span>";
+                        break;
+                    case 'shipped':
+                        return "<span class='badge bg-success'>Shipped</span>";
+                        break;
+                    case 'out_for_delivery':
+                        return "<span class='badge bg-secondary'>Out For Delivery</span>";
+                        break;
+                    case 'delivered':
+                        return "<span class='badge bg-success'>Delivered</span>";
+                        break;
+                    case 'cancelled':
+                        return "<span class='badge bg-danger'>Cancelled</span>";
+                        break;
+                    default:
+                        return "<span class='badge bg-dark'>Unknown Status</span>";
+                        break;
+                }                
             })
             ->rawColumns(['order_status', 'action', 'payment_status'])
             ->setRowId('id');

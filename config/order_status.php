@@ -25,7 +25,11 @@ return [
         'delivered' => [
             'status' => 'Delivered',
             'details' => 'Your package has been successfully delivered. Thank you for shopping with us!'
-        ]
+        ],
+        'cancelled' => [
+            'status' => 'Cancelled',
+            'details' => 'Your order has been cancelled. If you have any questions, please contact our support team.'
+        ],
     ],
 
     'order_status_vendor' => [
