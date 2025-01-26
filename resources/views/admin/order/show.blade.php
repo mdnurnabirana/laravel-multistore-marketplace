@@ -86,7 +86,11 @@
                                         @endphp
                                         <tr>
                                             <td>{{++$loop->index}}</td>
-                                            <td>{{$product->product_name}}</td>
+                                            @if ($product->product->slug)
+                                                <td><a target="_blank" href="{{route('product-detail', $product->product->slug)}}">{{$product->product_name}}</a></td>
+                                            @else
+                                                <td>{{$product->product_name}}</td>
+                                            @endif 
                                             <td>
                                                 @foreach ($variants as $key => $variant)
                                                     <b>{{$key}}: </b>{{$variant->name}} ({{$settings->currency_icon}}{{$variant->price}}) <br>
@@ -115,7 +119,7 @@
                                 <div class="col-lg-4 text-right">
                                     <div class="invoice-detail-item">
                                         <div class="invoice-detail-name">Subtotal</div>
-                                        <div class="invoice-detail-value">{{$settings->currency_icon}} {{($product->unit_price * $product->qty) + $product->variant_total}}</div>
+                                        <div class="invoice-detail-value">{{$settings->currency_icon}} {{$order->sub_total}}</div>
                                     </div>
                                     <div class="invoice-detail-item">
                                         <div class="invoice-detail-name">Shipping(+)</div>
