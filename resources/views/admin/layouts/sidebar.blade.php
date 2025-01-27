@@ -65,6 +65,8 @@
                             href="{{ route('admin.cancelled-orders') }}">All Cancelled Orders</a></li>
                 </ul>
             </li>
+            <li class="{{ setActive(['admin.transaction*']) }}"><a class="nav-link"
+                href="{{ route('admin.transaction') }}"><i class="fas fa-exchange-alt"></i><span>Transactions</span></a></li>
             <li
                 class="dropdown {{ setActive([
                     'admin.brand.*',

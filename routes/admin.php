@@ -22,6 +22,7 @@ use App\Http\Controllers\Backend\SellerProductController;
 use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\Backend\ShippingRuleController;
 use App\Http\Controllers\Backend\StripeSettingController;
+use App\Http\Controllers\Backend\TransactionController;
 
 Route::middleware(['auth', 'role:admin'])->prefix('admin') ->as('admin.') ->group(function () {
         Route::get('dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
@@ -118,6 +119,9 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin') ->as('admin.') ->grou
         Route::get('delivered-orders', [OrderController::class, 'deliveredOrders'])->name('delivered-orders');
         Route::get('cancelled-orders', [OrderController::class, 'cancelledOrders'])->name('cancelled-orders');
         Route::resource('order', OrderController::class);
+
+        // Transaction Routes
+        Route::get('transaction', [TransactionController::class, 'index'])->name('transaction');
 
 });
 
