@@ -6,23 +6,28 @@
     {{-- <a href="dashboard.html" class="dash_logo"><img src="images/logo.png" alt="logo" class="img-fluid"></a> --}}
     <ul class="dashboard_link">
         <li>
-            <a class="active" href="">
-                <i class="fas fa-tachometer"></i> Dashboard
+            <a class="active" href="{{route('vendor.dashboard')}}">
+                <i class="fas fa-home"></i> Dashboard
+            </a>
+        </li>
+        <li>
+            <a class="" href="{{route('vendor.orders.index')}}">
+                <i class="fas fa-shopping-cart"></i> Orders
             </a>
         </li>
         <li>
             <a href="{{ route('vendor.products.index') }}">
-                <i class="fas fa-user-alt"></i> Products
+                <i class="fas fa-box"></i> Products
             </a>
         </li>
         <li>
             <a href="{{ route('vendor.shop-profile.index') }}">
-                <i class="fas fa-user-alt"></i> Shop Profile
+                <i class="fas fa-store"></i> Shop Profile
             </a>
         </li>
         <li>
             <a href="{{ route('vendor.profile') }}">
-                <i class="far fa-user"></i> My Profile
+                <i class="fas fa-user-circle"></i> My Profile
             </a>
         </li>
         <li>
