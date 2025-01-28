@@ -22,7 +22,7 @@
                             <!--============================
                                 INVOICE PAGE START
                             ==============================-->
-                            <section>
+                            <section class="invoice-print">
                                 <div class="wsus__invoice_area">
                                     <div class="wsus__invoice_header">
                                         <div class="wsus__invoice_content">
@@ -54,7 +54,7 @@
                                                 <div class="col-xl-4 col-md-4">
                                                     <div class="wsus__invoice_single text-md-end">
                                                         <h5>Order id: #{{$order->invoice_id}}</h5>
-                                                        <h6>Order Status: {{$order->order_status}}</h6>
+                                                        <h6>Order Status: {{config('order_status.order_status_admin')[$order->order_status]['status']}}</h6>
                                                         <p>Payment Method: {{$order->payment_method}}</p>
                                                         <p>Payment Status: {{$order->payment_status}}</p>
                                                         <p>Transaction Id: {{$order->transaction->transaction_id}}</p>
@@ -105,6 +105,26 @@
                             <!--============================
                                 INVOICE PAGE END
                             ==============================-->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <form action="{{route('vendor.orders.status', $order->id)}}">
+                                        <div class="form-group mt-5">
+                                            <label class="mb-3">Order Status</label>
+                                            <select name="status" id="" class="form-control">
+                                                @foreach (config('order_status.order_status_vendor') as $key => $status)
+                                                    <option {{$key == $order->order_status ? 'selected' : ''}} value="{{$key}}">{{$status['status']}}</option>
+                                                @endforeach
+                                            </select>
+                                            <button class="btn btn-primary mt-3" type="submit">Save</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mt-3 float-end">
+                                    <button class="btn btn-warning print_invoice" >Print</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -115,3 +135,18 @@
         DASHBOARD END
         ==============================-->
 @endsection
+
+@push('scripts')
+    <script>
+            $('.print_invoice').on('click', function(){
+                let printBody = $('.invoice-print');
+                let originalContents = $('body').html();
+
+                $('body').html(printBody.html());
+
+                window.print();
+
+                $('body').html(originalContents);
+            })
+    </script>
+@endpush
