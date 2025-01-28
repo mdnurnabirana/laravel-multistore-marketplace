@@ -10,6 +10,7 @@ use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\AdminVendorProfileController;
 use App\Http\Controllers\Backend\CouponController;
 use App\Http\Controllers\Backend\FlashSaleController;
+use App\Http\Controllers\Backend\HomePageSettingController;
 use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\PaymentSettingController;
 use App\Http\Controllers\Backend\PaypalSettingController;
@@ -122,6 +123,10 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin') ->as('admin.') ->grou
 
         // Transaction Routes
         Route::get('transaction', [TransactionController::class, 'index'])->name('transaction');
+
+        // Home Page Setting Routes
+        Route::get('home-page-setting', [HomePageSettingController::class, 'index'])->name('home-page-setting');
+
 
 });
 
