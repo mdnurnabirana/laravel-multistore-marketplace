@@ -126,7 +126,8 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin') ->as('admin.') ->grou
 
         // Home Page Setting Routes
         Route::get('home-page-setting', [HomePageSettingController::class, 'index'])->name('home-page-setting');
-
+        Route::put('popular-category-section', [HomePageSettingController::class, 'updatePopularCategorySection'])->name('popular-category-section');
+        
 
 });
 

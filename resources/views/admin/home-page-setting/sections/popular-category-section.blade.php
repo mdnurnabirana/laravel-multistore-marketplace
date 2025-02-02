@@ -1,7 +1,7 @@
 <div class="tab-pane fade show active" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
     <div class="card border">
         <div class="card-body">
-            <form action="" method="POST">
+            <form action="{{route('admin.popular-category-section')}}" method="POST">
                 @csrf
                 @method('PUT')
                 <h5>Category 1</h5>
@@ -9,7 +9,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Category</label>
-                            <select name="" class="form-control main-category">
+                            <select name="cat_one" class="form-control main-category">
                                 <option value="">Select</option>
                                 @foreach ($categories as $category)
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -20,7 +20,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Sub Category</label>
-                            <select name="" class="form-control sub-category">
+                            <select name="sub_cat_one" class="form-control sub-category">
                                 <option value="">Select</option>
                             </select>
                         </div>
@@ -28,7 +28,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Child Category</label>
-                            <select name="" class="form-control child-category">
+                            <select name="child_cat_one" class="form-control child-category">
                                 <option value="">Select</option>
                             </select>
                         </div>
@@ -39,7 +39,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Category</label>
-                            <select name="" class="form-control main-category">
+                            <select name="cat_two" class="form-control main-category">
                                 <option value="">Select</option>
                                 @foreach ($categories as $category)
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -50,7 +50,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Sub Category</label>
-                            <select name="" class="form-control sub-category">
+                            <select name="sub_cat_two" class="form-control sub-category">
                                 <option value="">Select</option>
                             </select>
                         </div>
@@ -58,7 +58,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Child Category</label>
-                            <select name="" class="form-control child-category">
+                            <select name="child_cat_two" class="form-control child-category">
                                 <option value="">Select</option>
                             </select>
                         </div>
@@ -69,7 +69,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Category</label>
-                            <select name="" class="form-control main-category">
+                            <select name="cat_three" class="form-control main-category">
                                 <option value="">Select</option>
                                 @foreach ($categories as $category)
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -80,7 +80,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Sub Category</label>
-                            <select name="" class="form-control sub-category">
+                            <select name="sub_cat_three" class="form-control sub-category">
                                 <option value="">Select</option>
                             </select>
                         </div>
@@ -88,7 +88,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Child Category</label>
-                            <select name="" class="form-control child-category">
+                            <select name="child_cat_three" class="form-control child-category">
                                 <option value="">Select</option>
                             </select>
                         </div>
@@ -99,7 +99,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Category</label>
-                            <select name="" class="form-control main-category">
+                            <select name="cat_four" class="form-control main-category">
                                 <option value="">Select</option>
                                 @foreach ($categories as $category)
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -110,7 +110,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Sub Category</label>
-                            <select name="" class="form-control sub-category">
+                            <select name="sub_cat_four" class="form-control sub-category">
                                 <option value="">Select</option>
                             </select>
                         </div>
@@ -118,7 +118,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Child Category</label>
-                            <select name="" class="form-control child-category">
+                            <select name="child_cat_four" class="form-control child-category">
                                 <option value="">Select</option>
                             </select>
                         </div>
