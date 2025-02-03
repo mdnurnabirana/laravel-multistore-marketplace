@@ -125,3 +125,8 @@ function getPayableAmount()
 {
     return getMainCartTotal() + getShippingFee();
 }
+
+// Limit Text
+function limitText($text, $limit = 15) {
+    return  \Str::limit($text, $limit);
+}

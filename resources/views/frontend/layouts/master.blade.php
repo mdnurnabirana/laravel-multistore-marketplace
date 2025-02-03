@@ -220,6 +220,11 @@
             });
         });
     </script>
+    <script>
+        $(document).ready(function() {
+            $('.auto_click').click(); 
+        });
+    </script>
     @include('frontend.layouts.scripts');
     @stack('scripts')
 
