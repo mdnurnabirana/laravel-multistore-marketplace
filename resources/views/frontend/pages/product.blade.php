@@ -4,8 +4,8 @@
 @endsection
 @section('content')
     <!--============================
-                                        BREADCRUMB START
-                                    ==============================-->
+                                                BREADCRUMB START
+                                            ==============================-->
     <section id="wsus__breadcrumb">
         <div class="wsus_breadcrumb_overlay">
             <div class="container">
@@ -14,7 +14,7 @@
                         <h4>products</h4>
                         <ul>
                             <li><a href="{{ url('/') }}">home</a></li>
-                            <li><a href="{{ route('products.index') }}">product</a></li>
+                            <li><a href="javascript:void(0);">product</a></li>
                         </ul>
                     </div>
                 </div>
@@ -22,13 +22,13 @@
         </div>
     </section>
     <!--============================
-                                        BREADCRUMB END
-                                    ==============================-->
+                                                BREADCRUMB END
+                                            ==============================-->
 
 
     <!--============================
-                                        PRODUCT PAGE START
-                                    ==============================-->
+                                                PRODUCT PAGE START
+                                            ==============================-->
     <section id="wsus__product_page">
         <div class="container">
             <div class="row">
@@ -255,23 +255,6 @@
                                             <i class="fas fa-list-ul"></i>
                                         </button>
                                     </div>
-                                    <div class="wsus__topbar_select">
-                                        <select class="select_2" name="state">
-                                            <option>default shorting</option>
-                                            <option>short by rating</option>
-                                            <option>short by latest</option>
-                                            <option>low to high </option>
-                                            <option>high to low</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="wsus__topbar_select">
-                                    <select class="select_2" name="state">
-                                        <option>show 12</option>
-                                        <option>show 15</option>
-                                        <option>show 18</option>
-                                        <option>show 21</option>
-                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -431,39 +414,35 @@
                                             </div>
                                         </div>
                                     @endforeach
+
                                 </div>
                             </div>
                         </div>
                     </div>
+                    @if (count($products) == 0)
+                        <div class="card mt-5">
+                            <div class="card-body">
+                                <div class="text-center">
+                                    <h2>Product Not Found</h2>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
                 </div>
-                <div class="col-xl-12">
-                    <section id="pagination">
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination">
-                                <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Previous">
-                                        <i class="fas fa-chevron-left"></i>
-                                    </a>
-                                </li>
-                                <li class="page-item"><a class="page-link page_active" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item"><a class="page-link" href="#">4</a></li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Next">
-                                        <i class="fas fa-chevron-right"></i>
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </section>
+
+                <div class="col-xl-12 ">
+                    <div class="mt-5" style="display: flex; justify-content: center;">
+                        @if ($products->hasPages())
+                            {{ $products->withQueryString()->links() }}
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>
     </section>
     <!--============================
-                                        PRODUCT PAGE END
-                                    ==============================-->
+                                                PRODUCT PAGE END
+                                            ==============================-->
 @endsection
 
 @push('scripts')
