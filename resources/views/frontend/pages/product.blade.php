@@ -102,41 +102,6 @@
                                 </div>
                             </div>
                             <div class="accordion-item">
-                                <h2 class="accordion-header" id="headingThree2">
-                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#collapseThree2" aria-expanded="false"
-                                        aria-controls="collapseThree">
-                                        size
-                                    </button>
-                                </h2>
-                                <div id="collapseThree2" class="accordion-collapse collapse show"
-                                    aria-labelledby="headingThree2" data-bs-parent="#accordionExample">
-                                    <div class="accordion-body">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value=""
-                                                id="flexCheckDefault">
-                                            <label class="form-check-label" for="flexCheckDefault">
-                                                small
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value=""
-                                                id="flexCheckChecked">
-                                            <label class="form-check-label" for="flexCheckChecked">
-                                                medium
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value=""
-                                                id="flexCheckChecked2">
-                                            <label class="form-check-label" for="flexCheckChecked2">
-                                                large
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="accordion-item">
                                 <h2 class="accordion-header" id="headingThree3">
                                     <button class="accordion-button" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#collapseThree3" aria-expanded="false"
@@ -147,90 +112,14 @@
                                 <div id="collapseThree3" class="accordion-collapse collapse show"
                                     aria-labelledby="headingThree3" data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value=""
-                                                id="flexCheckDefault11">
-                                            <label class="form-check-label" for="flexCheckDefault11">
-                                                gentle park
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value=""
-                                                id="flexCheckChecked22">
-                                            <label class="form-check-label" for="flexCheckChecked22">
-                                                colors
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value=""
-                                                id="flexCheckChecked222">
-                                            <label class="form-check-label" for="flexCheckChecked222">
-                                                yellow
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value=""
-                                                id="flexCheckChecked33">
-                                            <label class="form-check-label" for="flexCheckChecked33">
-                                                enice man
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value=""
-                                                id="flexCheckChecked333">
-                                            <label class="form-check-label" for="flexCheckChecked333">
-                                                plus point
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="headingThree">
-                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#collapseThree" aria-expanded="true"
-                                        aria-controls="collapseThree">
-                                        color
-                                    </button>
-                                </h2>
-                                <div id="collapseThree" class="accordion-collapse collapse show"
-                                    aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-                                    <div class="accordion-body">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value=""
-                                                id="flexCheckDefaultc1">
-                                            <label class="form-check-label" for="flexCheckDefaultc1">
-                                                black
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value=""
-                                                id="flexCheckCheckedc2">
-                                            <label class="form-check-label" for="flexCheckCheckedc2">
-                                                white
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value=""
-                                                id="flexCheckCheckedc3">
-                                            <label class="form-check-label" for="flexCheckCheckedc3">
-                                                green
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value=""
-                                                id="flexCheckCheckedc4">
-                                            <label class="form-check-label" for="flexCheckCheckedc4">
-                                                pink
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value=""
-                                                id="flexCheckCheckedc5">
-                                            <label class="form-check-label" for="flexCheckCheckedc5">
-                                                red
-                                            </label>
-                                        </div>
+                                        <ul>
+                                            @foreach ($brands as $brand)
+                                                <li>
+                                                    <a href="{{ route('products.index', ['brand' => $brand->slug]) }}">{{ $brand->name }}</a>
+                                                </li>
+                                            @endforeach
+
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
@@ -470,12 +359,13 @@
         });
 
         @php
-            if(request()->has('range')){
+            if(request()->has('range') && request()->range != null){
                 $price = explode(';', request()->range);
                 $from = $price[0];
                 $to = $price[1];
             }else{
-                $price = [0, 8000];
+                $from = 0;
+                $to = 8000;
             }
         @endphp
         //*==========PRICE SLIDER========= 
