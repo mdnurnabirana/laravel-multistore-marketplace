@@ -34,6 +34,7 @@ Route::get('flash-sale', [FlashSaleController::class, 'index'])->name('flash-sal
 // Product Routes
 Route::get('products', [FrontendProductController::class, 'productsIndex'])->name('products.index');
 Route::get('product-detail/{slug}', [FrontendProductController::class, 'showProduct'])->name('product-detail');
+Route::get('change-product-list-view', [FrontendProductController::class, 'changeListView'])->name('change-product-list-view');
 
 // Cart Routes
 Route::post('add-to-cart', [CartController::class, 'addToCart'])->name('add-to-cart');
