@@ -36,7 +36,7 @@
                         </a>
                         <ul class="wsus__single_pro_icon">
                             <li><a href="#" data-bs-toggle="modal"
-                                    data-bs-target="#exampleModal-{{ $product->id }}"><i class="far fa-eye"></i></a>
+                                    data-bs-target="#exampleModal-{{$product->id}}"><i class="far fa-eye"></i></a>
                             </li>
                             <li><a href="#"><i class="far fa-heart"></i></a></li>
                             <li><a href="#"><i class="far fa-random"></i></a>
@@ -86,7 +86,7 @@
 <!--==========================
       PRODUCT MODAL VIEW START
     ===========================-->
-@foreach ($flashSaleItems as $items)
+@foreach ($flashSaleItems as $item)
     @php
         $product = \App\Models\Product::find($item->product_id);
     @endphp

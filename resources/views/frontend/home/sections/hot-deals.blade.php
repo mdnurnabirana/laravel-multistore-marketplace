@@ -137,7 +137,7 @@
 @foreach ($typeBaseProducts as $key => $products)
     @foreach ($products as $product)
         <section class="product_popup_modal">
-            <div class="modal fade" id="product-type-{{ $product->id }}" tabindex="-1" aria-hidden="true">
+            <div class="modal fade" id="product-type-{{$product->id}}" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-body">
