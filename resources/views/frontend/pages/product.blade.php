@@ -4,8 +4,8 @@
 @endsection
 @section('content')
     <!--============================
-                                                BREADCRUMB START
-                                            ==============================-->
+                                                    BREADCRUMB START
+                                                ==============================-->
     <section id="wsus__breadcrumb">
         <div class="wsus_breadcrumb_overlay">
             <div class="container">
@@ -22,13 +22,13 @@
         </div>
     </section>
     <!--============================
-                                                BREADCRUMB END
-                                            ==============================-->
+                                                    BREADCRUMB END
+                                                ==============================-->
 
 
     <!--============================
-                                                PRODUCT PAGE START
-                                            ==============================-->
+                                                    PRODUCT PAGE START
+                                                ==============================-->
     <section id="wsus__product_page">
         <div class="container">
             <div class="row">
@@ -67,7 +67,9 @@
                                     <div class="accordion-body">
                                         <ul>
                                             @foreach ($categories as $category)
-                                                <li><a href="{{route('products.index', ['category' => $category->slug])}}">{{ $category->name }}</a></li>
+                                                <li><a
+                                                        href="{{ route('products.index', ['category' => $category->slug]) }}">{{ $category->name }}</a>
+                                                </li>
                                             @endforeach
                                         </ul>
                                     </div>
@@ -87,10 +89,12 @@
                                             <form action="">
                                                 @foreach (request()->query() as $key => $value)
                                                     @if ($key != 'range')
-                                                        <input type="hidden" name="{{ $key }}" value="{{ $value }}"/>  
+                                                        <input type="hidden" name="{{ $key }}"
+                                                            value="{{ $value }}" />
                                                     @endif
                                                 @endforeach
-                                                <input type="hidden" id="slider_range" class="flat-slider" name="range"/>
+                                                <input type="hidden" id="slider_range" class="flat-slider"
+                                                    name="range" />
                                                 <button type="submit" class="common_btn">filter</button>
                                             </form>
                                         </div>
@@ -442,8 +446,8 @@
         </div>
     </section>
     <!--============================
-                                                PRODUCT PAGE END
-                                            ==============================-->
+                                                    PRODUCT PAGE END
+                                                ==============================-->
 @endsection
 
 @push('scripts')
@@ -462,6 +466,27 @@
                         // Optionally handle success response
                     }
                 });
+            });
+        });
+
+        @php
+            if(request()->has('range')){
+                $price = explode(';', request()->range);
+                $from = $price[0];
+                $to = $price[1];
+            }else{
+                $price = [0, 8000];
+            }
+        @endphp
+        //*==========PRICE SLIDER========= 
+        jQuery(function() {
+            jQuery("#slider_range").flatslider({
+                min: 0,
+                max: 10000,
+                step: 100,
+                values: [{{$from}}, {{$to}}],
+                range: true,
+                einheit: '{{$settings->currency_icon}}',
             });
         });
     </script>
