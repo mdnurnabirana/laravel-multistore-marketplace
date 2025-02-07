@@ -11,7 +11,8 @@ class WishlistController extends Controller
 {
     public function index()
     {
-        return view('frontend.pages.wishlist');
+        $wishlistProducts = Wishlist::with('product')->where('user_id', Auth::user()->id)->get();
+        return view('frontend.pages.wishlist', compact('wishlistProducts'));
     }
 
     public function addToWishlist(Request $request)
@@ -33,5 +34,18 @@ class WishlistController extends Controller
         $wishlist->save();
 
         return response(['message' => 'Product added to wishlist', 'status' => 'success']);
+    }
+
+    public function removeFromWishlist(string $id)
+    {
+        $wishlistProduct = Wishlist::where('id', $id)->firstOrFail();
+        if($wishlistProduct->user_id != Auth::user()->id) {
+            return redirect()->back();
+        }
+        $wishlistProduct->delete();
+
+        toastr('Product removed from wishlist', 'success');
+
+        return redirect()->back();
     }
 }
