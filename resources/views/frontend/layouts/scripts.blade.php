@@ -153,6 +153,7 @@
                 success: function(data) {
                     if(data.status == 'success')
                     {
+                        $('#wishlist-count').text(data.count);
                         toastr.success(data.message);
                     }
                     else if(data.status == 'error'){
