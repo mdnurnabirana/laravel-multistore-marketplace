@@ -11,6 +11,7 @@ use App\Http\Controllers\Backend\AdminVendorProfileController;
 use App\Http\Controllers\Backend\CouponController;
 use App\Http\Controllers\Backend\FlashSaleController;
 use App\Http\Controllers\Backend\FooterInfoController;
+use App\Http\Controllers\Backend\FooterSocialController;
 use App\Http\Controllers\Backend\HomePageSettingController;
 use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\PaymentSettingController;
@@ -134,6 +135,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin') ->as('admin.') ->grou
         
         // Footer Routes
         Route::resource('footer-info', FooterInfoController::class);
+        Route::resource('footer-socials', FooterSocialController::class);
         
 });
 

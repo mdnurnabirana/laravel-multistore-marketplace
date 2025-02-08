@@ -140,7 +140,8 @@
             </li>
 
             <li class="dropdown {{ setActive([
-                'admin.footer-info.*'
+                'admin.footer-info.*',
+                'admin.footer-socials.*',
                 ]) }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i>
                     <span>Footer</span>
@@ -148,6 +149,9 @@
                 <ul class="dropdown-menu">
                     <li class="{{ setActive(['admin.footer-info.index']) }}">
                         <a class="nav-link" href="{{ route('admin.footer-info.index') }}">Footer Info</a>
+                    </li>
+                    <li class="{{ setActive(['admin.footer-socials.index']) }}">
+                        <a class="nav-link" href="{{ route('admin.footer-socials.index') }}">Footer Socials</a>
                     </li>
                 </ul>
             </li>
