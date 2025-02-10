@@ -142,6 +142,7 @@
             <li class="dropdown {{ setActive([
                 'admin.footer-info.*',
                 'admin.footer-socials.*',
+                'admin.footer-grid-two.*'
                 ]) }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i>
                     <span>Footer</span>
@@ -152,6 +153,9 @@
                     </li>
                     <li class="{{ setActive(['admin.footer-socials.index']) }}">
                         <a class="nav-link" href="{{ route('admin.footer-socials.index') }}">Footer Socials</a>
+                    </li>
+                    <li class="{{ setActive(['admin.footer-grid-two.index']) }}">
+                        <a class="nav-link" href="{{ route('admin.footer-grid-two.index') }}">Footer Grid Two</a>
                     </li>
                 </ul>
             </li>
