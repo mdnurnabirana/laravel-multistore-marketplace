@@ -139,6 +139,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin') ->as('admin.') ->grou
         Route::put('change-status', [FooterSocialController::class, 'changeStatus'])->name('footer-socials.change-status');
         Route::resource('footer-socials', FooterSocialController::class);
         Route::put('change-status', [FooterGridTwoController::class, 'changeStatus'])->name('footer-grid-two.change-status');
+        Route::put('change-title', [FooterGridTwoController::class, 'changeTitle'])->name('footer-grid-two.change-title');
         Route::resource('footer-grid-two', FooterGridTwoController::class);
 
 });
