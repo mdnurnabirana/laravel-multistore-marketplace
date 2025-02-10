@@ -104,6 +104,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin') ->as('admin.') ->grou
         // Settings Routes
         Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
         Route::put('general-setting-update', [SettingController::class, 'generalSettingUpdate'])->name('general-setting-update');
+        Route::put('email-setting-update', [SettingController::class, 'emailConfigSettingUpdate'])->name('email-setting-update');
 
         // Paypal Payment Settings Routes
         Route::get('payment-settings', [PaymentSettingController::class, 'index'])->name('payment-settings.index');
@@ -146,5 +147,8 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin') ->as('admin.') ->grou
         Route::put('change-status', [FooterGridThreeController::class, 'changeStatus'])->name('footer-grid-three.change-status');
         Route::put('change-title', [FooterGridThreeController::class, 'changeTitle'])->name('footer-grid-three.change-title');
         Route::resource('footer-grid-three', FooterGridThreeController::class);
+
+       
+
 });
 
