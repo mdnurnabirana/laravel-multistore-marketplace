@@ -10,6 +10,7 @@ use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\AdminVendorProfileController;
 use App\Http\Controllers\Backend\CouponController;
 use App\Http\Controllers\Backend\FlashSaleController;
+use App\Http\Controllers\Backend\FooterGridThreeController;
 use App\Http\Controllers\Backend\FooterGridTwoController;
 use App\Http\Controllers\Backend\FooterInfoController;
 use App\Http\Controllers\Backend\FooterSocialController;
@@ -142,5 +143,8 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin') ->as('admin.') ->grou
         Route::put('change-title', [FooterGridTwoController::class, 'changeTitle'])->name('footer-grid-two.change-title');
         Route::resource('footer-grid-two', FooterGridTwoController::class);
 
+        Route::put('change-status', [FooterGridThreeController::class, 'changeStatus'])->name('footer-grid-three.change-status');
+        Route::put('change-title', [FooterGridThreeController::class, 'changeTitle'])->name('footer-grid-three.change-title');
+        Route::resource('footer-grid-three', FooterGridThreeController::class);
 });
 
