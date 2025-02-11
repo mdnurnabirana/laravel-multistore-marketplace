@@ -50,8 +50,9 @@
                     <h3>Subscribe To Our Newsletter</h3>
                     <p>Get all the latest information on Events, Sales and Offers.
                         Get all the latest information on Events.</p>
-                    <form>
-                        <input type="text" placeholder="Search...">
+                    <form action="{{route('newsletter-request')}}" method="POST" id="newsletter">
+                        @csrf
+                        <input type="text" placeholder="Email">
                         <button type="submit" class="common_btn">subscribe</button>
                     </form>
                     <div class="footer_payment">
