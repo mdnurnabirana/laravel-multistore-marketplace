@@ -11,16 +11,17 @@ class MailHelper
         $emailConfig = EmailConfiguration::first();
         $config = [
             'transport' => 'smtp',
+            'url' => env('MAIL_URL'),
             'host' => $emailConfig->host,
             'port' => $emailConfig->port,
             'encryption' => $emailConfig->encryption,
             'username' => $emailConfig->username,
             'password' => $emailConfig->password,
             'timeout' => null,
-            'local_domain' => env('MAIL_EHLO_DOMAIN', parse_url(env('APP_URL', 'http://localhost'), PHP_URL_HOST)),
-        ];
+            'local_domain' => config('app.url'),
+         ];
 
         config(['mail.mailers.smtp' => $config]);
-        config(['mail.from.address' => $emailConfig->email]);
+        config(['mail.from.address' => $emailConfig->email, 'mail.from.name' => 'IzyBuy']);
     }
 }

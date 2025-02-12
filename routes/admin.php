@@ -27,6 +27,7 @@ use App\Http\Controllers\Backend\SellerProductController;
 use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\Backend\ShippingRuleController;
 use App\Http\Controllers\Backend\StripeSettingController;
+use App\Http\Controllers\Backend\SubscribersController;
 use App\Http\Controllers\Backend\TransactionController;
 
 Route::middleware(['auth', 'role:admin'])->prefix('admin') ->as('admin.') ->group(function () {
@@ -148,7 +149,12 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin') ->as('admin.') ->grou
         Route::put('change-title', [FooterGridThreeController::class, 'changeTitle'])->name('footer-grid-three.change-title');
         Route::resource('footer-grid-three', FooterGridThreeController::class);
 
-       
+       // Subscriber Routes
+        Route::get('subscribers', [SubscribersController::class, 'index'])->name('subscribers');
+        Route::post('subscribers-send-mail', [SubscribersController::class, 'sendMail'])->name('subscribers-send-mail');
+        Route::delete('subscribers/{id}', [SubscribersController::class, 'destroy'])->name('subscribers.destroy');
 
+        // 
+        
 });
 

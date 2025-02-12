@@ -163,8 +163,9 @@
                     </li>
                 </ul>
             </li>
-    
-            <li><a class="nav-link" href="{{ route('admin.settings.index') }}"><i class="far fa-square"></i>
+            <li class="{{ setActive(['admin.subscribers']) }}"><a class="nav-link" href="{{ route('admin.subscribers') }}"><i class="far fa-square"></i>
+                <span>Subscriber's</span></a></li>
+            <li class="{{ setActive(['admin.settings.index']) }}"><a class="nav-link" href="{{ route('admin.settings.index') }}"><i class="far fa-square"></i>
                     <span>Settings</span></a></li>
 
             {{-- <li class="menu-header">Starter</li>
