@@ -52,7 +52,7 @@
                         Get all the latest information on Events.</p>
                     <form action="{{route('newsletter-request')}}" method="POST" id="newsletter">
                         @csrf
-                        <input type="text" placeholder="Email">
+                        <input type="text" placeholder="Email" name="email">
                         <button type="submit" class="common_btn">subscribe</button>
                     </form>
                     <div class="footer_payment">

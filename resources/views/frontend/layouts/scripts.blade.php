@@ -15,14 +15,12 @@
                 data: formData,
                 url: "{{ route('add-to-cart') }}",
                 success: function(data) {
-                    if(data.status == 'success')
-                    {
+                    if (data.status == 'success') {
                         getCartCount()
                         fetchSidebarCartProducts()
                         $('.mini_cart_actions').removeClass('d-none')
                         toastr.success(data.message);
-                    }
-                    else if(data.status == 'error'){
+                    } else if (data.status == 'error') {
                         toastr.error(data.message);
                     }
                 },
@@ -143,52 +141,51 @@
         $('.add_to_wishlist').on('click', function(e) {
             e.preventDefault();
             let id = $(this).data('id');
-            
+
             $.ajax({
                 method: 'GET',
-                url: "{{route('user.wishlist.store')}}",
+                url: "{{ route('user.wishlist.store') }}",
                 data: {
                     id: id
                 },
                 success: function(data) {
-                    if(data.status == 'success')
-                    {
+                    if (data.status == 'success') {
                         $('#wishlist-count').text(data.count);
                         toastr.success(data.message);
-                    }
-                    else if(data.status == 'error'){
+                    } else if (data.status == 'error') {
                         toastr.error(data.message);
                     }
                 },
                 error: function(data) {
                     console.log(data);
-                }       
+                }
             })
-            
+
         })
 
-        // NewsLetter JS
-        $('#newsletter').on('submit', function(e){
+        $('#newsletter').on('submit', function(e) {
             e.preventDefault();
             let data = $(this).serialize();
             $.ajax({
                 method: 'POST',
-                url: "{{route('newsletter-request')}}",
+                url: "{{ route('newsletter-request') }}",
                 data: data,
-                success: function(data)
-                {
-
+                success: function(data) {
+                    if (data.status === 'success') {
+                        toastr.success(data.message);
+                    } else if (data.status === 'error') {
+                        toastr.error(data.message);
+                    }
                 },
-                error: function(data)
-                {
-                    let errors = data.responseJSON.errors;
-                    if(errors){
-                        $.each(errors, function(key, value){
+                error: function(data) {
+                    if (data.responseJSON && data.responseJSON.errors) {
+                        $.each(data.responseJSON.errors, function(key, value) {
                             toastr.error(value);
-                        })
+                        });
                     }
                 }
-            })
-        })
+            });
+        });
+
     })
 </script>
