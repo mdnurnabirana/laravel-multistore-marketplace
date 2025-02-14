@@ -5,21 +5,18 @@
 <section id="wsus__monthly_top" class="wsus__monthly_top_2">
     <div class="container">
         <div class="row">
-            <div class="col-xl-12 col-lg-12">
-                <div class="wsus__monthly_top_banner">
-                    <div class="wsus__monthly_top_banner_img">
-                        <img src="images/monthly_top_img3.jpg" alt="img" class="img-fluid w-100">
-                        <span></span>
-                    </div>
-                    <div class="wsus__monthly_top_banner_text">
-                        <h4>Black Friday Sale</h4>
-                        <h3>Up To <span>70% Off</span></h3>
-                        <h6>Everything</h6>
-                        <a class="shop_btn" href="#">shop now</a>
+            @if ($homepage_section_banner_one->banner_one->status == 1)
+                <div class="col-xl-12 col-lg-12">
+                    <div class="wsus__monthly_top_banner">
+                        <div class="wsus__monthly_top_banner_img">
+                            <img src="{{ asset($homepage_section_banner_one->banner_one->banner_image ?? 'images/monthly_top_img3.jpg') }}" alt="img" class="img-fluid w-100">
+                            <span></span>
+                        </div>
                     </div>
                 </div>
-            </div>
+            @endif
         </div>
+        
         <div class="row">
             <div class="col-xl-12">
                 <div class="wsus__section_header for_md">
