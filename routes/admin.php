@@ -157,6 +157,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin') ->as('admin.') ->grou
 
         // Advertisement
         Route::get('advertisement', [AdvertisementController::class, 'index'])->name('advertisement.index');
+        Route::put('advertisement/homepage-banner-section-one', [AdvertisementController::class, 'homepageBannerSectionOne'])->name('homepage-banner-section-one');
         
 
 });
