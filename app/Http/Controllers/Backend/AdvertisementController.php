@@ -25,11 +25,19 @@ class AdvertisementController extends Controller
         $homepage_section_banner_four = Advertisement::where('key', 'homepage_section_banner_four')->first();
         $homepage_section_banner_four = json_decode($homepage_section_banner_four?->value);
 
+        $product_page_banner = Advertisement::where('key', 'product_page_banner')->first();
+        $product_page_banner = json_decode($product_page_banner?->value);
+
+        $cart_page_banner = Advertisement::where('key', 'cart_page_banner')->first();
+        $cart_page_banner = json_decode($cart_page_banner?->value);
+
         return view('admin.advertisement.index', compact([
             'homepage_section_banner_one',
             'homepage_section_banner_two',
             'homepage_section_banner_three',
-            'homepage_section_banner_four'
+            'homepage_section_banner_four',
+            'product_page_banner',
+            'cart_page_banner'
         ]));
     }
 
@@ -164,6 +172,66 @@ class AdvertisementController extends Controller
         );
 
         // Return success message and redirect back
+        toastr('Updated Successfully!', 'success');
+        return redirect()->back();
+    }
+
+    public function productPageBanner(Request $request)
+    {
+        $request->validate([
+            'banner_image' => ['image'],
+            'banner_url' => ['required']
+        ]);
+
+        $imagePath = $this->updateImage($request, 'banner_image', 'uploads');
+
+        $value = [
+            'banner_one' => [
+                'banner_url' => $request->banner_url,
+                'status' => $request->status == 'on' ? 1 : 0,
+                'banner_image' => !empty($imagePath) ? $imagePath : $request->banner_old_image
+            ]
+        ];
+
+        Advertisement::updateOrCreate(
+            ['key' => 'product_page_banner'],
+            ['value' => json_encode($value)]
+        );
+
+        toastr('Updated Successfully!', 'success');
+        return redirect()->back();
+    }
+
+    public function cartPageBanner(Request $request)
+    {
+        $request->validate([
+            'banner_one_image' => ['image'],
+            'banner_one_url' => ['required'],
+            'banner_two_image' => ['image'],
+            'banner_two_url' => ['required']
+        ]);
+
+        $imagePath1 = $this->updateImage($request, 'banner_one_image', 'uploads');
+        $imagePath2 = $this->updateImage($request, 'banner_two_image', 'uploads');
+
+        $value = [
+            'banner_one' => [
+                'banner_url' => $request->banner_one_url,
+                'status' => $request->banner_one_status == 'on' ? 1 : 0,
+                'banner_image' => !empty($imagePath1) ? $imagePath1 : $request->banner_one_old_image
+            ],
+            'banner_two' => [
+                'banner_url' => $request->banner_two_url,
+                'status' => $request->banner_two_status == 'on' ? 1 : 0,
+                'banner_image' => !empty($imagePath2) ? $imagePath2 : $request->banner_two_old_image
+            ]
+        ];
+
+        Advertisement::updateOrCreate(
+            ['key' => 'cart_page_banner'],
+            ['value' => json_encode($value)]
+        );
+
         toastr('Updated Successfully!', 'success');
         return redirect()->back();
     }
