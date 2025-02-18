@@ -436,44 +436,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="wsus__main_comment">
-                                                            <div class="wsus__comment_img">
-                                                                <img src="images/client_img_1.jpg" alt="user"
-                                                                    class="img-fluid w-100">
-                                                            </div>
-                                                            <div class="wsus__comment_text reply">
-                                                                <h6>Smith jhon <span>5 <i class="fas fa-star"></i></span>
-                                                                </h6>
-                                                                <span>09 Jul 2021</span>
-                                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing
-                                                                    elit.
-                                                                    Cupiditate sint molestiae eos? Officia, fuga eaque.
-                                                                </p>
-                                                                <a href="#" data-bs-toggle="collapse"
-                                                                    data-bs-target="#flush-collapsetwo2">reply</a>
-                                                                <div class="accordion accordion-flush"
-                                                                    id="accordionFlushExample2">
-                                                                    <div class="accordion-item">
-                                                                        <div id="flush-collapsetwo2"
-                                                                            class="accordion-collapse collapse"
-                                                                            aria-labelledby="flush-collapsetwo"
-                                                                            data-bs-parent="#accordionFlushExample">
-                                                                            <div class="accordion-body">
-                                                                                <form>
-                                                                                    <div
-                                                                                        class="wsus__riv_edit_single text_area">
-                                                                                        <i class="far fa-edit"></i>
-                                                                                        <textarea cols="3" rows="1" placeholder="Your Text"></textarea>
-                                                                                    </div>
-                                                                                    <button type="submit"
-                                                                                        class="common_btn">submit</button>
-                                                                                </form>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                                        
                                                         <div id="pagination">
                                                             <nav aria-label="Page navigation example">
                                                                 <ul class="pagination">
@@ -506,41 +469,45 @@
                                                 <div class="col-xl-4 col-lg-5 mt-4 mt-lg-0">
                                                     <div class="wsus__post_comment rev_mar" id="sticky_sidebar3">
                                                         <h4>write a Review</h4>
-                                                        <form action="#">
+                                                        <form action="{{route('user.review.create')}}" enctype="multipart/form-data" method="POST">
+                                                            @csrf
                                                             <p class="rating">
                                                                 <span>select your rating : </span>
-                                                                <i class="fas fa-star"></i>
-                                                                <i class="fas fa-star"></i>
-                                                                <i class="fas fa-star"></i>
-                                                                <i class="fas fa-star"></i>
-                                                                <i class="fas fa-star"></i>
                                                             </p>
                                                             <div class="row">
-                                                                <div class="col-xl-12">
+                                                                <div class="col-xl-12 mb-4">
                                                                     <div class="wsus__single_com">
-                                                                        <input type="text" placeholder="Name">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-xl-12">
-                                                                    <div class="wsus__single_com">
-                                                                        <input type="email" placeholder="Email">
+                                                                        <select name="rating" id="" class="form-control">
+                                                                            <option value="">Select</option>
+                                                                            <option value="1">1</option>
+                                                                            <option value="2">2</option>
+                                                                            <option value="3">3</option>
+                                                                            <option value="4">4</option>
+                                                                            <option value="5">5</option>
+                                                                        </select>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-xl-12">
                                                                     <div class="col-xl-12">
                                                                         <div class="wsus__single_com">
-                                                                            <textarea cols="3" rows="3" placeholder="Write your review"></textarea>
+                                                                            <textarea cols="3" rows="3"name="review" placeholder="Write your review"></textarea>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="img_upload">
+                                                            {{-- <div class="img_upload">
                                                                 <div class="gallery">
                                                                     <a class="cam" href="javascript:void(0)"><span><i
-                                                                                class="fas fa-image"></i></span>
+                                                                                class="fas fa-image" name="image[]"></i></span>
                                                                     </a>
                                                                 </div>
+                                                            </div> --}}
+                                                            <div class="img_upload">
+                                                                <div class="">
+                                                                    <input type="file" name="image[]">
+                                                                </div>
                                                             </div>
+                                                            
                                                             <button class="common_btn" type="submit">submit
                                                                 review</button>
                                                         </form>
