@@ -4,8 +4,8 @@
 @endsection
 @section('content')
     <!--==========================
-                              PRODUCT MODAL VIEW START
-                            ===========================-->
+                                  PRODUCT MODAL VIEW START
+                                ===========================-->
     <section class="product_popup_modal">
         <div class="modal fade" id="exampleModal2" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog">
@@ -143,13 +143,13 @@
         </div>
     </section>
     <!--==========================
-                              PRODUCT MODAL VIEW END
-                            ===========================-->
+                                  PRODUCT MODAL VIEW END
+                                ===========================-->
 
 
     <!--============================
-                                BREADCRUMB START
-                            ==============================-->
+                                    BREADCRUMB START
+                                ==============================-->
     <section id="wsus__breadcrumb">
         <div class="wsus_breadcrumb_overlay">
             <div class="container">
@@ -167,13 +167,13 @@
         </div>
     </section>
     <!--============================
-                                BREADCRUMB END
-                            ==============================-->
+                                    BREADCRUMB END
+                                ==============================-->
 
 
     <!--============================
-                                PRODUCT DETAILS START
-                            ==============================-->
+                                    PRODUCT DETAILS START
+                                ==============================-->
     <section id="wsus__product_details">
         <div class="container">
             <div class="wsus__details_bg">
@@ -250,7 +250,8 @@
                                                                     {{ $variantItem->is_default == 1 ? 'selected' : '' }}>
                                                                     {{ $variantItem->name }}
                                                                     ({{ $settings->currency_icon }}
-                                                                    {{ $variantItem->price }} )</option>
+                                                                    {{ $variantItem->price }})
+                                                                </option>
                                                             @endif
                                                         @endforeach
                                                     </select>
@@ -392,83 +393,41 @@
                                             <div class="row">
                                                 <div class="col-xl-8 col-lg-7">
                                                     <div class="wsus__comment_area">
-                                                        <h4>Reviews <span>02</span></h4>
-                                                        <div class="wsus__main_comment">
-                                                            <div class="wsus__comment_img">
-                                                                <img src="images/client_img_3.jpg" alt="user"
-                                                                    class="img-fluid w-100">
-                                                            </div>
-                                                            <div class="wsus__comment_text reply">
-                                                                <h6>Shopnil mahadi <span>4 <i
-                                                                            class="fas fa-star"></i></span></h6>
-                                                                <span>09 Jul 2021</span>
-                                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing
-                                                                    elit.
-                                                                    Cupiditate sint molestiae eos? Officia, fuga eaque.
-                                                                </p>
-                                                                <ul class="">
-                                                                    <li><img src="images/headphone_1.jpg" alt="product"
-                                                                            class="img-fluid w-100"></li>
-                                                                    <li><img src="images/headphone_2.jpg" alt="product"
-                                                                            class="img-fluid w-100"></li>
-                                                                    <li><img src="images/kids_1.jpg" alt="product"
-                                                                            class="img-fluid w-100"></li>
-                                                                </ul>
-                                                                <a href="#" data-bs-toggle="collapse"
-                                                                    data-bs-target="#flush-collapsetwo">reply</a>
-                                                                <div class="accordion accordion-flush"
-                                                                    id="accordionFlushExample2">
-                                                                    <div class="accordion-item">
-                                                                        <div id="flush-collapsetwo"
-                                                                            class="accordion-collapse collapse"
-                                                                            aria-labelledby="flush-collapsetwo"
-                                                                            data-bs-parent="#accordionFlushExample">
-                                                                            <div class="accordion-body">
-                                                                                <form>
-                                                                                    <div
-                                                                                        class="wsus__riv_edit_single text_area">
-                                                                                        <i class="far fa-edit"></i>
-                                                                                        <textarea cols="3" rows="1" placeholder="Your Text"></textarea>
-                                                                                    </div>
-                                                                                    <button type="submit"
-                                                                                        class="common_btn">submit</button>
-                                                                                </form>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
+                                                        <h4>Reviews <span>{{ count($reviews) }}</span></h4>
+                                                        @foreach ($reviews as $review)
+                                                            <div class="wsus__main_comment">
+                                                                <div class="wsus__comment_img">
+                                                                    <img src="{{ asset($review->user->image) }}"
+                                                                        alt="user" class="img-fluid w-100">
+                                                                </div>
+                                                                <div class="wsus__comment_text reply">
+                                                                    <h6>{{ $review->user->name }}
+                                                                        <span>{{ $review->rating }} <i
+                                                                                class="fas fa-star"></i></span></h6>
+                                                                    <span>{{ date('d M Y', strtotime($review->created_at)) }}</span>
+                                                                    <p>
+                                                                        {{ $review->review }}
+                                                                    </p>
+                                                                    <ul class="">
+                                                                        @if (count($review->productReviewGalleries) > 0)
+                                                                            @foreach ($review->productReviewGalleries as $image)
+                                                                                <li><img src="{{ asset($image->image) }}"
+                                                                                        alt="product" class="img-fluid">
+                                                                                </li>
+                                                                            @endforeach
+                                                                        @endif
+                                                                    </ul>
                                                                 </div>
                                                             </div>
-                                                        </div>
-
-                                                        <div id="pagination">
-                                                            <nav aria-label="Page navigation example">
-                                                                <ul class="pagination">
-                                                                    <li class="page-item">
-                                                                        <a class="page-link" href="#"
-                                                                            aria-label="Previous">
-                                                                            <i class="fas fa-chevron-left"></i>
-                                                                        </a>
-                                                                    </li>
-                                                                    <li class="page-item"><a class="page-link page_active"
-                                                                            href="#">1</a>
-                                                                    </li>
-                                                                    <li class="page-item"><a class="page-link"
-                                                                            href="#">2</a></li>
-                                                                    <li class="page-item"><a class="page-link"
-                                                                            href="#">3</a></li>
-                                                                    <li class="page-item"><a class="page-link"
-                                                                            href="#">4</a></li>
-                                                                    <li class="page-item">
-                                                                        <a class="page-link" href="#"
-                                                                            aria-label="Next">
-                                                                            <i class="fas fa-chevron-right"></i>
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-                                                            </nav>
+                                                        @endforeach
+                                                        <div class="mt-5">
+                                                            @if ($reviews->hasPages())
+                                                                {{ $reviews->links() }}
+                                                            @endif
                                                         </div>
                                                     </div>
                                                 </div>
+
                                                 <div class="col-xl-4 col-lg-5 mt-4 mt-lg-0">
                                                     @php
                                                         $isBrought = false;
@@ -526,16 +485,19 @@
                                                                 </div> --}}
                                                                 <div class="img_upload">
                                                                     <div class="">
-                                                                        <input type="file" name="image[]">
+                                                                        <input type="file" name="image[]" multiple>
                                                                     </div>
                                                                 </div>
-
+                                                                <input type="hidden" name="product_id"
+                                                                    value="{{ $product->id }}">
+                                                                <input type="hidden" name="vendor_id"
+                                                                    value="{{ $product->vendor_id }}">
                                                                 <button class="common_btn" type="submit">submit
                                                                     review</button>
                                                             </form>
                                                         </div>
                                                     @endif
-                                                    
+
                                                 </div>
                                             </div>
                                         </div>
@@ -847,13 +809,13 @@
         </div>
     </section>
     <!--============================
-                                PRODUCT DETAILS END
-                            ==============================-->
+                                    PRODUCT DETAILS END
+                                ==============================-->
 
 
     <!--============================
-                                RELATED PRODUCT START
-                            ==============================-->
+                                    RELATED PRODUCT START
+                                ==============================-->
     {{-- <section id="wsus__flash_sell">
         <div class="container">
             <div class="row">
@@ -1017,6 +979,6 @@
         </div>
     </section> --}}
     <!--============================
-                                RELATED PRODUCT END
-        ==============================-->
+                                    RELATED PRODUCT END
+            ==============================-->
 @endsection
