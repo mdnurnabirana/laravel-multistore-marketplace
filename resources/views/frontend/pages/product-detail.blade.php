@@ -4,8 +4,8 @@
 @endsection
 @section('content')
     <!--==========================
-                          PRODUCT MODAL VIEW START
-                        ===========================-->
+                              PRODUCT MODAL VIEW START
+                            ===========================-->
     <section class="product_popup_modal">
         <div class="modal fade" id="exampleModal2" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog">
@@ -143,13 +143,13 @@
         </div>
     </section>
     <!--==========================
-                          PRODUCT MODAL VIEW END
-                        ===========================-->
+                              PRODUCT MODAL VIEW END
+                            ===========================-->
 
 
     <!--============================
-                            BREADCRUMB START
-                        ==============================-->
+                                BREADCRUMB START
+                            ==============================-->
     <section id="wsus__breadcrumb">
         <div class="wsus_breadcrumb_overlay">
             <div class="container">
@@ -167,13 +167,13 @@
         </div>
     </section>
     <!--============================
-                            BREADCRUMB END
-                        ==============================-->
+                                BREADCRUMB END
+                            ==============================-->
 
 
     <!--============================
-                            PRODUCT DETAILS START
-                        ==============================-->
+                                PRODUCT DETAILS START
+                            ==============================-->
     <section id="wsus__product_details">
         <div class="container">
             <div class="wsus__details_bg">
@@ -212,9 +212,11 @@
                         <div class="wsus__pro_details_text">
                             <a class="title" href="javascript:;">{{ $product->name }}</a>
                             @if ($product->qty > 0)
-                                <p class="wsus__stock_area"><span class="in_stock">in stock</span> ({{$product->qty}} Item)</p>
+                                <p class="wsus__stock_area"><span class="in_stock">in stock</span> ({{ $product->qty }}
+                                    Item)</p>
                             @elseif ($product->qty == 0)
-                            <p class="wsus__stock_area"><span class="in_stock"> stock out</span> ({{$product->qty}} Item)</p>
+                                <p class="wsus__stock_area"><span class="in_stock"> stock out</span> ({{ $product->qty }}
+                                    Item)</p>
                             @endif
                             @if (checkDiscount($product))
                                 <h4>{{ $settings->currency_icon }}{{ $product->offer_price }}
@@ -246,7 +248,8 @@
                                                             @if ($variantItem->status != 0)
                                                                 <option value="{{ $variantItem->id }}"
                                                                     {{ $variantItem->is_default == 1 ? 'selected' : '' }}>
-                                                                    {{ $variantItem->name }} ({{ $settings->currency_icon }}
+                                                                    {{ $variantItem->name }}
+                                                                    ({{ $settings->currency_icon }}
                                                                     {{ $variantItem->price }} )</option>
                                                             @endif
                                                         @endforeach
@@ -436,7 +439,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        
+
                                                         <div id="pagination">
                                                             <nav aria-label="Page navigation example">
                                                                 <ul class="pagination">
@@ -467,51 +470,72 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-xl-4 col-lg-5 mt-4 mt-lg-0">
-                                                    <div class="wsus__post_comment rev_mar" id="sticky_sidebar3">
-                                                        <h4>write a Review</h4>
-                                                        <form action="{{route('user.review.create')}}" enctype="multipart/form-data" method="POST">
-                                                            @csrf
-                                                            <p class="rating">
-                                                                <span>select your rating : </span>
-                                                            </p>
-                                                            <div class="row">
-                                                                <div class="col-xl-12 mb-4">
-                                                                    <div class="wsus__single_com">
-                                                                        <select name="rating" id="" class="form-control">
-                                                                            <option value="">Select</option>
-                                                                            <option value="1">1</option>
-                                                                            <option value="2">2</option>
-                                                                            <option value="3">3</option>
-                                                                            <option value="4">4</option>
-                                                                            <option value="5">5</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-xl-12">
-                                                                    <div class="col-xl-12">
+                                                    @php
+                                                        $isBrought = false;
+                                                        $orders = \App\Models\Order::where([
+                                                            'user_id' => auth()->user()->id,
+                                                            'order_status' => 'delivered',
+                                                        ])->get();
+                                                        foreach ($orders as $key => $order) {
+                                                            $existItem = $order
+                                                                ->orderProducts()
+                                                                ->where('product_id', $product->id)
+                                                                ->first();
+                                                            if ($existItem) {
+                                                                $isBrought = true;
+                                                            }
+                                                        }
+                                                    @endphp
+                                                    @if ($isBrought)
+                                                        <div class="wsus__post_comment rev_mar" id="sticky_sidebar3">
+                                                            <h4>write a Review</h4>
+                                                            <form action="{{ route('user.review.create') }}"
+                                                                enctype="multipart/form-data" method="POST">
+                                                                @csrf
+                                                                <p class="rating">
+                                                                    <span>select your rating : </span>
+                                                                </p>
+                                                                <div class="row">
+                                                                    <div class="col-xl-12 mb-4">
                                                                         <div class="wsus__single_com">
-                                                                            <textarea cols="3" rows="3"name="review" placeholder="Write your review"></textarea>
+                                                                            <select name="rating" id=""
+                                                                                class="form-control">
+                                                                                <option value="">Select</option>
+                                                                                <option value="1">1</option>
+                                                                                <option value="2">2</option>
+                                                                                <option value="3">3</option>
+                                                                                <option value="4">4</option>
+                                                                                <option value="5">5</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-xl-12">
+                                                                        <div class="col-xl-12">
+                                                                            <div class="wsus__single_com">
+                                                                                <textarea cols="3" rows="3"name="review" placeholder="Write your review"></textarea>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                            {{-- <div class="img_upload">
-                                                                <div class="gallery">
-                                                                    <a class="cam" href="javascript:void(0)"><span><i
-                                                                                class="fas fa-image" name="image[]"></i></span>
-                                                                    </a>
+                                                                {{-- <div class="img_upload">
+                                                                    <div class="gallery">
+                                                                        <a class="cam" href="javascript:void(0)"><span><i
+                                                                                    class="fas fa-image" name="image[]"></i></span>
+                                                                        </a>
+                                                                    </div>
+                                                                </div> --}}
+                                                                <div class="img_upload">
+                                                                    <div class="">
+                                                                        <input type="file" name="image[]">
+                                                                    </div>
                                                                 </div>
-                                                            </div> --}}
-                                                            <div class="img_upload">
-                                                                <div class="">
-                                                                    <input type="file" name="image[]">
-                                                                </div>
-                                                            </div>
-                                                            
-                                                            <button class="common_btn" type="submit">submit
-                                                                review</button>
-                                                        </form>
-                                                    </div>
+
+                                                                <button class="common_btn" type="submit">submit
+                                                                    review</button>
+                                                            </form>
+                                                        </div>
+                                                    @endif
+                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -823,13 +847,13 @@
         </div>
     </section>
     <!--============================
-                            PRODUCT DETAILS END
-                        ==============================-->
+                                PRODUCT DETAILS END
+                            ==============================-->
 
 
     <!--============================
-                            RELATED PRODUCT START
-                        ==============================-->
+                                RELATED PRODUCT START
+                            ==============================-->
     {{-- <section id="wsus__flash_sell">
         <div class="container">
             <div class="row">
@@ -993,6 +1017,6 @@
         </div>
     </section> --}}
     <!--============================
-                            RELATED PRODUCT END
-    ==============================-->
+                                RELATED PRODUCT END
+        ==============================-->
 @endsection

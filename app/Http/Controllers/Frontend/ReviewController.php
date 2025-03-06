@@ -15,6 +15,5 @@ class ReviewController extends Controller
             'image.*' => ['required', 'image']
         ]);
 
-        
     }
 }
