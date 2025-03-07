@@ -16,6 +16,11 @@
             </a>
         </li>
         <li>
+            <a class="" href="{{route('vendor.reviews.index')}}">
+                <i class="fas fa-shopping-cart"></i> Reviews
+            </a>
+        </li>
+        <li>
             <a href="{{ route('vendor.products.index') }}">
                 <i class="fas fa-box"></i> Products
             </a>
