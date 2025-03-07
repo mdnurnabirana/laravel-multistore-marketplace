@@ -5,14 +5,12 @@
     </span>
     <a href="dsahboard.html" class="dash_logo"><img src="images/logo.png" alt="logo" class="img-fluid"></a>
     <ul class="dashboard_link">
-      <li><a class="active" href="{{route('user.dashboard')}}"><i class="fas fa-tachometer"></i>Dashboard</a></li>
-      <li><a class="" href="{{route('home')}}"><i class="fas fa-tachometer"></i>Home</a></li>
+      <li><a class="active" href="{{route('user.dashboard')}}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+      <li><a class="" href="{{route('home')}}"><i class="fas fa-home"></i> Home</a></li>
       <li><a href="{{route('user.orders.index')}}"><i class="fas fa-list-ul"></i> Orders</a></li>
-      <li><a href="dsahboard_download.html"><i class="far fa-cloud-download-alt"></i> Downloads</a></li>
-      <li><a href="dsahboard_review.html"><i class="far fa-star"></i> Reviews</a></li>
-      <li><a href="dsahboard_wishlist.html"><i class="far fa-heart"></i> Wishlist</a></li>
-      <li><a href="{{route('user.profile')}}"><i class="far fa-user"></i> My Profile</a></li>
-      <li><a href="{{route('user.address.index')}}"><i class="fal fa-gift-card"></i> Addresses</a></li>
+      <li><a href="{{route('user.review.index')}}"><i class="fas fa-star"></i> Reviews</a></li>
+      <li><a href="{{route('user.profile')}}"><i class="fas fa-user"></i> My Profile</a></li>
+      <li><a href="{{route('user.address.index')}}"><i class="fas fa-map-marker-alt"></i> Addresses</a></li>
       <li>
         <form method="POST" action="{{ route('logout') }}">
           @csrf
