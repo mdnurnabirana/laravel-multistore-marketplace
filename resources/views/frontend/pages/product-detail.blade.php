@@ -4,8 +4,8 @@
 @endsection
 @section('content')
     <!--==========================
-                                  PRODUCT MODAL VIEW START
-                                ===========================-->
+                                      PRODUCT MODAL VIEW START
+                                    ===========================-->
     <section class="product_popup_modal">
         <div class="modal fade" id="exampleModal2" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog">
@@ -50,12 +50,21 @@
                                     <p class="wsus__stock_area"><span class="in_stock">in stock</span> (167 item)</p>
                                     <h4>$50.00 <del>$60.00</del></h4>
                                     <p class="review">
+                                        @php
+                                    $avgRating = $product->reviews()->avg('rating');
+                                    $fullRating = floor($avgRating);
+                                    $halfRating = $avgRating - $fullRating >= 0.5;
+                                @endphp
+                                @for ($i = 1; $i <= 5; $i++)
+                                    @if ($i <= $fullRating)
                                         <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
+                                    @elseif ($i == $fullRating + 1 && $halfRating)
                                         <i class="fas fa-star-half-alt"></i>
-                                        <span>20 review</span>
+                                    @else
+                                        <i class="far fa-star"></i>
+                                    @endif
+                                @endfor
+                                <span>( {{count($product->reviews)}} review)</span>
                                     </p>
                                     <p class="description">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
 
@@ -143,13 +152,13 @@
         </div>
     </section>
     <!--==========================
-                                  PRODUCT MODAL VIEW END
-                                ===========================-->
+                                      PRODUCT MODAL VIEW END
+                                    ===========================-->
 
 
     <!--============================
-                                    BREADCRUMB START
-                                ==============================-->
+                                        BREADCRUMB START
+                                    ==============================-->
     <section id="wsus__breadcrumb">
         <div class="wsus_breadcrumb_overlay">
             <div class="container">
@@ -167,13 +176,13 @@
         </div>
     </section>
     <!--============================
-                                    BREADCRUMB END
-                                ==============================-->
+                                        BREADCRUMB END
+                                    ==============================-->
 
 
     <!--============================
-                                    PRODUCT DETAILS START
-                                ==============================-->
+                                        PRODUCT DETAILS START
+                                    ==============================-->
     <section id="wsus__product_details">
         <div class="container">
             <div class="wsus__details_bg">
@@ -226,12 +235,21 @@
                                 <h4>{{ $settings->currency_icon }}{{ $product->price }}</del></h4>
                             @endif
                             <p class="review">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                                <span>20 review</span>
+                                @php
+                                    $avgRating = $product->reviews()->avg('rating');
+                                    $fullRating = floor($avgRating);
+                                    $halfRating = $avgRating - $fullRating >= 0.5;
+                                @endphp
+                                @for ($i = 1; $i <= 5; $i++)
+                                    @if ($i <= $fullRating)
+                                        <i class="fas fa-star"></i>
+                                    @elseif ($i == $fullRating + 1 && $halfRating)
+                                        <i class="fas fa-star-half-alt"></i>
+                                    @else
+                                        <i class="far fa-star"></i>
+                                    @endif
+                                @endfor
+                                <span>( {{count($product->reviews)}} review)</span>
                             </p>
                             <p class="description">{!! $product->short_description !!}</p>
 
@@ -364,12 +382,21 @@
                                                 <div class="wsus__pro_det_vendor_text">
                                                     <h4>{{ $product->vendor->user->name }}</h4>
                                                     <p class="rating">
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="fas fa-star"></i>
-                                                        <span>(41 review)</span>
+                                                        @php
+                                                            $avgRating = $product->reviews()->avg('rating');
+                                                            $fullRating = floor($avgRating);
+                                                            $halfRating = $avgRating - $fullRating >= 0.5;
+                                                        @endphp
+                                                        @for ($i = 1; $i <= 5; $i++)
+                                                            @if ($i <= $fullRating)
+                                                                <i class="fas fa-star"></i>
+                                                            @elseif ($i == $fullRating + 1 && $halfRating)
+                                                                <i class="fas fa-star-half-alt"></i>
+                                                            @else
+                                                                <i class="far fa-star"></i>
+                                                            @endif
+                                                        @endfor
+                                                        <span>( {{ count($product->reviews) }} review)</span>
                                                     </p>
                                                     <p><span>Store Name:</span> {{ $product->vendor->shop_name }}</p>
                                                     <p><span>Address:</span> {{ $product->vendor->address }}</p>
@@ -403,7 +430,8 @@
                                                                 <div class="wsus__comment_text reply">
                                                                     <h6>{{ $review->user->name }}
                                                                         <span>{{ $review->rating }} <i
-                                                                                class="fas fa-star"></i></span></h6>
+                                                                                class="fas fa-star"></i></span>
+                                                                    </h6>
                                                                     <span>{{ date('d M Y', strtotime($review->created_at)) }}</span>
                                                                     <p>
                                                                         {{ $review->review }}
@@ -432,7 +460,7 @@
                                                     @php
                                                         $isBrought = false;
                                                         $orders = \App\Models\Order::where([
-                                                            'user_id' => auth()->user()->id,
+                                                            'user_id' => Auth::id(),
                                                             'order_status' => 'delivered',
                                                         ])->get();
                                                         foreach ($orders as $key => $order) {
@@ -809,13 +837,13 @@
         </div>
     </section>
     <!--============================
-                                    PRODUCT DETAILS END
-                                ==============================-->
+                                        PRODUCT DETAILS END
+                                    ==============================-->
 
 
     <!--============================
-                                    RELATED PRODUCT START
-                                ==============================-->
+                                        RELATED PRODUCT START
+                                    ==============================-->
     {{-- <section id="wsus__flash_sell">
         <div class="container">
             <div class="row">
@@ -979,6 +1007,6 @@
         </div>
     </section> --}}
     <!--============================
-                                    RELATED PRODUCT END
-            ==============================-->
+                                        RELATED PRODUCT END
+                ==============================-->
 @endsection

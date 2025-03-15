@@ -4,8 +4,8 @@
 @endsection
 @section('content')
     <!--============================
-                                                        BREADCRUMB START
-                                                    ==============================-->
+                                                                    BREADCRUMB START
+                                                                ==============================-->
     <section id="wsus__breadcrumb">
         <div class="wsus_breadcrumb_overlay">
             <div class="container">
@@ -22,13 +22,13 @@
         </div>
     </section>
     <!--============================
-                                                        BREADCRUMB END
-                                                    ==============================-->
+                                                                    BREADCRUMB END
+                                                                ==============================-->
 
 
     <!--============================
-                                                        PRODUCT PAGE START
-                                                    ==============================-->
+                                                                    PRODUCT PAGE START
+                                                                ==============================-->
     <section id="wsus__product_page">
         <div class="container">
             <div class="row">
@@ -36,7 +36,8 @@
                     <div class="col-xl-12">
                         <div class="wsus__pro_page_bammer">
                             <a href="{{ $product_page_banner->banner_one->banner_url ?? '#' }}">
-                                <img src="{{ asset($product_page_banner->banner_one->banner_image ?? 'frontend/images/pro_banner_1.jpg') }}" alt="banner" class="img-fluid w-100" >
+                                <img src="{{ asset($product_page_banner->banner_one->banner_image ?? 'frontend/images/pro_banner_1.jpg') }}"
+                                    alt="banner" class="img-fluid w-100">
                             </a>
                         </div>
                     </div>
@@ -177,19 +178,30 @@
                                                     <li><a href="#" data-bs-toggle="modal"
                                                             data-bs-target="#product-{{ $product->id }}"><i
                                                                 class="far fa-eye"></i></a></li>
-                                                    <li><a href="" class="add_to_wishlist" data-id="{{$product->id}}"><i class="far fa-heart"></i></a></li>
+                                                    <li><a href="" class="add_to_wishlist"
+                                                            data-id="{{ $product->id }}"><i
+                                                                class="far fa-heart"></i></a></li>
                                                     {{-- <li><a href="#"><i class="far fa-random"></i></a> --}}
                                                 </ul>
                                                 <div class="wsus__product_details">
                                                     <a class="wsus__category"
                                                         href="#">{{ $product->category->name }} </a>
                                                     <p class="wsus__pro_rating">
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="fas fa-star-half-alt"></i>
-                                                        <span>(133 review)</span>
+                                                        @php
+                                                            $avgRating = $product->reviews()->avg('rating');
+                                                            $fullRating = floor($avgRating);
+                                                            $halfRating = $avgRating - $fullRating >= 0.5;
+                                                        @endphp
+                                                        @for ($i = 1; $i <= 5; $i++)
+                                                            @if ($i <= $fullRating)
+                                                                <i class="fas fa-star"></i>
+                                                            @elseif ($i == $fullRating + 1 && $halfRating)
+                                                                <i class="fas fa-star-half-alt"></i>
+                                                            @else
+                                                                <i class="far fa-star"></i>
+                                                            @endif
+                                                        @endfor
+                                                        <span>( {{ count($product->reviews) }} review)</span>
                                                     </p>
                                                     <a class="wsus__pro_name"
                                                         href="{{ route('product-detail', $product->slug) }}">{{ limitText($product->name, 50) }}</a>
@@ -256,12 +268,21 @@
                                                     <a class="wsus__category"
                                                         href="#">{{ @$product->category->name }} </a>
                                                     <p class="wsus__pro_rating">
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="fas fa-star-half-alt"></i>
-                                                        <span>(17 review)</span>
+                                                        @php
+                                                            $avgRating = $product->reviews()->avg('rating');
+                                                            $fullRating = floor($avgRating);
+                                                            $halfRating = $avgRating - $fullRating >= 0.5;
+                                                        @endphp
+                                                        @for ($i = 1; $i <= 5; $i++)
+                                                            @if ($i <= $fullRating)
+                                                                <i class="fas fa-star"></i>
+                                                            @elseif ($i == $fullRating + 1 && $halfRating)
+                                                                <i class="fas fa-star-half-alt"></i>
+                                                            @else
+                                                                <i class="far fa-star"></i>
+                                                            @endif
+                                                        @endfor
+                                                        <span>( {{ count($product->reviews) }} review)</span>
                                                     </p>
                                                     <a class="wsus__pro_name"
                                                         href="{{ route('product-detail', $product->slug) }}">{{ $product->name }}
@@ -298,7 +319,9 @@
                                                                 type="submit">Add to
                                                                 Cart</button>
                                                         </form>
-                                                        <li><a href="" class="add_to_wishlist" data-id="{{$product->id}}"><i class="far fa-heart"></i></a></li>
+                                                        <li><a href="" class="add_to_wishlist"
+                                                                data-id="{{ $product->id }}"><i
+                                                                    class="far fa-heart"></i></a></li>
                                                         {{-- <li><a href="#"><i class="far fa-random"></i></a> --}}
                                                     </ul>
 
@@ -333,8 +356,8 @@
         </div>
     </section>
     <!--============================
-                                                        PRODUCT PAGE END
-                                                    ==============================-->
+                                                                    PRODUCT PAGE END
+                                                                ==============================-->
     @foreach ($products as $product)
         <section class="product_popup_modal">
             <div class="modal fade" id="product-{{ $product->id }}" tabindex="-1" aria-hidden="true">
@@ -347,8 +370,8 @@
                                 <div class="col-xl-6 col-12 col-sm-10 col-md-8 col-lg-6 m-auto display">
                                     <div class="wsus__quick_view_img">
                                         @if ($product->video_link)
-                                            <a class="venobox wsus__pro_det_video" data-autoplay="true" data-vbtype="video"
-                                                href="{{ $product->video_link }}">
+                                            <a class="venobox wsus__pro_det_video" data-autoplay="true"
+                                                data-vbtype="video" href="{{ $product->video_link }}">
                                                 <i class="fas fa-play"></i>
                                             </a>
                                         @endif
@@ -396,12 +419,21 @@
                                             <h4>{{ $settings->currency_icon }}{{ $product->price }}</del></h4>
                                         @endif
                                         <p class="review">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star-half-alt"></i>
-                                            <span>20 review</span>
+                                            @php
+                                                $avgRating = $product->reviews()->avg('rating');
+                                                $fullRating = floor($avgRating);
+                                                $halfRating = $avgRating - $fullRating >= 0.5;
+                                            @endphp
+                                            @for ($i = 1; $i <= 5; $i++)
+                                                @if ($i <= $fullRating)
+                                                    <i class="fas fa-star"></i>
+                                                @elseif ($i == $fullRating + 1 && $halfRating)
+                                                    <i class="fas fa-star-half-alt"></i>
+                                                @else
+                                                    <i class="far fa-star"></i>
+                                                @endif
+                                            @endfor
+                                            <span>( {{ count($product->reviews) }} review)</span>
                                         </p>
                                         <p class="description">{!! $product->short_description !!}</p>
 
@@ -438,15 +470,17 @@
                                             <div class="wsus__quentity">
                                                 <h5>quantity :</h5>
                                                 <div class="select_number">
-                                                    <input class="number_area" type="text" min="1" max="100"
-                                                        name="qty" value="1" />
+                                                    <input class="number_area" type="text" min="1"
+                                                        max="100" name="qty" value="1" />
                                                 </div>
                                             </div>
                                             <ul class="wsus__button_area">
                                                 <li><button type="submit" class="add_cart" href="">add to
                                                         cart</button></li>
                                                 <li><a class="buy_now" href="#">buy now</a></li>
-                                                <li><a href="" class="add_to_wishlist" data-id="{{$product->id}}"><i class="fal fa-heart"></i></a></li>
+                                                <li><a href="" class="add_to_wishlist"
+                                                        data-id="{{ $product->id }}"><i class="fal fa-heart"></i></a>
+                                                </li>
                                                 {{-- <li><a href="#"><i class="far fa-random"></i></a></li> --}}
                                             </ul>
                                         </form>

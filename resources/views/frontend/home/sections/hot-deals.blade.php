@@ -38,18 +38,28 @@
                                             data-bs-target="#product-type-{{ $product->id }}"><i
                                                 class="far fa-eye"></i></a>
                                     </li>
-                                    <li><a href="" class="add_to_wishlist" data-id="{{$product->id}}"><i class="far fa-heart"></i></a></li>
+                                    <li><a href="" class="add_to_wishlist" data-id="{{ $product->id }}"><i
+                                                class="far fa-heart"></i></a></li>
                                     {{-- <li><a href="#"><i class="far fa-random"></i></a> --}}
                                 </ul>
                                 <div class="wsus__product_details">
                                     <a class="wsus__category" href="#">{{ $product->category->name }} </a>
                                     <p class="wsus__pro_rating">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
-                                        <span>(133 review)</span>
+                                        @php
+                                            $avgRating = $product->reviews()->avg('rating');
+                                            $fullRating = floor($avgRating);
+                                            $halfRating = $avgRating - $fullRating >= 0.5;
+                                        @endphp
+                                        @for ($i = 1; $i <= 5; $i++)
+                                            @if ($i <= $fullRating)
+                                                <i class="fas fa-star"></i>
+                                            @elseif ($i == $fullRating + 1 && $halfRating)
+                                                <i class="fas fa-star-half-alt"></i>
+                                            @else
+                                                <i class="far fa-star"></i>
+                                            @endif
+                                        @endfor
+                                        <span>( {{ count($product->reviews) }} review)</span>
                                     </p>
                                     <a class="wsus__pro_name"
                                         href="{{ route('product-detail', $product->slug) }}">{{ limitText($product->name, 50) }}</a>
@@ -91,7 +101,9 @@
                         @if ($homepage_section_banner_three->banner_one->status == 1)
                             <div class="wsus__single_banner_content banner_1">
                                 <a href="{{ $homepage_section_banner_three->banner_one->banner_url ?? '#' }}">
-                                    <img class="img-fluid w-100" src="{{ asset($homepage_section_banner_three->banner_one->banner_image ?? 'images/single_banner_55.jpg') }}" alt="banner">
+                                    <img class="img-fluid w-100"
+                                        src="{{ asset($homepage_section_banner_three->banner_one->banner_image ?? 'images/single_banner_55.jpg') }}"
+                                        alt="banner">
                                 </a>
                             </div>
                         @endif
@@ -103,7 +115,9 @@
                                     <div class="wsus__single_banner_content single_banner_2">
                                         <a href="{{ $homepage_section_banner_three->banner_two->banner_url ?? '#' }}">
                                             <div class="wsus__single_banner_img">
-                                                <img class="img-fluid w-100" src="{{ asset($homepage_section_banner_three->banner_two->banner_image ?? 'images/single_banner_66.jpg') }}" alt="banner">
+                                                <img class="img-fluid w-100"
+                                                    src="{{ asset($homepage_section_banner_three->banner_two->banner_image ?? 'images/single_banner_66.jpg') }}"
+                                                    alt="banner">
                                             </div>
                                         </a>
                                     </div>
@@ -112,9 +126,12 @@
                             <div class="col-12 mt-lg-4">
                                 @if ($homepage_section_banner_three->banner_three->status == 1)
                                     <div class="wsus__single_banner_content">
-                                        <a href="{{ $homepage_section_banner_three->banner_three->banner_url ?? '#' }}">
+                                        <a
+                                            href="{{ $homepage_section_banner_three->banner_three->banner_url ?? '#' }}">
                                             <div class="wsus__single_banner_img">
-                                                <img class="img-fluid w-100" src="{{ asset($homepage_section_banner_three->banner_three->banner_image ?? 'images/single_banner_66.jpg') }}" alt="banner">
+                                                <img class="img-fluid w-100"
+                                                    src="{{ asset($homepage_section_banner_three->banner_three->banner_image ?? 'images/single_banner_66.jpg') }}"
+                                                    alt="banner">
                                             </div>
                                         </a>
                                     </div>
@@ -125,7 +142,7 @@
                 </div>
             </div>
         </section>
-        
+
     </div>
 </section>
 
@@ -133,7 +150,7 @@
 @foreach ($typeBaseProducts as $key => $products)
     @foreach ($products as $product)
         <section class="product_popup_modal">
-            <div class="modal fade" id="product-type-{{$product->id}}" tabindex="-1" aria-hidden="true">
+            <div class="modal fade" id="product-type-{{ $product->id }}" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-body">
@@ -192,12 +209,21 @@
                                             <h4>{{ $settings->currency_icon }}{{ $product->price }}</del></h4>
                                         @endif
                                         <p class="review">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star-half-alt"></i>
-                                            <span>20 review</span>
+                                            @php
+                                                $avgRating = $product->reviews()->avg('rating');
+                                                $fullRating = floor($avgRating);
+                                                $halfRating = $avgRating - $fullRating >= 0.5;
+                                            @endphp
+                                            @for ($i = 1; $i <= 5; $i++)
+                                                @if ($i <= $fullRating)
+                                                    <i class="fas fa-star"></i>
+                                                @elseif ($i == $fullRating + 1 && $halfRating)
+                                                    <i class="fas fa-star-half-alt"></i>
+                                                @else
+                                                    <i class="far fa-star"></i>
+                                                @endif
+                                            @endfor
+                                            <span>( {{ count($product->reviews) }} review)</span>
                                         </p>
                                         <p class="description">{!! $product->short_description !!}</p>
 
@@ -243,7 +269,9 @@
                                                 <li><button type="submit" class="add_cart" href="">add to
                                                         cart</button></li>
                                                 <li><a class="buy_now" href="#">buy now</a></li>
-                                                <li><a href="" class="add_to_wishlist" data-id="{{$product->id}}"><i class="fal fa-heart"></i></a></li>
+                                                <li><a href="" class="add_to_wishlist"
+                                                        data-id="{{ $product->id }}"><i
+                                                            class="fal fa-heart"></i></a></li>
                                                 {{-- <li><a href="#"><i class="far fa-random"></i></a></li> --}}
                                             </ul>
                                         </form>

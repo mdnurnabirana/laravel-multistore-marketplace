@@ -22,7 +22,7 @@
                         if ($lastKeyKeys[0] === 'category') {
                             $category = \App\Models\Category::find($lastKey['category']);
                             if ($category) {
-                                $products = \App\Models\Product::where('category_id', $category->id)
+                                $products = \App\Models\Product::with('reviews')->where('category_id', $category->id)
                                     ->orderBy('id', 'DESC')
                                     ->take(12)
                                     ->get();
@@ -30,7 +30,7 @@
                         } elseif ($lastKeyKeys[0] === 'sub_category') {
                             $category = \App\Models\SubCategory::find($lastKey['sub_category']);
                             if ($category) {
-                                $products = \App\Models\Product::where('sub_category_id', $category->id)
+                                $products = \App\Models\Product::with('reviews')->where('sub_category_id', $category->id)
                                     ->orderBy('id', 'DESC')
                                     ->take(12)
                                     ->get();
@@ -38,7 +38,7 @@
                         } else {
                             $category = \App\Models\ChildCategory::find($lastKey['child_category']);
                             if ($category) {
-                                $products = \App\Models\Product::where('child_category_id', $category->id)
+                                $products = \App\Models\Product::with('reviews')->where('child_category_id', $category->id)
                                     ->orderBy('id', 'DESC')
                                     ->take(12)
                                     ->get();
@@ -61,15 +61,25 @@
                                     <div class="wsus__hot_deals__single_text mt-2">
                                         <h5>{!! limitText($item->name) !!}</h5>
                                         <p class="wsus__rating">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star-half-alt"></i>
+                                            @php
+                                                $avgRating = $item->reviews()->avg('rating');
+                                                $fullRating = floor($avgRating);
+                                                $halfRating = $avgRating - $fullRating >= 0.5;
+                                            @endphp
+                                            @for ($i = 1; $i <= 5; $i++)
+                                                @if ($i <= $fullRating)
+                                                    <i class="fas fa-star"></i>
+                                                @elseif ($i == $fullRating + 1 && $halfRating)
+                                                    <i class="fas fa-star-half-alt"></i>
+                                                @else
+                                                    <i class="far fa-star"></i>
+                                                @endif
+                                            @endfor
                                         </p>
                                         @if (checkDiscount($item))
                                             <p class="wsus__tk">{{ $settings->currency_icon }}{{ $item->offer_price }}
-                                                <del>{{ $settings->currency_icon }}{{ $item->price }}</del></p>
+                                                <del>{{ $settings->currency_icon }}{{ $item->price }}</del>
+                                            </p>
                                         @else
                                             <p class="wsus__tk">{{ $settings->currency_icon }}{{ $item->price }}</p>
                                         @endif
