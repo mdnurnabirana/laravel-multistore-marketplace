@@ -1,6 +1,7 @@
 <?php
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\AdminController;
+use App\Http\Controllers\Backend\AdminReviewController;
 use App\Http\Controllers\Backend\ProfileController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\CategoryController;
@@ -40,40 +41,40 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin') ->as('admin.') ->grou
         // Slider
         Route::resource('slider', SliderController::class);
 
-        //Category
+        // Category
         Route::put('change-status', [CategoryController::class, 'changeStatus'])->name('category.change-status');
         Route::resource('category', CategoryController::class);
 
-        //Sub Category
+        // Sub Category
         Route::put('subcategory/change-status', [SubCategoryController::class, 'changeStatus'])->name('sub-category.change-status');
         Route::resource('sub-category', SubCategoryController::class);
 
-        //Child Category
+        // Child Category
         Route::put('child-category/change-status', [ChildCategoryController::class, 'changeStatus'])->name('child-category.change-status');
         Route::get('get-subcategory', [ChildCategoryController::class, 'getSubCategories'])->name('get-subcategories');
         Route::resource('child-category', ChildCategoryController::class);
 
-        //Brand Routes
+        // Brand Routes
         Route::put('brand/change-status', [BrandController::class, 'changeStatus'])->name('brand.change-status');
         Route::resource('brand', BrandController::class);
 
-        //Vendor Profile Routes
+        // Vendor Profile Routes
         Route::resource('vendor-profile', AdminVendorProfileController::class);
 
-        //Product Routes
+        // Product Routes
         Route::get('product/get-subcategories', [ProductController::class, 'getSubCategories'])->name('product.get-subcategories');
         Route::get('product/get-child-categories', [ProductController::class, 'getChildCategories'])->name('product.get-child-categories');
         Route::put('product/change-status', [ProductController::class, 'changeStatus'])->name('product.change-status');
         Route::resource('products', ProductController::class);
 
-        //Product Image Gallery
+        // Product Image Gallery
         Route::resource('products-image-gallery', ProductImageGalleryController::class);
 
-        //Products Varient Route
+        // Products Varient Route
         Route::put('products-variant/change-status', [ProductVariantController::class, 'changeStatus'])->name('products-variant.change-status');
         Route::resource('products-variant', ProductVariantController::class);
         
-        //Products Varient Item Route
+        // Products Varient Item Route
         Route::get('products-variant-item/{productId}/{variantId}', [ProductVariantItemController::class, 'index'])->name('products-variant-item.index');
         Route::get('products-variant-item/create/{productId}/{variantId}', [ProductVariantItemController::class, 'create'])->name('products-variant-item.create');
         Route::post('products-variant-item', [ProductVariantItemController::class, 'store'])->name('products-variant-item.store');
@@ -164,6 +165,11 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin') ->as('admin.') ->grou
         Route::put('advertisement/product-page-banner', [AdvertisementController::class, 'productPageBanner'])->name('product-page-banner');
         Route::put('advertisement/cart-page-banner', [AdvertisementController::class, 'cartPageBanner'])->name('cart-page-banner');
         
+        // Reviews
+        Route::get('reviews', [AdminReviewController::class, 'index'])->name('review.index');
+        Route::put('change-status', [AdminReviewController::class, 'changeStatus'])->name('review.change-status');
+
+        // 
 
 });
 
