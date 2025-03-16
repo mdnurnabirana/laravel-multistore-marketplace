@@ -14,6 +14,7 @@ use App\Http\Controllers\Frontend\UserAddressController;
 use App\Http\Controllers\Frontend\UserDashboardController;
 use App\Http\Controllers\Frontend\UserOrderController;
 use App\Http\Controllers\Frontend\UserProfileController;
+use App\Http\Controllers\Frontend\UserVendorRequestController;
 use App\Http\Controllers\Frontend\WishlistController;
 use Illuminate\Support\Facades\Route;
 
@@ -104,6 +105,9 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
     Route::post('review', [ReviewController::class, 'create'])->name('review.create');
     Route::get('reviews', [ReviewController::class, 'index'])->name('review.index');
 
-    // 
+    // Vendor Request Routes
+    Route::get('vendor-request', [UserVendorRequestController::class, 'index'])->name('vendor-request.index');
 
+    //
+    
 });
