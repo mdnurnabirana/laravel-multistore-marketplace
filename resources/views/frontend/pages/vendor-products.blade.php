@@ -1,20 +1,20 @@
 @extends('frontend.layouts.master')
 @section('title')
-    {{ $settings->site_name }} || Products
+    {{ $settings->site_name }} || Vendor Products
 @endsection
 @section('content')
     <!--============================
-                                                                    BREADCRUMB START
-                                                                ==============================-->
+        BREADCRUMB START
+    ==============================-->
     <section id="wsus__breadcrumb">
         <div class="wsus_breadcrumb_overlay">
             <div class="container">
                 <div class="row">
                     <div class="col-12">
-                        <h4>products</h4>
+                        <h4>vendor products</h4>
                         <ul>
                             <li><a href="{{ url('/') }}">home</a></li>
-                            <li><a href="javascript:void(0);">product</a></li>
+                            <li><a href="javascript:void(0);">vendor product</a></li>
                         </ul>
                     </div>
                 </div>
@@ -22,111 +22,43 @@
         </div>
     </section>
     <!--============================
-                                                                    BREADCRUMB END
-                                                                ==============================-->
+        BREADCRUMB END
+    ==============================-->
 
 
     <!--============================
-                                                                    PRODUCT PAGE START
-                                                                ==============================-->
+        PRODUCT PAGE START
+    ==============================-->
     <section id="wsus__product_page">
         <div class="container">
             <div class="row">
-                @if ($product_page_banner->banner_one->status == 1)
-                    <div class="col-xl-12">
-                        <div class="wsus__pro_page_bammer">
-                            <a href="{{ $product_page_banner->banner_one->banner_url ?? '#' }}">
-                                <img src="{{ asset($product_page_banner->banner_one->banner_image ?? 'frontend/images/pro_banner_1.jpg') }}"
-                                    alt="banner" class="img-fluid w-100">
-                            </a>
-                        </div>
-                    </div>
-                @endif
-
-
-                <div class="col-xl-3 col-lg-4">
-                    <div class="wsus__sidebar_filter ">
-                        <p>filter</p>
-                        <span class="wsus__filter_icon">
-                            <i class="far fa-minus" id="minus"></i>
-                            <i class="far fa-plus" id="plus"></i>
-                        </span>
-                    </div>
-                    <div class="wsus__product_sidebar" id="sticky_sidebar">
-                        <div class="accordion" id="accordionExample">
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="headingOne">
-                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                        All Categories
-                                    </button>
-                                </h2>
-                                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
-                                    data-bs-parent="#accordionExample">
-                                    <div class="accordion-body">
-                                        <ul>
-                                            @foreach ($categories as $category)
-                                                <li><a
-                                                        href="{{ route('products.index', ['category' => $category->slug]) }}">{{ $category->name }}</a>
-                                                </li>
-                                            @endforeach
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="headingTwo">
-                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                        Price
-                                    </button>
-                                </h2>
-                                <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo"
-                                    data-bs-parent="#accordionExample">
-                                    <div class="accordion-body">
-                                        <div class="price_ranger">
-                                            <form action="">
-                                                @foreach (request()->query() as $key => $value)
-                                                    @if ($key != 'range')
-                                                        <input type="hidden" name="{{ $key }}"
-                                                            value="{{ $value }}" />
-                                                    @endif
-                                                @endforeach
-                                                <input type="hidden" id="slider_range" class="flat-slider"
-                                                    name="range" />
-                                                <button type="submit" class="common_btn">filter</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="headingThree3">
-                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#collapseThree3" aria-expanded="false"
-                                        aria-controls="collapseThree">
-                                        brand
-                                    </button>
-                                </h2>
-                                <div id="collapseThree3" class="accordion-collapse collapse show"
-                                    aria-labelledby="headingThree3" data-bs-parent="#accordionExample">
-                                    <div class="accordion-body">
-                                        <ul>
-                                            @foreach ($brands as $brand)
-                                                <li>
-                                                    <a
-                                                        href="{{ route('products.index', ['brand' => $brand->slug]) }}">{{ $brand->name }}</a>
-                                                </li>
-                                            @endforeach
-
-                                        </ul>
-                                    </div>
-                                </div>
+                <div class="">
+                    <div class="wsus__pro_page_bammer vendor_det_banner">
+                        <img src="{{asset($vendor->banner)}}" alt="banner" class="img-fluid w-100">
+                        <div class="wsus__pro_page_bammer_text wsus__vendor_det_banner_text">
+                            <div class="wsus__vendor_text_center">
+                                <h4>{{$vendor->shop_name}}</h4>
+                                <p class="wsus__vendor_rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </p>
+                                <a href="javascript:;"><i class="far fa-phone-alt"></i> {{$vendor->phone}}</a>
+                                <a href="javascript:;"><i class="far fa-envelope"></i> {{$vendor->email}}</a>
+                                <p class="wsus__vendor_location"><i class="fal fa-map-marker-alt"></i> {{$vendor->address}} </p>
+                                <p class="wsus__open_store"><i class="fab fa-shopify"></i> store open</p>
+                                <ul class="d-flex">
+                                    <li><a class="facebook" href="{{$vendor->fb_link}}"><i class="fab fa-facebook-f"></i></a></li>
+                                    <li><a class="twitter" href="{{$vendor->tw_link}}"><i class="fab fa-twitter"></i></a></li>
+                                    <li><a class="instagram" href="{{$vendor->insta_link}}"><i class="fab fa-instagram"></i></a></li>
+                                </ul>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-9 col-lg-8">
+                <div class="">
                     <div class="row">
                         <div class="col-xl-12 d-none d-md-block mt-md-4 mt-lg-0">
                             <div class="wsus__product_topbar">
@@ -156,7 +88,7 @@
                                 id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
                                 <div class="row">
                                     @foreach ($products as $product)
-                                        <div class="col-xl-4  col-sm-6">
+                                        <div class="col-xl-3  col-sm-6">
                                             <div class="wsus__product_item">
                                                 <span class="wsus__new">{{ productType($product->product_type) }}</span>
                                                 @if (checkDiscount($product))

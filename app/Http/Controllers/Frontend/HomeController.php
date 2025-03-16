@@ -7,10 +7,13 @@ use App\Models\Advertisement;
 use App\Models\Brand;
 use App\Models\Slider;
 use App\Models\Category;
+use App\Models\ChildCategory;
 use App\Models\FlashSale;
 use App\Models\FlashSaleItem;
 use App\Models\HomePageSetting;
 use App\Models\Product;
+use App\Models\SubCategory;
+use App\Models\Vendor;
 use Illuminate\Http\Request;
 
 use function PHPSTORM_META\map;
@@ -74,5 +77,21 @@ class HomeController extends Controller
         $typeBaseProducts['best_product'] = Product::where(['product_type' => 'best_product', 'is_approved' => 1, 'status' => 1])->orderBy('id', 'DESC')->take(8)->get();
         
         return $typeBaseProducts;
+    }
+
+    public function vendorPage()
+    {
+        $vendors = Vendor::paginate(12);
+        return view('frontend.pages.vendor', compact('vendors'));
+    }
+
+    public function vendorProductsPage(string $id)
+    {
+        $products = Product::where(['status' => 1, 'is_approved' => 1, 'vendor_id' => $id])->orderBy('id', 'DESC')->paginate(12);
+        
+        $categories = Category::where('status', 1)->get();
+        $brands = Brand::where('status', 1)->get();
+        $vendor = Vendor::findOrFail($id);
+        return view('frontend.pages.vendor-products', compact('products', 'categories', 'brands', 'vendor'));
     }
 }

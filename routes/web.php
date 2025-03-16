@@ -58,6 +58,9 @@ Route::get('coupon-calculation', [CartController::class, 'couponCalculation'])->
 Route::post('newsletter-request', [NewsletterController::class, 'newsLetterRequest'])->name('newsletter-request');
 Route::get('newsletter-verify/{token}', [NewsletterController::class, 'newsLetterEmailVerify'])->name('newsletter-verify');
 
+// Vendor Routes
+Route::get('vendors', [HomeController::class, 'vendorPage'])->name('vendor.index');
+Route::get('vendor-products/{id}', [HomeController::class, 'vendorProductsPage'])->name('vendor.products');
 
 Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 'user.'], function () {
     Route::get('dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
@@ -100,4 +103,7 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
     // Review System Routes
     Route::post('review', [ReviewController::class, 'create'])->name('review.create');
     Route::get('reviews', [ReviewController::class, 'index'])->name('review.index');
+
+    // 
+
 });
