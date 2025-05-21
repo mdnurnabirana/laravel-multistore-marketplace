@@ -58,7 +58,7 @@
                     <section id="pagination">
                         <div class="mt-5">
                             @if ($vendors->hasPages())
-                                {{ $vendors->links() }}
+                                {{$vendors->links()}}
                             @endif
                         </div>
                     </section>
