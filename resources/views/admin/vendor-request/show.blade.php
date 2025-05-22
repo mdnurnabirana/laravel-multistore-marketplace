@@ -9,7 +9,6 @@
         <div class="section-body">
             <div class="invoice">
                 <div class="invoice-print">
-
                     <div class="row mt-4">
                         <div class="col-md-12">
                             <div class="table-responsive">
@@ -47,15 +46,19 @@
                             <div class="row mt-4">
                                 <div class="col-lg-8">
                                     <div class="col-md-6">
-                                        <div class="form-group">
+                                        <form action="{{route('admin.vendor-requests.change-status', $vendor->id)}}" method="POST">
+                                            @csrf
+                                            @method('PUT')
+                                            <div class="form-group">
                                             <label for="">Action</label>
-                                            <select name="payment_status" id="payment_status" data-id=""
+                                            <select name="status"
                                                 class="form-control">
                                                 <option {{$vendor->status == 0 ? 'selected' : '' }} value="0">Pending</option>
                                                 <option {{$vendor->status == 1 ? 'selected' : '' }} value="1">Approve</option>
                                             </select>
                                         </div>
-
+                                        <button type="submit" class="btn btn-primary">Update</button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
