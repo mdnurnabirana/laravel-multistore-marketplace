@@ -32,6 +32,7 @@ use App\Http\Controllers\Backend\ShippingRuleController;
 use App\Http\Controllers\Backend\StripeSettingController;
 use App\Http\Controllers\Backend\SubscribersController;
 use App\Http\Controllers\Backend\TransactionController;
+use App\Http\Controllers\Backend\VendorConditionController;
 use App\Http\Controllers\Backend\VendorListController;
 use App\Http\Controllers\Backend\VendorRequestController;
 
@@ -185,5 +186,10 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin') ->as('admin.') ->grou
         Route::get('vendor-list', [VendorListController::class, 'index'])->name('vendor-list.index');   
         Route::put('vendor-list/change-status', [VendorListController::class, 'changeStatus'])->name('vendor-list.change-status');
         
+        // Vendor Conditions
+        Route::get('vendor-condition', [VendorConditionController::class, 'index'])->name('vendor-condition.index');
+        Route::put('vendor-condition/update', [VendorConditionController::class, 'update'])->name('vendor-condition.update');
+
+        // 
 });
 

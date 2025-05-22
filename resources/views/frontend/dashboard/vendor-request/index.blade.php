@@ -16,7 +16,7 @@
                         <h3><i class="fas fa-shopping-cart"></i> Become a Vendor Today</h3>
                         <div class="wsus__dashboard_profile">
                             <div class="wsus__dash_pro_area">
-
+                                {!! @$content->content !!}
                             </div>
                         </div>
                         <div class="wsus__dashboard_profile mt-5">
