@@ -31,6 +31,7 @@ use App\Http\Controllers\Backend\ShippingRuleController;
 use App\Http\Controllers\Backend\StripeSettingController;
 use App\Http\Controllers\Backend\SubscribersController;
 use App\Http\Controllers\Backend\TransactionController;
+use App\Http\Controllers\Backend\VendorRequestController;
 
 Route::middleware(['auth', 'role:admin'])->prefix('admin') ->as('admin.') ->group(function () {
         Route::get('dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
@@ -169,7 +170,10 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin') ->as('admin.') ->grou
         Route::get('reviews', [AdminReviewController::class, 'index'])->name('review.index');
         Route::put('change-status', [AdminReviewController::class, 'changeStatus'])->name('review.change-status');
 
+        // Venodr Request
+        Route::get('vendor-requests', [VendorRequestController::class, 'index'])->name('vendor-requests.index');
+        Route::get('vendor-requests/{id}/show', [VendorRequestController::class, 'show'])->name('vendor-requests.show');
+       
         // 
-
 });
 
