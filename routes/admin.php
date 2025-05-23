@@ -1,4 +1,6 @@
 <?php
+
+use App\Http\Controllers\Backend\AboutController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\AdminReviewController;
@@ -190,6 +192,11 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin') ->as('admin.') ->grou
         Route::get('vendor-condition', [VendorConditionController::class, 'index'])->name('vendor-condition.index');
         Route::put('vendor-condition/update', [VendorConditionController::class, 'update'])->name('vendor-condition.update');
 
+        // About
+        Route::get('about', [AboutController::class, 'index'])->name('about.index');
+        Route::put('about/update', [AboutController::class, 'update'])->name('about.update');
+
         // 
+
 });
 

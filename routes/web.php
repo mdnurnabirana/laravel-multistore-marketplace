@@ -9,6 +9,7 @@ use App\Http\Controllers\Frontend\FlashSaleController;
 use App\Http\Controllers\Frontend\FrontendProductController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\NewsletterController;
+use App\Http\Controllers\Frontend\PageController;
 use App\Http\Controllers\Frontend\ReviewController;
 use App\Http\Controllers\Frontend\UserAddressController;
 use App\Http\Controllers\Frontend\UserDashboardController;
@@ -63,6 +64,9 @@ Route::get('newsletter-verify/{token}', [NewsletterController::class, 'newsLette
 Route::get('vendors', [HomeController::class, 'vendorPage'])->name('vendor.index');
 Route::get('vendor-products/{id}', [HomeController::class, 'vendorProductsPage'])->name('vendor.products');
 
+// About Page
+Route::get('about', [PageController::class, 'about'])->name('about');
+
 Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 'user.'], function () {
     Route::get('dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
     Route::get('profile', [UserProfileController::class, 'index'])->name('profile');
@@ -109,6 +113,6 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
     Route::get('vendor-request', [UserVendorRequestController::class, 'index'])->name('vendor-request.index');
     Route::post('vendor-request', [UserVendorRequestController::class, 'create'])->name('vendor-request.create');
 
-    //
+    // 
     
 });
