@@ -33,6 +33,7 @@ use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\Backend\ShippingRuleController;
 use App\Http\Controllers\Backend\StripeSettingController;
 use App\Http\Controllers\Backend\SubscribersController;
+use App\Http\Controllers\Backend\TermsAndCondition;
 use App\Http\Controllers\Backend\TransactionController;
 use App\Http\Controllers\Backend\VendorConditionController;
 use App\Http\Controllers\Backend\VendorListController;
@@ -196,7 +197,10 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin') ->as('admin.') ->grou
         Route::get('about', [AboutController::class, 'index'])->name('about.index');
         Route::put('about/update', [AboutController::class, 'update'])->name('about.update');
 
-        // 
+        // Term's & Condition
+        Route::get('termsandcondition', [TermsAndCondition::class, 'index'])->name('termsandcondition.index');
+        Route::put('termsandcondition/update', [TermsAndCondition::class, 'update'])->name('termsandcondition.update');
+
 
 });
 

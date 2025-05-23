@@ -135,7 +135,7 @@
 
             <li
                 class="dropdown {{ setActive(['admin.slider.*', 'admin.home-page-setting.*', 'admin.vendor-condition.index',
-                'admin.about.index']) }}">
+                'admin.about.index', 'admin.termsandcondition.index']) }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
                         class="fas fa-columns"></i>
                     <span>Manage Website</span>
@@ -152,6 +152,9 @@
                     </li>
                     <li class="{{ setActive(['admin.about.index']) }}">
                         <a class="nav-link" href="{{ route('admin.about.index') }}">About</a>
+                    </li>
+                    <li class="{{ setActive(['admin.termsandcondition.index']) }}">
+                        <a class="nav-link" href="{{ route('admin.termsandcondition.index') }}">Term's & Condition</a>
                     </li>
                 </ul>
             </li>
