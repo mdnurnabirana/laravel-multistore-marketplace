@@ -72,6 +72,7 @@ Route::get('terms-and-condition', [PageController::class, 'termsAndCondition'])-
 
 // Contact Page
 Route::get('contact', [PageController::class, 'contact'])->name('contact');
+Route::post('form-submit', [PageController::class, 'handleContactForm'])->name('contact.form-submit');
 
 Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 'user.'], function () {
     Route::get('dashboard', [UserDashboardController::class, 'index'])->name('dashboard');

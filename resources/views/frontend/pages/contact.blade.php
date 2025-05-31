@@ -69,34 +69,29 @@
                     <div class="col-xl-8">
                         <div class="wsus__contact_question">
                             <h5>Send Us a Message</h5>
-                            <form action="{{ route('contact.send') }}" method="POST">
+                            <form id="contact-form">
                                 @csrf
                                 <div class="row">
                                     <div class="col-xl-12">
                                         <div class="wsus__con_form_single">
-                                            <input type="text" name="name" placeholder="Your Name" required>
+                                            <input type="text" name="name" placeholder="Your Name" >
                                         </div>
                                     </div>
                                     <div class="col-xl-12">
                                         <div class="wsus__con_form_single">
-                                            <input type="email" name="email" placeholder="Email" required>
+                                            <input type="email" name="email" placeholder="Email" >
                                         </div>
                                     </div>
-                                    <div class="col-xl-6">
-                                        <div class="wsus__con_form_single">
-                                            <input type="text" name="phone" placeholder="Phone">
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-6">
+                                    <div class="col-xl-12">
                                         <div class="wsus__con_form_single">
                                             <input type="text" name="subject" placeholder="Subject">
                                         </div>
                                     </div>
                                     <div class="col-xl-12">
                                         <div class="wsus__con_form_single">
-                                            <textarea name="message" cols="3" rows="5" placeholder="Message" required></textarea>
+                                            <textarea name="message" cols="3" rows="5" placeholder="Message" ></textarea>
                                         </div>
-                                        <button type="submit" class="common_btn">send now</button>
+                                        <button type="submit" class="common_btn" id="form-submit-btn">send now</button>
                                     </div>
                                 </div>
                             </form>
@@ -118,3 +113,43 @@
             CONTACT PAGE END
         ==============================-->
 @endsection
+
+@push('scripts')
+    <script>
+        $(document).ready(function () {
+            $('#contact-form').on('submit', function (e) {
+                e.preventDefault();
+                let $btn = $('#form-submit-btn');
+                $btn.prop('disabled', true).text('Sending...');
+
+                let data = $(this).serialize();
+                $.ajax({
+                    method: "POST",
+                    url: "{{ route('contact.form-submit') }}",
+                    data: data,
+                    success: function (msg) {
+                        if (msg.status === 'success') {
+                            toastr.success(msg.message);
+                            $('#contact-form')[0].reset();
+                        } else {
+                            toastr.error(msg.message || 'Something went wrong.');
+                        }
+                        $btn.prop('disabled', false).text('Send Now');
+                    },
+                    error: function (xhr) {
+                        if (xhr.status === 422) {
+                            let errors = xhr.responseJSON.errors;
+                            $.each(errors, function (key, value) {
+                                toastr.error(value[0]);
+                            });
+                        } else {
+                            toastr.error('An error occurred. Please try again.');
+                        }
+                        $btn.prop('disabled', false).text('Send Now');
+                    }
+                });
+            });
+        });
+    </script>
+@endpush
+
