@@ -70,6 +70,9 @@ Route::get('about', [PageController::class, 'about'])->name('about');
 // Term's And Condition Page
 Route::get('terms-and-condition', [PageController::class, 'termsAndCondition'])->name('terms-and-condition');
 
+// Contact Page
+Route::get('contact', [PageController::class, 'contact'])->name('contact');
+
 Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 'user.'], function () {
     Route::get('dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
     Route::get('profile', [UserProfileController::class, 'index'])->name('profile');

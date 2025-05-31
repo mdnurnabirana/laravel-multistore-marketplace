@@ -34,6 +34,9 @@ class SettingController extends Controller
                 'layout' => $request->layout,
                 'contact_email' => $request->contact_email,
                 'currency_name' => $request->currency_name,
+                'contact_phone' => $request->contact_phone,
+                'contact_address' => $request->contact_address,
+                'map' => $request->map,
                 'currency_icon' => $request->currency_icon,
                 'time_zone' => $request->time_zone,
             ]
