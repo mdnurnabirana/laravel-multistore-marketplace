@@ -20,6 +20,7 @@ use App\Http\Controllers\Backend\FooterGridTwoController;
 use App\Http\Controllers\Backend\FooterInfoController;
 use App\Http\Controllers\Backend\FooterSocialController;
 use App\Http\Controllers\Backend\HomePageSettingController;
+use App\Http\Controllers\Backend\ManageUserController;
 use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\PaymentSettingController;
 use App\Http\Controllers\Backend\PaypalSettingController;
@@ -201,6 +202,9 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin') ->as('admin.') ->grou
         Route::get('termsandcondition', [TermsAndCondition::class, 'index'])->name('termsandcondition.index');
         Route::put('termsandcondition/update', [TermsAndCondition::class, 'update'])->name('termsandcondition.update');
 
+        // Manage User 
+        Route::get('manage-user', [ManageUserController::class, 'index'])->name('manage-user.index');
+        Route::post('manage-user/create', [ManageUserController::class, 'create'])->name('manage-user.create');
 
+        // 
 });
-
