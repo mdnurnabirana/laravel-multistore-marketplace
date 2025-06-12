@@ -192,6 +192,7 @@
                     'admin.customers.index',
                     'admin.vendor-list.index',
                     'admin.manage-user.index',
+                    'admin.admin-list.index',
                 ]) }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
                         class="fas fa-columns"></i>
@@ -206,6 +207,9 @@
                     </li>
                     <li class="{{ setActive(['admin.vendor-requests.index']) }}">
                         <a class="nav-link" href="{{ route('admin.vendor-requests.index') }}">Pending Vendors</a>
+                    </li>
+                    <li class="{{ setActive(['admin.admin-list.index']) }}">
+                        <a class="nav-link" href="{{ route('admin.admin-list.index') }}">Admin List</a>
                     </li>
                     <li class="{{ setActive(['admin.manage-user.index']) }}">
                         <a class="nav-link" href="{{ route('admin.manage-user.index') }}">Manage User</a>

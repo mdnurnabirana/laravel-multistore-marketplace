@@ -3,6 +3,7 @@
 use App\Http\Controllers\Backend\AboutController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\AdminController;
+use App\Http\Controllers\Backend\AdminListController;
 use App\Http\Controllers\Backend\AdminReviewController;
 use App\Http\Controllers\Backend\ProfileController;
 use App\Http\Controllers\Backend\SliderController;
@@ -206,5 +207,9 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin') ->as('admin.') ->grou
         Route::get('manage-user', [ManageUserController::class, 'index'])->name('manage-user.index');
         Route::post('manage-user/create', [ManageUserController::class, 'create'])->name('manage-user.create');
 
-        // 
+        // Admin List
+        Route::get('admin-list', [AdminListController::class, 'index'])->name('admin-list.index');
+        Route::put('admin-list/change-status', [AdminListController::class, 'changeStatus'])->name('admin-list.change-status');
+        Route::delete('admin-list/{id}', [AdminListController::class, 'destroy'])->name('admin-list.destroy');
+
 });
