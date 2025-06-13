@@ -10,6 +10,7 @@ use App\Http\Controllers\Frontend\FrontendProductController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\NewsletterController;
 use App\Http\Controllers\Frontend\PageController;
+use App\Http\Controllers\Frontend\ProductTrackController;
 use App\Http\Controllers\Frontend\ReviewController;
 use App\Http\Controllers\Frontend\UserAddressController;
 use App\Http\Controllers\Frontend\UserDashboardController;
@@ -73,6 +74,10 @@ Route::get('terms-and-condition', [PageController::class, 'termsAndCondition'])-
 // Contact Page
 Route::get('contact', [PageController::class, 'contact'])->name('contact');
 Route::post('form-submit', [PageController::class, 'handleContactForm'])->name('contact.form-submit');
+
+// Product Track
+Route::get('product-tracking', [ProductTrackController::class, 'index'])->name('product-tracking.index');
+
 
 Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 'user.'], function () {
     Route::get('dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
