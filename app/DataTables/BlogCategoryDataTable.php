@@ -22,7 +22,31 @@ class BlogCategoryDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'blogcategory.action')
+            ->addColumn('action', function($query)
+            {
+                $editBtn = "<a href='".route('admin.blog-category.edit', $query->id)."' class='btn btn-primary'><i class='far fa-edit'></i></a>";
+                $dltBtn = "<a href='".route('admin.blog-category.destroy', $query->id)."' class='btn btn-danger ml-2 delete-item'><i class='far fa-trash-alt'></i></a>";
+
+                return $editBtn . $dltBtn;
+            })
+            ->addColumn('status', function($query) {
+                if($query->status == 1)
+                {
+                    $button = '<label class="custom-switch mt-2">
+                        <input type="checkbox" checked name="custom-switch-checkbox" data-id="'.$query->id.'" class="custom-switch-input change-status">
+                        <span class="custom-switch-indicator"></span>
+                        </label>';
+                }
+                else{
+                    $button = '<label class="custom-switch mt-2">
+                        <input type="checkbox" name="custom-switch-checkbox" data-id="'.$query->id.'" class="custom-switch-input change-status">
+                        <span class="custom-switch-indicator"></span>
+                        </label>';
+                }
+
+                return $button;
+            })
+            ->rawColumns(['action', 'status'])
             ->setRowId('id');
     }
 
@@ -44,7 +68,7 @@ class BlogCategoryDataTable extends DataTable
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')
-                    ->orderBy(1)
+                    ->orderBy(0)
                     ->selectStyleSingle()
                     ->buttons([
                         Button::make('excel'),
@@ -62,15 +86,15 @@ class BlogCategoryDataTable extends DataTable
     public function getColumns(): array
     {
         return [
+            Column::make('id')->addClass('text-center'),
+            Column::make('name')->addClass('text-center'),
+            Column::make('slug')->addClass('text-center'),
+            Column::make('status')->addClass('text-center'),
             Column::computed('action')
                   ->exportable(false)
                   ->printable(false)
-                  ->width(60)
+                  ->width(150)
                   ->addClass('text-center'),
-            Column::make('id'),
-            Column::make('add your columns'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
         ];
     }
 

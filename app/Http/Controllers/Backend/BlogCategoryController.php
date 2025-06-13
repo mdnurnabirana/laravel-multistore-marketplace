@@ -57,7 +57,8 @@ class BlogCategoryController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $category = BlogCategory::findOrFail($id);
+        return view('admin.blog.blog-category.edit', compact('category'));
     }
 
     /**
@@ -65,7 +66,17 @@ class BlogCategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $category = BlogCategory::findOrFail($id);
+        $request->validate([
+            'name' => ['required', 'string', 'max:255', 'unique:blog_categories,name,'.$category->id]
+        ]);
+        $category->name = $request->name;
+        $category->slug = Str::slug($request->name);
+        $category->status = $request->status;
+        $category->save();
+
+        toastr('Category updated successfully', 'success');
+        return redirect()->route('admin.blog-category.index');
     }
 
     /**
@@ -73,6 +84,19 @@ class BlogCategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $category = BlogCategory::findOrFail($id);
+        $category->delete();
+
+        toastr('Category deleted successfully', 'success');
+        return redirect()->route('admin.blog-category.index');
+    }
+
+    public function changeStatus(Request $request)
+    {
+        $category = BlogCategory::findOrFail($request->id);
+        $category->status = $request->status == 'true' ? 1 : 0;
+        $category->save();
+
+        return response(['message' => 'Status has been updated!']);
     }
 }
