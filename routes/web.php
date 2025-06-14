@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Backend\AdminController;
+use App\Http\Controllers\Frontend\BlogController;
 use App\Http\Controllers\Frontend\CheckOutController;
 use App\Http\Controllers\Frontend\PaymentController;
 use App\Http\Controllers\Frontend\CartController;
@@ -78,6 +79,8 @@ Route::post('form-submit', [PageController::class, 'handleContactForm'])->name('
 // Product Track
 Route::get('product-tracking', [ProductTrackController::class, 'index'])->name('product-tracking.index');
 
+// Blogs
+Route::get('blog-details/{slug}', [BlogController::class, 'blogDetails'])->name('blog.details');
 
 Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 'user.'], function () {
     Route::get('dashboard', [UserDashboardController::class, 'index'])->name('dashboard');

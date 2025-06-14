@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Advertisement;
+use App\Models\Blog;
 use App\Models\Brand;
 use App\Models\Slider;
 use App\Models\Category;
@@ -45,6 +46,8 @@ class HomeController extends Controller
         $homepage_section_banner_four = Advertisement::where('key', 'homepage_section_banner_four')->first();
         $homepage_section_banner_four = json_decode($homepage_section_banner_four?->value);
 
+        $recentBlogs = Blog::with(['category', 'user'])->where('status', 1)->orderBy('id', 'DESC')->take(8)->get();
+
         return view('frontend.home.home',
             compact(
                 'sliders',
@@ -56,6 +59,7 @@ class HomeController extends Controller
                 'categoryProductSliderSectionOne',
                 'categoryProductSliderSectionTwo',
                 'categoryProductSliderSectionThree',
+                'recentBlogs',
                 'homepage_section_banner_one',
                 'homepage_section_banner_two',
                 'homepage_section_banner_three',

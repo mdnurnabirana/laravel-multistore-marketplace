@@ -9,7 +9,7 @@ use App\Models\BlogCategory;
 use App\Traits\ImageUploadTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Str;
+use Illuminate\Support\Str;
 
 class BlogController extends Controller
 {
