@@ -219,7 +219,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin') ->as('admin.') ->grou
         Route::resource('blog-category', BlogCategoryController::class);
 
         // Manage Blog Posts
-
+        Route::put('blog/change-status', [BlogController::class, 'changeStatus'])->name('blog.change-status');
         Route::resource('blog', BlogController::class);
 
 });
