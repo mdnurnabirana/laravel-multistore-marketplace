@@ -48,10 +48,21 @@
                         <div class="wsus__share_blog">
                             <p>share:</p>
                             <ul>
-                                <li><a class="facebook" href="#"><i class="fab fa-facebook-f"></i></a></li>
-                                <li><a class="twitter" href="#"><i class="fab fa-twitter"></i></a></li>
-                                <li><a class="linkedin" href="#"><i class="fab fa-linkedin-in"></i></a></li>
-                                <li><a class="pinterest" href="#"><i class="fab fa-pinterest-p"></i></a></li>
+                                <li>
+                                    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(Request::fullUrl()) }}" target="_blank" rel="noopener">
+                                        <i class="fab fa-facebook-f"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="twitter" href="https://twitter.com/intent/tweet?url={{ urlencode(Request::fullUrl()) }}&text={{ urlencode($blog->title) }}" target="_blank" rel="noopener">
+                                        <i class="fab fa-twitter"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&url={{ urlencode(Request::fullUrl()) }}&title={{ urlencode($blog->title) }}" target="_blank" rel="noopener">
+                                        <i class="fab fa-linkedin-in"></i>
+                                    </a>
+                                </li>
                             </ul>
                         </div>
                         <div class="wsus__related_post">
