@@ -120,9 +120,10 @@ class BlogController extends Controller
     public function destroy(string $id)
     {
         $blog = Blog::findOrFail($id);
+        $this->deleteImage($blog->image);
         $blog->delete();
 
-        toastr('Blog deleted successfully', 'success');
+        return response(['status' => 'success', 'message' => 'Blog deleted successfully!']);
         return redirect()->route('admin.blog.index');
     }
 
