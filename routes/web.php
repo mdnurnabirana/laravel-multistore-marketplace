@@ -128,6 +128,7 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
     Route::get('vendor-request', [UserVendorRequestController::class, 'index'])->name('vendor-request.index');
     Route::post('vendor-request', [UserVendorRequestController::class, 'create'])->name('vendor-request.create');
 
-    // 
+    // Blog Comments
+    Route::post('blog-comment', [BlogController::class, 'addComment'])->name('blog-comment');
     
 });
