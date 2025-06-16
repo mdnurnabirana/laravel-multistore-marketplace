@@ -16,31 +16,36 @@
                 <div class="col-xl-2 col-6 col-md-4">
                   <a class="wsus__dashboard_item red" href="dsahboard_order.html">
                     <i class="far fa-address-book"></i>
-                    <p>order</p>
+                    <p>today's order</p>
+                    <h5 class="text-white">{{$todaysOrders}}</h5>
                   </a>
                 </div>
                 <div class="col-xl-2 col-6 col-md-4">
                   <a class="wsus__dashboard_item green" href="dsahboard_download.html">
                     <i class="fal fa-cloud-download"></i>
-                    <p>download</p>
+                    <p>today's pending Order</p>
+                    <h5 class="text-white">{{$todaysPendingOrders}}</h5>
                   </a>
                 </div>
                 <div class="col-xl-2 col-6 col-md-4">
                   <a class="wsus__dashboard_item sky" href="dsahboard_review.html">
                     <i class="fas fa-star"></i>
-                    <p>review</p>
+                    <p>total order</p>
+                    <h5 class="text-white">{{$totalOrders}}</h5>
                   </a>
                 </div>
                 <div class="col-xl-2 col-6 col-md-4">
                   <a class="wsus__dashboard_item blue" href="dsahboard_wishlist.html">
                     <i class="far fa-heart"></i>
-                    <p>wishlist</p>
+                    <p>total pending order</p>
+                    <h5 class="text-white">{{$totalPendingOrders}}</h5>
                   </a>
                 </div>
                 <div class="col-xl-2 col-6 col-md-4">
                   <a class="wsus__dashboard_item orange" href="dsahboard_profile.html">
                     <i class="fas fa-user-shield"></i>
-                    <p>profile</p>
+                    <p>total completed order</p>
+                    <h5 class="text-white">{{$totalCompletedOrders}}</h5>
                   </a>
                 </div>
                 <div class="col-xl-2 col-6 col-md-4">
@@ -50,7 +55,6 @@
                   </a>
                 </div>
               </div>
-              
             </div>
           </div>
         </div>

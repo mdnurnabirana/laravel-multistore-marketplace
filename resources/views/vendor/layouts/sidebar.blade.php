@@ -6,32 +6,32 @@
     {{-- <a href="dashboard.html" class="dash_logo"><img src="images/logo.png" alt="logo" class="img-fluid"></a> --}}
     <ul class="dashboard_link">
         <li>
-            <a class="active" href="{{route('vendor.dashboard')}}">
+            <a class="{{setActive(['vendor.dashboard'])}}" href="{{route('vendor.dashboard')}}">
                 <i class="fas fa-home"></i> Dashboard
             </a>
         </li>
         <li>
-            <a class="" href="{{route('vendor.orders.index')}}">
+            <a class="{{setActive(['vendor.orders.*'])}}" href="{{route('vendor.orders.index')}}">
                 <i class="fas fa-shopping-cart"></i> Orders
             </a>
         </li>
         <li>
-            <a class="" href="{{route('vendor.reviews.index')}}">
+            <a class="{{setActive(['vendor.reviews.*'])}}" href="{{route('vendor.reviews.index')}}">
                 <i class="fas fa-shopping-cart"></i> Reviews
             </a>
         </li>
         <li>
-            <a href="{{ route('vendor.products.index') }}">
+            <a class="{{setActive(['vendor.products.*'])}}" href="{{ route('vendor.products.index') }}">
                 <i class="fas fa-box"></i> Products
             </a>
         </li>
         <li>
-            <a href="{{ route('vendor.shop-profile.index') }}">
+            <a class="{{setActive(['vendor.shop-profile'])}}" href="{{ route('vendor.shop-profile.index') }}">
                 <i class="fas fa-store"></i> Shop Profile
             </a>
         </li>
         <li>
-            <a href="{{ route('vendor.profile') }}">
+            <a class="{{setActive(['vendor.profile'])}}" href="{{ route('vendor.profile') }}">
                 <i class="fas fa-user-circle"></i> My Profile
             </a>
         </li>
