@@ -14,6 +14,7 @@ use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\AdminVendorProfileController;
 use App\Http\Controllers\Backend\AdvertisementController;
 use App\Http\Controllers\Backend\BlogCategoryController;
+use App\Http\Controllers\Backend\BlogCommentController;
 use App\Http\Controllers\Backend\BlogController;
 use App\Http\Controllers\Backend\CouponController;
 use App\Http\Controllers\Backend\CustomerListController;
@@ -221,5 +222,6 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin') ->as('admin.') ->grou
         // Manage Blog Posts
         Route::put('blog/change-status', [BlogController::class, 'changeStatus'])->name('blog.change-status');
         Route::resource('blog', BlogController::class);
-
+        Route::get('blog-comments', [BlogCommentController::class, 'index'])->name('blog-comments.index');
+        Route::delete('blog-comments/{id}', [BlogCommentController::class, 'destroy'])->name('blog-comments.destroy');
 });

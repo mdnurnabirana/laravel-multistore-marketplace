@@ -163,6 +163,7 @@
                 class="dropdown {{ setActive([
                     'admin.blog-category.*',
                     'admin.blog.*',
+                    'admin.blog-comments.*',
                 ]) }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
                         class="fas fa-columns"></i>
@@ -174,6 +175,9 @@
                     </li>
                     <li class="{{ setActive(['admin.blog.*']) }}">
                         <a class="nav-link" href="{{ route('admin.blog.index') }}">Blogs</a>
+                    </li>
+                    <li class="{{ setActive(['admin.blog-comments.*']) }}">
+                        <a class="nav-link" href="{{ route('admin.blog-comments.index') }}">Blog Comments</a>
                     </li>
                 </ul>
             </li>
