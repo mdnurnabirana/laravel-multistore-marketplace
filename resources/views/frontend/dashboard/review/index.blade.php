@@ -1,4 +1,4 @@
-@extends('vendor.layouts.master')
+@extends('frontend.dashboard.layouts.master')
 @section('title')
     {{$settings->site_name}} || Reviews
 @endsection

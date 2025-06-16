@@ -4,7 +4,7 @@
     $coupon = json_decode($order->coupon);
 @endphp
 
-@extends('vendor.layouts.master')
+@extends('frontend.dashboard.layouts.master')
 @section('title')
     {{ $settings->site_name }} || Product
 @endsection
@@ -14,7 +14,7 @@
         ==============================-->
     <section id="wsus__dashboard">
         <div class="container-fluid">
-            @include('vendor.layouts.sidebar')
+            @include('frontend.dashboard.layouts.sidebar')
 
             <div class="row">
                 <div class="col-xl-9 col-xxl-10 col-lg-9 ms-auto">
@@ -96,10 +96,10 @@
                                         </div>
                                     </div>
                                     <div class="wsus__invoice_footer">
-                                        <p><span>Sub Total:</span> {{$settings->currency_icon}} {{$order->sub_total}}</p>
-                                        <p><span>Shipping Fee(+):</span> {{$settings->currency_icon}} {{$shipping->cost}}</p>
-                                        <p><span>Coupon(-):</span> {{$settings->currency_icon}} {{$coupon->discount}}</p>
-                                        <p><span><b>Total Amount:</b></span> {{$settings->currency_icon}} {{$order->amount}}</p>
+                                        <p><span>Sub Total:</span> {{@$settings->currency_icon}} {{@$order->sub_total}}</p>
+                                        <p><span>Shipping Fee(+):</span> {{@$settings->currency_icon}} {{@$shipping->cost}}</p>
+                                        <p><span>Coupon(-):</span> {{@$settings->currency_icon}} {{@$coupon->discount ? @$coupon->discount : 0}}</p>
+                                        <p><span><b>Total Amount:</b></span> {{@$settings->currency_icon}} {{@$order->amount}}</p>
                                     </div>
                                 </div>
                             </section>
