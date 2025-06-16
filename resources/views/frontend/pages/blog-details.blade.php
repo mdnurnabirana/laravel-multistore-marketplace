@@ -65,14 +65,15 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="wsus__related_post">
+                        @if (count($recentBlogs) != 0)
+                            <div class="wsus__related_post">
                             <div class="row">
                                 <div class="col-xl-12">
-                                    <h5>more post</h5>
+                                    <h5>recent post</h5>
                                 </div>
                             </div>
                             <div class="row blog_det_slider">
-                                @foreach ($moreBlogs as $blogItem)
+                                @foreach ($recentBlogs as $blogItem)
                                     <div class="col-xl-3">
                                         <div class="wsus__single_blog wsus__single_blog_2">
                                             <a class="wsus__blog_img" href="{{ route('blog.details', $blogItem->slug) }}">
@@ -90,6 +91,7 @@
                                 @endforeach
                             </div>
                         </div>
+                        @endif
                         <div class="wsus__comment_area">
                             <h4>comment <span>{{ $comments->total() }}</span></h4>
                             @foreach ($comments as $comment)
@@ -145,85 +147,36 @@
                     <div class="wsus__blog_sidebar" id="sticky_sidebar">
                         <div class="wsus__blog_search">
                             <h4>search</h4>
-                            <form>
-                                <input type="text" placeholder="Search">
+                            <form action="{{ route('blog') }}" method="GET">
+                                <input type="text" placeholder="Search" name="search">
                                 <button type="submit" class="common_btn"><i class="far fa-search"></i></button>
                             </form>
                         </div>
                         <div class="wsus__blog_category">
                             <h4>Categories</h4>
                             <ul>
-                                <li><a href="#">Clothes</a></li>
-                                <li><a href="#">Entertainment</a></li>
-                                <li><a href="#">Fashion</a></li>
-                                <li><a href="#">Lifestyle</a></li>
-                                <li><a href="#">Technology</a></li>
-                                <li><a href="#">Shoes</a></li>
-                                <li><a href="#">electronic</a></li>
-                                <li><a href="#">Others</a></li>
+                                @foreach ($categories as $category)
+                                    <li>
+                                        <a href="{{route('blog', ['category' => $category->slug])}}">
+                                            {{ $category->name }}
+                                        </a>
+                                    </li>
+                                @endforeach
                             </ul>
                         </div>
                         <div class="wsus__blog_post">
-                            <h4>Popular Post</h4>
-                            <div class="wsus__blog_post_single">
-                                <a href="#" class="wsus__blog_post_img">
-                                    <img src="images/location_1.jpg" alt="blog" class="imgofluid w-100">
-                                </a>
-                                <div class="wsus__blog_post_text">
-                                    <a href="#">One Thing Separates Creators</a>
-                                    <p> <span>Jul 29 2021 </span> 2 Comment </p>
+                            <h4>More Post</h4>
+                            @foreach ($moreBlogs as $blog)
+                                <div class="wsus__blog_post_single">
+                                    <a href="{{ route('blog.details', $blog->slug) }}" class="wsus__blog_post_img">
+                                        <img src="{{ asset($blog->image) }}" alt="blog" class="imgofluid w-100">
+                                    </a>
+                                    <div class="wsus__blog_post_text">
+                                        <a href="{{ route('blog.details', $blog->slug) }}">{{ limitText($blog->title, 40) }}</a>
+                                        <p> <span>{{ $blog->created_at->format('M d Y') }}</span> {{count($blog->comments)}} Comment </p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="wsus__blog_post_single">
-                                <a href="#" class="wsus__blog_post_img">
-                                    <img src="images/location_2.jpg" alt="blog" class="imgofluid w-100">
-                                </a>
-                                <div class="wsus__blog_post_text">
-                                    <a href="#">One Thing Separates Creators</a>
-                                    <p> <span>Jul 29 2021 </span> 2 Comment </p>
-                                </div>
-                            </div>
-                            <div class="wsus__blog_post_single">
-                                <a href="#" class="wsus__blog_post_img">
-                                    <img src="images/location_3.jpg" alt="blog" class="imgofluid w-100">
-                                </a>
-                                <div class="wsus__blog_post_text">
-                                    <a href="#">One Thing Separates Creators</a>
-                                    <p> <span>Jul 29 2021 </span> 2 Comment </p>
-                                </div>
-                            </div>
-                            <div class="wsus__blog_post_single">
-                                <a href="#" class="wsus__blog_post_img">
-                                    <img src="images/location_4.jpg" alt="blog" class="imgofluid w-100">
-                                </a>
-                                <div class="wsus__blog_post_text">
-                                    <a href="#">One Thing Separates Creators</a>
-                                    <p> <span>Jul 29 2021 </span> 2 Comment </p>
-                                </div>
-                            </div>
-                            <div class="wsus__blog_post_single">
-                                <a href="#" class="wsus__blog_post_img">
-                                    <img src="images/location_2.jpg" alt="blog" class="imgofluid w-100">
-                                </a>
-                                <div class="wsus__blog_post_text">
-                                    <a href="#">One Thing Separates Creators</a>
-                                    <p> <span>Jul 29 2021 </span> 2 Comment </p>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="wsus__popular_tag">
-                            <h4>popular tags</h4>
-                            <ul>
-                                <li><a href="#">Fashion</a></li>
-                                <li><a href="#">Style</a></li>
-                                <li><a href="#">Travel</a></li>
-                                <li><a href="#">Women</a></li>
-                                <li><a href="#">Men</a></li>
-                                <li><a href="#">Hobbies</a></li>
-                                <li><a href="#">Shopping</a></li>
-                                <li><a href="#">Photography</a></li>
-                            </ul>
+                            @endforeach
                         </div>
                     </div>
                 </div>

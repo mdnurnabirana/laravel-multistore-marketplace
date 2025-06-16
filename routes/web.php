@@ -81,6 +81,7 @@ Route::get('product-tracking', [ProductTrackController::class, 'index'])->name('
 
 // Blogs
 Route::get('blog-details/{slug}', [BlogController::class, 'blogDetails'])->name('blog.details');
+Route::get('blogs', [BlogController::class, 'blog'])->name('blog');
 
 Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 'user.'], function () {
     Route::get('dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
