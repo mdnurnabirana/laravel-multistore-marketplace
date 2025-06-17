@@ -3,63 +3,80 @@
     {{$settings->site_name}} || Dashboard
 @endsection
 @section('content')
-    <section id="wsus__dashboard">
-        <div class="container-fluid">
+<section id="wsus__dashboard">
+    <div class="container-fluid">
 
-            @include('frontend.dashboard.layouts.sidebar')
+        @include('frontend.dashboard.layouts.sidebar')
 
-            <div class="row">
-                <div class="col-xl-9 col-xxl-10 col-lg-9 ms-auto">
-                    <div class="dashboard_content">
-                        <div class="wsus__dashboard">
-                            <div class="row">
-                                <div class="col-xl-2 col-6 col-md-6">
-                                    <a class="wsus__dashboard_item red" href="{{ route('user.orders.index') }}">
-                                        <i class="fas fa-shopping-cart"></i>
-                                        <p>total order</p>
-                                        <h4 class="text-white">{{ $totalOrder }}</h4>
-                                    </a>
-                                </div>
-                                <div class="col-xl-2 col-6 col-md-6">
-                                    <a class="wsus__dashboard_item green" href="{{ route('user.orders.index') }}">
-                                        <i class="fas fa-clock"></i>
-                                        <p>pending order</p>
-                                        <h4 class="text-white">{{ $pendingOrder }}</h4>
-                                    </a>
-                                </div>
-                                <div class="col-xl-2 col-6 col-md-6">
-                                    <a class="wsus__dashboard_item sky" href="{{ route('user.orders.index') }}">
-                                        <i class="fas fa-check-circle"></i>
-                                        <p>completed order</p>
-                                        <h4 class="text-white">{{ $completedOrder }}</h4>
-                                    </a>
-                                </div>
-                                <div class="col-xl-2 col-6 col-md-4">
-                                    <a class="wsus__dashboard_item blue" href="{{ route('user.review.index') }}">
-                                        <i class="fas fa-star"></i>
-                                        <p>reviews</p>
-                                        <h4 class="text-white">{{ $reviews }}</h4>
-                                    </a>
-                                </div>
-                                <div class="col-xl-2 col-6 col-md-4">
-                                    <a class="wsus__dashboard_item orange" href="{{ route('user.wishlist.index') }}">
-                                        <i class="fas fa-heart"></i>
-                                        <p>wishlist</p>
-                                        <h4 class="text-white">{{ $wishlist }}</h4>
-                                    </a>
-                                </div>
-                                <div class="col-xl-2 col-6 col-md-4">
-                                    <a class="wsus__dashboard_item purple" href="{{route('user.profile')}}">
-                                        <i class="fas fa-user"></i>
-                                        <p>profile</p>
-                                        <h4 class="text-white">-</h4>
-                                    </a>
-                                </div>
+        <div class="row">
+            <div class="col-xl-9 col-xxl-10 col-lg-9 ms-auto">
+                <div class="dashboard_content">
+                    <div class="wsus__dashboard">
+                        <div class="row g-3">
+                            <div class="col-xl-2 col-6 col-md-6 d-flex">
+                                <a class="wsus__dashboard_item bg-primary d-flex flex-column align-items-center text-center w-100 py-3" href="{{ route('user.orders.index') }}">
+                                    <div>
+                                        <i class="fas fa-shopping-cart mb-2"></i>
+                                        <p class="mb-1">total order</p>
+                                    </div>
+                                    <h4 class="text-white mt-auto">{{ $totalOrder }}</h4>
+                                </a>
                             </div>
-                        </div>
+
+                            <div class="col-xl-2 col-6 col-md-6 d-flex">
+                                <a class="wsus__dashboard_item bg-warning d-flex flex-column align-items-center text-center w-100 py-3" href="{{ route('user.orders.index') }}">
+                                    <div>
+                                        <i class="fas fa-clock mb-2"></i>
+                                        <p class="mb-1">pending order</p>
+                                    </div>
+                                    <h4 class="text-white mt-auto">{{ $pendingOrder }}</h4>
+                                </a>
+                            </div>
+
+                            <div class="col-xl-2 col-6 col-md-6 d-flex">
+                                <a class="wsus__dashboard_item bg-success d-flex flex-column align-items-center text-center w-100 py-3" href="{{ route('user.orders.index') }}">
+                                    <div>
+                                        <i class="fas fa-check-circle mb-2"></i>
+                                        <p class="mb-1">completed order</p>
+                                    </div>
+                                    <h4 class="text-white mt-auto">{{ $completedOrder }}</h4>
+                                </a>
+                            </div>
+
+                            <div class="col-xl-2 col-6 col-md-4 d-flex">
+                                <a class="wsus__dashboard_item bg-info d-flex flex-column align-items-center text-center w-100 py-3" href="{{ route('user.review.index') }}">
+                                    <div>
+                                        <i class="fas fa-star mb-2"></i>
+                                        <p class="mb-1">reviews</p>
+                                    </div>
+                                    <h4 class="text-white mt-auto">{{ $reviews }}</h4>
+                                </a>
+                            </div>
+
+                            <div class="col-xl-2 col-6 col-md-4 d-flex">
+                                <a class="wsus__dashboard_item bg-danger d-flex flex-column align-items-center text-center w-100 py-3" href="{{ route('user.wishlist.index') }}">
+                                    <div>
+                                        <i class="fas fa-heart mb-2"></i>
+                                        <p class="mb-1">wishlist</p>
+                                    </div>
+                                    <h4 class="text-white mt-auto">{{ $wishlist }}</h4>
+                                </a>
+                            </div>
+
+                            <div class="col-xl-2 col-6 col-md-4 d-flex">
+                                <a class="wsus__dashboard_item bg-secondary d-flex flex-column align-items-center text-center w-100 py-3" href="{{route('user.profile')}}">
+                                    <div>
+                                        <i class="fas fa-user mb-2"></i>
+                                        <p class="mb-1">profile</p>
+                                    </div>
+                                    <h4 class="text-white mt-auto">-</h4>
+                                </a>
+                            </div>
+                        </div> <!-- row -->
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 @endsection
