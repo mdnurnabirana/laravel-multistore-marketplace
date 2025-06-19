@@ -5,15 +5,20 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\EmailConfiguration;
 use App\Models\GeneralSetting;
+use App\Models\LogoSetting;
+use App\Traits\ImageUploadTrait;
 use Illuminate\Http\Request;
 
 class SettingController extends Controller
 {
+    use ImageUploadTrait;
+
     public function index()
     {
         $generalSettings = GeneralSetting::first();
         $emailSettings = EmailConfiguration::first();
-        return view('admin.setting.index', compact('generalSettings', 'emailSettings'));
+        $logoSettings = LogoSetting::first();
+        return view('admin.setting.index', compact('generalSettings', 'emailSettings', 'logoSettings'));
     }
 
     public function generalSettingUpdate(Request $request)
@@ -72,6 +77,32 @@ class SettingController extends Controller
         
 
         toastr('Updated Successfully!', 'success');
+        return redirect()->back();
+    }
+
+    public function logoSettingUpdate(Request $request)
+    {
+        $request->validate([
+            'logo' => ['image', 'mimes:jpeg,png,jpg,gif,svg', 'max:3072'],
+            'footer_logo' => ['image', 'mimes:jpeg,png,jpg,gif,svg', 'max:3072'],
+            'favicon' => ['image', 'mimes:jpeg,png,jpg,gif,svg', 'max:3072'],
+        ]);
+
+        $logoPath = $this->updateImage($request, 'logo', 'uploads', $request->old_logo);
+        $footerLogoPath = $this->updateImage($request, 'footer_logo', 'uploads', $request->old_footer_logo);
+        $faviconPath = $this->updateImage($request, 'favicon', 'uploads', $request->old_favicon);
+
+        $logoSetting = LogoSetting::updateOrCreate(
+            ['id' => 1],
+            [
+                'logo' => !empty($logoPath) ? $logoPath : $request->old_logo,
+                'footer_logo' => !empty($footerLogoPath) ? $footerLogoPath : $request->old_footer_logo,
+                'favicon' => !empty($faviconPath) ? $faviconPath : $request->old_favicon,
+            ]
+        );
+
+        toastr('Logo Settings Updated Successfully', 'success');
+
         return redirect()->back();
     }
 }

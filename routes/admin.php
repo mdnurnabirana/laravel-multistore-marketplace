@@ -120,7 +120,8 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin') ->as('admin.') ->grou
         Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
         Route::put('general-setting-update', [SettingController::class, 'generalSettingUpdate'])->name('general-setting-update');
         Route::put('email-setting-update', [SettingController::class, 'emailConfigSettingUpdate'])->name('email-setting-update');
-
+        Route::put('logo-setting-update', [SettingController::class, 'logoSettingUpdate'])->name('logo-setting-update');
+        
         // Paypal Payment Settings Routes
         Route::get('payment-settings', [PaymentSettingController::class, 'index'])->name('payment-settings.index');
         Route::resource('paypal-setting', PaypalSettingController::class);
@@ -224,4 +225,6 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin') ->as('admin.') ->grou
         Route::resource('blog', BlogController::class);
         Route::get('blog-comments', [BlogCommentController::class, 'index'])->name('blog-comments.index');
         Route::delete('blog-comments/{id}', [BlogCommentController::class, 'destroy'])->name('blog-comments.destroy');
+
+        // 
 });
