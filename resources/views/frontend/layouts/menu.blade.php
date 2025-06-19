@@ -1,12 +1,15 @@
 @php
     $categories = \App\Models\Category::where('status', 1)
-    ->with(['subCategories' => function($query){
-        $query->where('status',1)
-        ->with(['childCategories' => function($query){
-            $query->where('status', 1);
-        }]);
-    }])
-    ->get();
+        ->with([
+            'subCategories' => function ($query) {
+                $query->where('status', 1)->with([
+                    'childCategories' => function ($query) {
+                        $query->where('status', 1);
+                    },
+                ]);
+            },
+        ])
+        ->get();
 @endphp
 
 <nav class="wsus__main_menu d-none d-lg-block">
@@ -19,39 +22,49 @@
                     </div>
                     <ul class="wsus_menu_cat_item show_home toggle_menu">
                         @foreach ($categories as $category)
-                            <li><a class="{{count($category->subCategories)>0 ? 'wsus__droap_arrow' : ''}}" href="{{route('products.index', ['category' => $category->slug])}}"> <i class="{{$category->icon}}"></i> {{$category->name}} </a>
-                                @if(count($category->subCategories) > 0)
+                            <li><a class="{{ count($category->subCategories) > 0 ? 'wsus__droap_arrow' : '' }}"
+                                    href="{{ route('products.index', ['category' => $category->slug]) }}"> <i
+                                        class="{{ $category->icon }}"></i> {{ $category->name }} </a>
+                                @if (count($category->subCategories) > 0)
                                     <ul class="wsus_menu_cat_droapdown">
                                         @foreach ($category->subCategories as $subCategory)
-                                            <li><a href="{{route('products.index', ['subcategory' => $subCategory->slug])}}">{{$subCategory->name}} <i class="{{count($subCategory->childCategories)>0 ? 'fas fa-angle-right' : ''}}"></i></a>
+                                            <li><a
+                                                    href="{{ route('products.index', ['subcategory' => $subCategory->slug]) }}">{{ $subCategory->name }}
+                                                    <i
+                                                        class="{{ count($subCategory->childCategories) > 0 ? 'fas fa-angle-right' : '' }}"></i></a>
                                                 <ul class="wsus__sub_category">
-                                                    @if(count($subCategory->childCategories)>0 )
-                                                        @foreach ($subCategory->childCategories as $childCategory )
-                                                            <li><a href="{{route('products.index', ['childcategory' => $childCategory->slug])}}">{{$childCategory->name}}s</a> </li>
+                                                    @if (count($subCategory->childCategories) > 0)
+                                                        @foreach ($subCategory->childCategories as $childCategory)
+                                                            <li><a
+                                                                    href="{{ route('products.index', ['childcategory' => $childCategory->slug]) }}">{{ $childCategory->name }}s</a>
+                                                            </li>
                                                         @endforeach
                                                     @endif
                                                 </ul>
                                             </li>
-                                        @endforeach  
+                                        @endforeach
                                     </ul>
                                 @endif
                             </li>
                         @endforeach
-                        
+
                         <li><a href="#"><i class="fal fa-gem"></i> View All Categories</a></li>
                     </ul>
 
                     <ul class="wsus__menu_item">
-                        <li><a class="{{setActive(['home'])}}" href="{{url('/')}}">home</a></li>
-                        <li><a class="{{setActive(['vendor.index'])}}" href="{{route('vendor.index')}}">vendor</a></li>
-                        <li><a class="{{setActive(['blog'])}}" href="{{route('blog')}}">blog</a></li>
-                        <li><a class="{{setActive(['flash-sale'])}}" href="{{route('flash-sale')}}">flash sale</a></li>
-                        <li><a class="{{setActive(['contact'])}}" href="{{route('contact')}}">contact</a></li>
-                        <li><a class="{{setActive(['product-tracking.index'])}}" href="{{route('product-tracking.index')}}">track order</a></li>
+                        <li><a class="{{ setActive(['home']) }}" href="{{ url('/') }}">home</a></li>
+                        <li><a class="{{ setActive(['vendor.index']) }}" href="{{ route('vendor.index') }}">vendor</a>
+                        </li>
+                        <li><a class="{{ setActive(['blog']) }}" href="{{ route('blog') }}">blog</a></li>
+                        <li><a class="{{ setActive(['flash-sale']) }}" href="{{ route('flash-sale') }}">flash sale</a>
+                        </li>
+                        <li><a class="{{ setActive(['contact']) }}" href="{{ route('contact') }}">contact</a></li>
+                        <li><a class="{{ setActive(['product-tracking.index']) }}"
+                                href="{{ route('product-tracking.index') }}">track order</a></li>
                     </ul>
                     <ul class="wsus__menu_item wsus__menu_item_right">
-                        @if(Auth::check())
-                            @if(Auth::user()->role === 'admin')
+                        @if (Auth::check())
+                            @if (Auth::user()->role === 'admin')
                                 <li><a href="{{ route('admin.dashboard') }}">my account</a></li>
                                 <li><a href="{{ route('logout') }}">logout</a></li>
                             @elseif(Auth::user()->role === 'vendor')
@@ -59,7 +72,6 @@
                                 <li><a href="{{ route('logout') }}">logout</a></li>
                             @elseif(Auth::user()->role === 'user')
                                 <li><a href="{{ route('user.dashboard') }}">my account</a></li>
-                                <li><a href="{{ route('logout') }}">logout</a></li>
                             @endif
                         @else
                             <li><a href="{{ route('login') }}">login</a></li>
@@ -102,23 +114,21 @@
                     <ul class="wsus_mobile_menu_category">
                         @foreach ($categories as $categoryItem)
                             <li>
-                                <a href="#" 
-                                   class="{{ count($categoryItem->subCategories) > 0 ? 'accordion-button' : '' }} collapsed" 
-                                   data-bs-toggle="{{ count($categoryItem->subCategories) > 0 ? 'collapse' : '' }}" 
-                                   data-bs-target="#flush-collapseThreew-{{$loop->index}}" 
-                                   aria-expanded="false" 
-                                   aria-controls="flush-collapseThreew-{{$loop->index}}">
-                                   <i class="{{$categoryItem->name}}"></i> {{$categoryItem->name}}
+                                <a href="#"
+                                    class="{{ count($categoryItem->subCategories) > 0 ? 'accordion-button' : '' }} collapsed"
+                                    data-bs-toggle="{{ count($categoryItem->subCategories) > 0 ? 'collapse' : '' }}"
+                                    data-bs-target="#flush-collapseThreew-{{ $loop->index }}" aria-expanded="false"
+                                    aria-controls="flush-collapseThreew-{{ $loop->index }}">
+                                    <i class="{{ $categoryItem->name }}"></i> {{ $categoryItem->name }}
                                 </a>
-                    
-                                @if(count($categoryItem->subCategories) > 0)
-                                    <div id="flush-collapseThreew-{{$loop->index}}" 
-                                         class="accordion-collapse collapse" 
-                                         data-bs-parent=".wsus_mobile_menu_category">
+
+                                @if (count($categoryItem->subCategories) > 0)
+                                    <div id="flush-collapseThreew-{{ $loop->index }}"
+                                        class="accordion-collapse collapse" data-bs-parent=".wsus_mobile_menu_category">
                                         <div class="accordion-body">
                                             <ul>
                                                 @foreach ($categoryItem->subCategories as $subCategoryItem)
-                                                    <li><a href="#">{{$subCategoryItem->name}}</a></li>
+                                                    <li><a href="#">{{ $subCategoryItem->name }}</a></li>
                                                 @endforeach
                                             </ul>
                                         </div>
@@ -127,7 +137,7 @@
                             </li>
                         @endforeach
                     </ul>
-                    
+
                 </div>
             </div>
         </div>
@@ -152,7 +162,7 @@
                             </div>
                         </li>
                         <li><a href="vendor.html">vendor</a></li>
-                        <li><a href="{{route('blog')}}">blog</a></li>
+                        <li><a href="{{ route('blog') }}">blog</a></li>
                         <li><a href="daily_deals.html">campain</a></li>
                         <li><a href="#" class="accordion-button collapsed" data-bs-toggle="collapse"
                                 data-bs-target="#flush-collapseThree101" aria-expanded="false"
@@ -173,7 +183,7 @@
                                 </div>
                             </div>
                         </li>
-                        <li><a href="{{route('product-tracking.index')}}">track order</a></li>
+                        <li><a href="{{ route('product-tracking.index') }}">track order</a></li>
                         <li><a href="daily_deals.html">daily deals</a></li>
                     </ul>
                 </div>

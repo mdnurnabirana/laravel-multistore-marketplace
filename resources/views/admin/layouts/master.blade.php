@@ -25,6 +25,9 @@
 <!-- Template CSS -->
 <link rel="stylesheet" href="{{ asset('backend/assets/css/style.css') }}">
 <link rel="stylesheet" href="{{ asset('backend/assets/css/components.css') }}">
+@if($settings->layout == 'RTL')
+  <link rel="stylesheet" href="{{ asset('backend/assets/css/rtl.css') }}">
+@endif
 <link rel="stylesheet" href="{{asset('backend/assets/modules/select2/dist/css/select2.min.css')}}">
 
 <!-- Start GA -->
