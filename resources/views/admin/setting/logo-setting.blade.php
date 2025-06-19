@@ -14,14 +14,6 @@
                 </div>
 
                 <div class="form-group">
-                    <img src="{{ asset(@$logoSettings->footer_logo) }}" alt="Footer Logo" class="img-fluid mb-3" style="max-width: 200px;">
-                    <br>
-                    <label>Footer Logo</label>
-                    <input type="file" name="footer_logo" class="form-control">
-                    <input type="hidden" name="old_footer_logo" value="{{ @$logoSettings->footer_logo }}">
-                </div>
-
-                <div class="form-group">
                     <img src="{{ asset(@$logoSettings->favicon) }}" alt="Favicon" class="img-fluid mb-3" style="max-width: 50px;">
                     <br>
                     <label>Favicon</label>

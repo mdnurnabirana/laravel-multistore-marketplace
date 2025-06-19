@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('logo_settings', function (Blueprint $table) {
             $table->id();
             $table->text('logo');
-            $table->text('footer_logo');
             $table->text('favicon');
             $table->timestamps();
         });
