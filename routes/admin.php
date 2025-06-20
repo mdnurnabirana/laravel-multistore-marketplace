@@ -16,6 +16,7 @@ use App\Http\Controllers\Backend\AdvertisementController;
 use App\Http\Controllers\Backend\BlogCategoryController;
 use App\Http\Controllers\Backend\BlogCommentController;
 use App\Http\Controllers\Backend\BlogController;
+use App\Http\Controllers\Backend\CodSettingController;
 use App\Http\Controllers\Backend\CouponController;
 use App\Http\Controllers\Backend\CustomerListController;
 use App\Http\Controllers\Backend\FlashSaleController;
@@ -43,6 +44,7 @@ use App\Http\Controllers\Backend\TransactionController;
 use App\Http\Controllers\Backend\VendorConditionController;
 use App\Http\Controllers\Backend\VendorListController;
 use App\Http\Controllers\Backend\VendorRequestController;
+use Symfony\Component\Routing\Route as RoutingRoute;
 
 Route::middleware(['auth', 'role:admin'])->prefix('admin') ->as('admin.') ->group(function () {
         Route::get('dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
@@ -129,6 +131,9 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin') ->as('admin.') ->grou
         // Stripe & RazorPay Settings Routes
         Route::put('stripe-settings/{id}', [StripeSettingController::class, 'update'])->name('stripe-setting.update');
         Route::put('razorpay-settings/{id}', [RazorpaySettingController::class, 'update'])->name('razorpay-setting.update');
+
+        // COD Setting
+        Route::put('cod-setting/{id}', [CodSettingController::class, 'update'])->name('cod-setting.update');
 
         // Order Related Routes
         Route::get('payment-status', [OrderController::class, 'changePaymentStatus'])->name('payment.status');
