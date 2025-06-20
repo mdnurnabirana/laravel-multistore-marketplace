@@ -3,11 +3,16 @@
         <i class="far fa-bars dash_bar"></i>
         <i class="far fa-times dash_close"></i>
     </span>
-    {{-- <a href="dashboard.html" class="dash_logo"><img src="images/logo.png" alt="logo" class="img-fluid"></a> --}}
+    <a href="{{route('home')}}" class="dash_logo"><img src="{{asset($logoSettings->logo)}}" alt="logo" class="img-fluid"></a> 
     <ul class="dashboard_link">
         <li>
             <a class="{{setActive(['vendor.dashboard'])}}" href="{{route('vendor.dashboard')}}">
                 <i class="fas fa-home"></i> Dashboard
+            </a>
+        </li>
+        <li>
+            <a class="" href="{{route('home')}}">
+                <i class="fas fa-home"></i> Go To Home
             </a>
         </li>
         <li>
