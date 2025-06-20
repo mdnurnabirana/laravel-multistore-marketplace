@@ -24,9 +24,9 @@ class AdminController extends Controller
         $totalPendingOrders = Order::where('order_status', 'pending')->count();
         $totalCancelledOrders = Order::where('order_status', 'cancelled')->count();
         $totalCompletedOrders = Order::where('order_status', 'delivered')->count();
-        $todaysEarnings = Order::whereDate('created_at', Carbon::today())->where('order_status', '!=', 'cancelled')->sum('sub_total');
-        $thisMonthsEarnings = Order::whereMonth('created_at', Carbon::now()->month)->where('order_status', '!=', 'cancelled')->sum('sub_total');
-        $thisYearsEarnings = Order::whereYear('created_at', Carbon::now()->year)->where('order_status', '!=', 'cancelled')->sum('sub_total');
+        $todaysEarnings = Order::whereDate('created_at', Carbon::today())->where('payment_status', 1)->where('order_status', '!=', 'cancelled')->sum('sub_total');
+        $thisMonthsEarnings = Order::whereMonth('created_at', Carbon::now()->month)->where('payment_status', 1)->where('order_status', '!=', 'cancelled')->sum('sub_total');
+        $thisYearsEarnings = Order::whereYear('created_at', Carbon::now()->year)->where('payment_status', 1)->where('order_status', '!=', 'cancelled')->sum('sub_total');
         $totalReviews = ProductReview::count();
         $avgRatings = ProductReview::avg('rating');
         $totalBrands = Brand::count();

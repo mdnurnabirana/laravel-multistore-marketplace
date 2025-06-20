@@ -33,15 +33,15 @@ class VendorController extends Controller
         })->count();
         $totalProducts = Product::where('vendor_id', Auth::user()->vendor->id)->count();
 
-        $todaysEarnings = Order::whereDate('created_at', Carbon::today())->where('order_status', 'delivered')->whereHas('orderProducts', function ($query) {
+        $todaysEarnings = Order::whereDate('created_at', Carbon::today())->where('payment_status', 1)->where('order_status', 'delivered')->whereHas('orderProducts', function ($query) {
             $query->where('vendor_id', Auth::user()->vendor->id);
         })->sum('sub_total');
 
-        $thisMonthsEarnings = Order::whereMonth('created_at', Carbon::now()->month)->where('order_status', 'delivered')->whereHas('orderProducts', function ($query) {
+        $thisMonthsEarnings = Order::whereMonth('created_at', Carbon::now()->month)->where('payment_status', 1)->where('order_status', 'delivered')->whereHas('orderProducts', function ($query) {
             $query->where('vendor_id', Auth::user()->vendor->id);
         })->sum('sub_total');
 
-        $thisYearsEarnings = Order::whereYear('created_at', Carbon::now()->year)->where('order_status', 'delivered')->whereHas('orderProducts', function ($query) {
+        $thisYearsEarnings = Order::whereYear('created_at', Carbon::now()->year)->where('payment_status', 1)->where('order_status', 'delivered')->whereHas('orderProducts', function ($query) {
             $query->where('vendor_id', Auth::user()->vendor->id);
         })->sum('sub_total');
 
