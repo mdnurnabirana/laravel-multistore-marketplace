@@ -81,6 +81,9 @@ Route::get('product-tracking', [ProductTrackController::class, 'index'])->name('
 Route::get('blog-details/{slug}', [BlogController::class, 'blogDetails'])->name('blog.details');
 Route::get('blogs', [BlogController::class, 'blog'])->name('blog');
 
+// WishList
+Route::get('wishlist/add-product', [WishlistController::class, 'addToWishlist'])->name('wishlist.store');
+
 Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 'user.'], function () {
     Route::get('dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
     Route::get('profile', [UserProfileController::class, 'index'])->name('profile');
@@ -119,7 +122,7 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
 
     // Wishlist Routes
     Route::get('wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
-    Route::get('wishlist/add-product', [WishlistController::class, 'addToWishlist'])->name('wishlist.store');
+    
     Route::get('wishlist/remove-product/{id}', [WishlistController::class, 'removeFromWishlist'])->name('wishlist.destroy');
 
     // Review System Routes
