@@ -133,16 +133,7 @@
                         <textarea name="long_description" class="form-control summernote">{!! $product->long_description !!}</textarea>
                     </div>
 
-                    <div class="form-group wsus__input">
-                        <label for="inputState">Product Type</label>            
-                            <select id="inputState" class="form-control" name="product_type">
-                                  <option value="">Select</option>
-                                  <option value="new_arrival" {{$product->product_type == 'new_arrival' ? 'selected' : ''}}>New Arrival</option>
-                                  <option value="featured_product" {{$product->product_type == 'featured_product' ? 'selected' : ''}}>Featured Product</option>
-                                  <option value="top_product" {{$product->product_type == 'top_product' ? 'selected' : ''}}>Top Product</option>
-                                  <option value="best_product" {{$product->product_type == 'best_product' ? 'selected' : ''}}>Best Product</option>
-                            </select>
-                    </div>       
+                    
                     
                     <div class="form-group wsus__input">
                         <label>Seo Title</label>
