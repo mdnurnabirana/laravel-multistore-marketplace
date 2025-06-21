@@ -66,10 +66,8 @@
                         @if (Auth::check())
                             @if (Auth::user()->role === 'admin')
                                 <li><a href="{{ route('admin.dashboard') }}">my account</a></li>
-                                <li><a href="{{ route('logout') }}">logout</a></li>
                             @elseif(Auth::user()->role === 'vendor')
                                 <li><a href="{{ route('vendor.dashboard') }}">my account</a></li>
-                                <li><a href="{{ route('logout') }}">logout</a></li>
                             @elseif(Auth::user()->role === 'user')
                                 <li><a href="{{ route('user.dashboard') }}">my account</a></li>
                             @endif
