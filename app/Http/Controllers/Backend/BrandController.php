@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Traits\ImageUploadTrait;
 use Illuminate\Support\Str;
 use App\Models\Brand;
+use App\Models\Product;
 
 class BrandController extends Controller
 {
@@ -108,6 +109,10 @@ class BrandController extends Controller
     public function destroy(string $id)
     {
         $brand = Brand::findOrFail($id);
+
+        if(Product::where('brand_id', $brand->id)->count() >0){
+            return response(['status' => 'error', 'message' => 'This brand have associated products. You can not Delete it!']);
+        }
 
         $this->deleteImage($brand->logo);
         $brand->delete();

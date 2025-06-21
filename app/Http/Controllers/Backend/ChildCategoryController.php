@@ -7,6 +7,8 @@ use App\Models\SubCategory;
 use App\Models\ChildCategory;
 use App\DataTables\ChildCategoryDataTable;
 use App\Http\Controllers\Controller;
+use App\Models\HomePageSetting;
+use App\Models\Product;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
@@ -112,6 +114,18 @@ class ChildCategoryController extends Controller
     public function destroy(string $id)
     {
         $childCategory = ChildCategory::findOrFail($id);
+        if(Product::where('child_category_id', $childCategory->id)->count() > 0){
+            return response(['status' => 'error', 'message' => 'The Category has associated Products. You can not delete it!']);
+        }
+        $homeSetting = HomePageSetting::all();
+        foreach($homeSetting as $item){
+            $array = json_decode($item->value, true);
+            $collection = collect($array);
+
+            if($collection->contains('child_category', $childCategory->id)){
+                return response(['status' => 'error', 'message' => 'The Category has associated Products. You can not delete it!']);
+            }
+        }
         $childCategory->delete();
 
         return response(['status' => 'success', 'message' => 'Deleted Successfully!']);

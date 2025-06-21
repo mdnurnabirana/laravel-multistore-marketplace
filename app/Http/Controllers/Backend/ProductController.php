@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\ChildCategory;
+use App\Models\OrderProduct;
 use App\Models\Product;
 use App\Models\ProductImageGallery;
 use App\Models\ProductVariant;
@@ -165,6 +166,10 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
 
+        if(OrderProduct::where('product_id', $product->id)->count() > 0){
+            return response(['status' => 'error', 'message' => 'The Product has associated Orders. You can not delete it!']);
+        }
+        
         // Delete main Product Image
         $this->deleteImage($product->thumb_image);
 
