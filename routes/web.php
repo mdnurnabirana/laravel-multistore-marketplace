@@ -33,8 +33,6 @@ require __DIR__.'/auth.php';
 require __DIR__.'/admin.php';
 require __DIR__.'/vendor.php';
 
-Route::get('/admin/login', [AdminController::class, 'login'])->name('admin.login');
-
 // Flash Sale
 Route::get('flash-sale', [FlashSaleController::class, 'index'])->name('flash-sale');
 
