@@ -39,7 +39,8 @@ class VendorWithdrawController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $methodInfo = WithDrawMethod::findOrFail($id);
+        return response($methodInfo);
     }
 
     /**
