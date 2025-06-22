@@ -193,7 +193,7 @@ class CartController extends Controller
     
             if ($coupon['discount_type'] == 'amount') {
                 $discount = $coupon['discount'];
-                $total = $subTotal - $discount;
+                $total = max(0, ($subTotal - $discount));
             } elseif ($coupon['discount_type'] == 'percent') {
                 $discount = $subTotal * $coupon['discount'] / 100;
                 $total = $subTotal - $discount;

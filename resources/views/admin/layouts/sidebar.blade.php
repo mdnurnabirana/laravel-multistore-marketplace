@@ -97,6 +97,15 @@
                 </ul>
             </li>
 
+            <!-- Manage Withdraw Methods -->
+            <li class="dropdown {{ setActive(['admin.withdraw-method.*']) }}">
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
+                    <i class="fas fa-newspaper"></i> <span>WithDraw Payments</span></a>
+                <ul class="dropdown-menu">
+                    <li class="{{ setActive(['admin.withdraw-method.index']) }}"><a class="nav-link" href="{{ route('admin.withdraw-method.index') }}">WithDraw Method</a></li>
+                </ul>
+            </li>
+
             <li class="menu-header">Settings & More</li>
 
             <!-- Footer -->

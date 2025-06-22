@@ -44,6 +44,8 @@ use App\Http\Controllers\Backend\TransactionController;
 use App\Http\Controllers\Backend\VendorConditionController;
 use App\Http\Controllers\Backend\VendorListController;
 use App\Http\Controllers\Backend\VendorRequestController;
+use App\Http\Controllers\Backend\WithDrawMethodController;
+use App\Models\WithDrawMethod;
 use Symfony\Component\Routing\Route as RoutingRoute;
 
 Route::middleware(['auth', 'role:admin'])->prefix('admin') ->as('admin.') ->group(function () {
@@ -231,5 +233,6 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin') ->as('admin.') ->grou
         Route::get('blog-comments', [BlogCommentController::class, 'index'])->name('blog-comments.index');
         Route::delete('blog-comments/{id}', [BlogCommentController::class, 'destroy'])->name('blog-comments.destroy');
 
-        // 
+        // WithDraw Method
+        Route::resource('withdraw-method', WithDrawMethodController::class);
 });
