@@ -60,6 +60,6 @@ class VendorProfileController extends Controller
         ]);
         
         toastr()->success('Password updated Succesfully');
-        return redirect->back();
+        return redirect()->back();
     }
 }

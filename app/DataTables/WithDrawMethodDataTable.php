@@ -22,7 +22,17 @@ class WithDrawMethodDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'withdrawmethod.action')
+            ->addColumn('action', function($query)
+            {
+                $editBtn = "<a href='".route('admin.withdraw-method.edit', $query->id)."' class='btn btn-primary'><i class='far fa-edit'></i></a>";
+                $dltBtn = "<a href='".route('admin.withdraw-method.destroy', $query->id)."' class='btn btn-danger ml-2 delete-item'><i class='far fa-trash-alt'></i></a>";
+
+                return $editBtn . $dltBtn;
+            })
+            ->addColumn('withdraw_charge', function($query){
+                return $query->withdraw_charge. '%';
+            })
+            ->rawColumns(['action'])
             ->setRowId('id');
     }
 
@@ -44,7 +54,7 @@ class WithDrawMethodDataTable extends DataTable
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')
-                    ->orderBy(1)
+                    ->orderBy(0)
                     ->selectStyleSingle()
                     ->buttons([
                         Button::make('excel'),
@@ -62,15 +72,16 @@ class WithDrawMethodDataTable extends DataTable
     public function getColumns(): array
     {
         return [
+            Column::make('id')->addClass('text-center'),
+            Column::make('name')->addClass('text-center'),
+            Column::make('minimum_amount')->addClass('text-center'),
+            Column::make('maximum_amount')->addClass('text-center'),
+            Column::make('withdraw_charge')->addClass('text-center'),
             Column::computed('action')
                   ->exportable(false)
                   ->printable(false)
-                  ->width(60)
+                  ->width(150)
                   ->addClass('text-center'),
-            Column::make('id'),
-            Column::make('add your columns'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
         ];
     }
 
