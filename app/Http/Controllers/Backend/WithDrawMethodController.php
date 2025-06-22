@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\DataTables\WithDrawMethodDataTable;
 use App\Http\Controllers\Controller;
+use App\Models\WithDrawMethod;
 use Illuminate\Http\Request;
 
 class WithDrawMethodController extends Controller
@@ -21,7 +22,7 @@ class WithDrawMethodController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.withdraw-method.create');
     }
 
     /**
@@ -29,7 +30,24 @@ class WithDrawMethodController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => ['required', 'max:255'],
+            'minimum_amount' => ['required', 'numeric', 'lt:maximum_amount'],
+            'maximum_amount' => ['required', 'numeric', 'gt:minimum_amount'],
+            'withdraw_charge' => ['required', 'numeric'],
+            'description' => ['required']
+        ]);
+
+        $method = new WithDrawMethod();
+        $method->name = $request->name;
+        $method->minimum_amount = $request->minimum_amount;
+        $method->maximum_amount = $request->maximum_amount;
+        $method->withdraw_charge = $request->withdraw_charge;
+        $method->description = $request->description;
+        $method->save();
+
+        toastr('Created Successfully', 'success');
+        return redirect()->route('admin.withdraw-method.index');
     }
 
     /**
