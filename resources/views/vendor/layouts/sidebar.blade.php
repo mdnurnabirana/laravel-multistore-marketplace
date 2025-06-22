@@ -26,6 +26,11 @@
             </a>
         </li>
         <li>
+            <a class="{{setActive(['vendor.vendor-withdraw.*'])}}" href="{{route('vendor.vendor-withdraw.index')}}">
+                <i class="fas fa-wallet"></i> Withdraw Payment
+            </a>
+        </li>
+        <li>
             <a class="{{setActive(['vendor.products.*'])}}" href="{{ route('vendor.products.index') }}">
                 <i class="fas fa-box"></i> Products
             </a>

@@ -11,6 +11,7 @@ use App\Http\Controllers\Backend\VendorProductVariantController;
 use App\Http\Controllers\Backend\VendorProductVariantItemController;
 use App\Http\Controllers\Backend\VendorProfileController;
 use App\Http\Controllers\Backend\VendorShopProfileController;
+use App\Http\Controllers\Backend\VendorWithdrawController;
 
 Route::middleware(['auth', 'role:vendor'])->prefix('vendor')->as('vendor.')->group(function () {
         Route::get('dashboard', [VendorController::class, 'dashboard'])->name('dashboard');
@@ -51,4 +52,6 @@ Route::middleware(['auth', 'role:vendor'])->prefix('vendor')->as('vendor.')->gro
         // Review Routes
         Route::get('reviews', [VendorProductReviewController::class, 'index'])->name('reviews.index');
 
+        // Vendor Withdraw
+        Route::resource('vendor-withdraw', VendorWithdrawController::class);
 });
