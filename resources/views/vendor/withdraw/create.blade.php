@@ -13,13 +13,28 @@
                         <h3><i class="fas fa-plus-circle"></i> Create Withdraw Request</h3>
 
                         <div class="wsus__dashboard_profile">
-                            <div class="wsus__dash_pro_area">
+                            <div class="wsus__dash_pro_area col-md-6">
                                 <form action="{{ route('vendor.products-variant.store') }}" method="POST">
                                     @csrf
 
                                     <div class="form-group wsus__input">
-                                        <label>Name</label>
-                                        <input type="text" class="form-control" name="name">
+                                        <label>Method</label>
+                                        <select name="method" id="method" class="form-control">
+                                            <option value="">Select</option>
+                                            @foreach ($methods as $method)
+                                                <option value="{{$method->id}}">{{$method->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group wsus__input">
+                                        <label>Withdraw Amount</label>
+                                        <input type="text" class="form-control" name="amount">
+                                    </div>
+
+                                    <div class="form-group wsus__input">
+                                        <label>Account Information</label>
+                                        <textarea class="form-control" name="account_information"></textarea>
                                     </div>
 
                                     <button type="submit" class="btn btn-primary mt-3">Create</button>
@@ -32,3 +47,23 @@
         </div>
     </section>
 @endsection
+
+@push('scripts')
+    <script>
+        $(document).ready(function(){
+            $('#method').on('change', function(e){
+                let id = $(this).val();
+                $.ajax({
+                    method: 'GET', 
+                    url: "{{ route('vendor.vendor-withdraw.show', ':id') }}".replace(':id', id),
+                    success: function(response){
+
+                    },
+                    error: function(response){
+                        console.log('error');
+                    }
+                })
+            })
+        })
+    </script>
+@endpush
