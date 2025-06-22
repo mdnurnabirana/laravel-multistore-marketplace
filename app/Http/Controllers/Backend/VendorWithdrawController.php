@@ -21,7 +21,7 @@ class VendorWithdrawController extends Controller
      */
     public function create()
     {
-        //
+        return view('vendor.withdraw.create');
     }
 
     /**
@@ -29,7 +29,7 @@ class VendorWithdrawController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
     }
 
     /**
