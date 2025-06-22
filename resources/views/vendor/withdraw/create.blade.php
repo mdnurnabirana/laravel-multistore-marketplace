@@ -15,7 +15,7 @@
                         <div class="wsus__dashboard_profile">
                             <div class="row">
                                 <div class="wsus__dash_pro_area col-md-6">
-                                    <form action="{{ route('vendor.products-variant.store') }}" method="POST">
+                                    <form action="{{ route('vendor.vendor-withdraw.store') }}" method="POST">
                                         @csrf
 
                                         <div class="form-group wsus__input">
@@ -35,7 +35,7 @@
 
                                         <div class="form-group wsus__input">
                                             <label>Account Information</label>
-                                            <textarea class="form-control" name="account_information"></textarea>
+                                            <textarea class="form-control" name="account_info"></textarea>
                                         </div>
 
                                         <button type="submit" class="btn btn-primary mt-3">Create</button>
