@@ -4,6 +4,7 @@ namespace App\DataTables;
 
 use App\Models\VendorWithdraw;
 use App\Models\WithDrawMethod;
+use App\Models\WithdrawRequest;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -23,16 +24,29 @@ class VendorWithdrawDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'vendorwithdraw.action')
+            ->addColumn('action', function($query) {
+                $showBtn = "<a href='".route('vendor.vendor-withdraw-request', $query->id)."' class='btn btn-primary'><i class='far fa-eye'></i></a>";
+                return $showBtn;
+            })
+            ->addColumn('status', function ($query) {
+                if ($query->status == 'pending') {
+                    return "<span class='badge bg-warning'>Pending</span>";
+                } elseif ($query->status == 'paid') {
+                    return "<span class='badge bg-success'>Paid</span>";
+                } else {
+                    return "<span class='badge bg-danger'>Declined</span>";
+                }
+            })
+            ->rawColumns(['status', 'action'])
             ->setRowId('id');
     }
 
     /**
      * Get the query source of dataTable.
      */
-    public function query(WithDrawMethod $model): QueryBuilder
+    public function query(WithdrawRequest $model): QueryBuilder
     {
-        return $model->newQuery();
+        return $model->newQuery()->where('vendor_id', auth()->user()->id);
     }
 
     /**
@@ -45,7 +59,7 @@ class VendorWithdrawDataTable extends DataTable
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')
-                    ->orderBy(1)
+                    ->orderBy(0)
                     ->selectStyleSingle()
                     ->buttons([
                         Button::make('excel'),
@@ -63,15 +77,17 @@ class VendorWithdrawDataTable extends DataTable
     public function getColumns(): array
     {
         return [
+            Column::make('id'),
+            Column::make('method'),
+            Column::make('total_amount'),
+            Column::make('withdraw_amount'),
+            Column::make('withdraw_charge'),
+            Column::make('status'),
             Column::computed('action')
                   ->exportable(false)
                   ->printable(false)
                   ->width(60)
                   ->addClass('text-center'),
-            Column::make('id'),
-            Column::make('add your columns'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
         ];
     }
 

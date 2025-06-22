@@ -9,6 +9,8 @@ use App\Models\WithdrawRequest;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Auth as FacadesAuth;
+use Illuminate\Support\Facades\Auth as SupportFacadesAuth;
 
 class VendorWithdrawController extends Controller
 {
@@ -68,6 +70,12 @@ class VendorWithdrawController extends Controller
     {
         $methodInfo = WithDrawMethod::findOrFail($id);
         return response($methodInfo);
+    }
+
+    public function showRequest(string $id)
+    {
+        $requests = WithdrawRequest::where('vendor_id', auth()->user()->id)->findOrFail($id);
+        return view('vendor.withdraw.show', compact('requests'));
     }
 
     /**
