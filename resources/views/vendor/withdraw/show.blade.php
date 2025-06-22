@@ -14,8 +14,44 @@
 
                         <div class="wsus__dashboard_profile">
                             <div class="row">
-                                <div class="wsus__dash_pro_area col-md-6">
-                                    
+                                <div class="wsus__dash_pro_area">
+                                    <table class="table table-bordered">
+                                        <tbody>
+                                            <tr>
+                                                <td>Withdraw Method</td>
+                                                <td>{{$requests->method}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Withdraw Charge</td>
+                                                <td>{{($requests->withdraw_charge / $requests->total_amount)*100}}%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Withdraw Charge Amount</td>
+                                                <td>{{$requests->withdraw_charge}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Total Amount</td>
+                                                <td>{{$requests->total_amount}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Status</td>
+                                                <td>
+                                                    @if ($requests->status == 'pending')
+                                                        <span class="badge bg-warning">Pending</span>
+                                                    @elseif ($requests->status == 'paid')
+                                                        <span class="badge bg-success">Paid</span>
+                                                    @elseif ($requests->status == 'decline')
+                                                        <span class="badge bg-danger">Declined</span>
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Account Information</td>
+                                                <td>{!!$requests->account_info!!}</td>
+                                            </tr>
+                                            
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
