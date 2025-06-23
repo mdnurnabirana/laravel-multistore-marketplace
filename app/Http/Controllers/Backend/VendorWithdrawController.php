@@ -24,7 +24,7 @@ class VendorWithdrawController extends Controller
                 $query->where('payment_status', 1)
                     ->where('order_status', 'delivered');
             })
-            ->sum(DB::raw('unit_price * qty'));
+            ->sum(DB::raw('unit_price * qty + variant_total'));
         $totalWithdraw = WithdrawRequest::where('status', 'paid')
             ->where('vendor_id', Auth::user()->id)
             ->sum('withdraw_amount');
