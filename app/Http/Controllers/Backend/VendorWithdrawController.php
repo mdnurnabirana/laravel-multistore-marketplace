@@ -74,7 +74,7 @@ class VendorWithdrawController extends Controller
 
     public function showRequest(string $id)
     {
-        $requests = WithdrawRequest::where('vendor_id', auth()->user()->id)->findOrFail($id);
+        $requests = WithdrawRequest::where('vendor_id', Auth::user()->id)->findOrFail($id);
         return view('vendor.withdraw.show', compact('requests'));
     }
 

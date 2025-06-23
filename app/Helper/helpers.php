@@ -2,6 +2,7 @@
 
 /* Sidebar Activation Part */
 
+use App\Models\GeneralSetting;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Session;
 
@@ -129,4 +130,9 @@ function getPayableAmount()
 // Limit Text
 function limitText($text, $limit = 15) {
     return  \Str::limit($text, $limit);
+}
+
+function getCurrencyIcon(){
+    $icon = GeneralSetting::first();
+    return $icon->currency_icon;
 }

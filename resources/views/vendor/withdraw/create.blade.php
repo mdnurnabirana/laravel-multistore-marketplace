@@ -17,7 +17,6 @@
                                 <div class="wsus__dash_pro_area col-md-6">
                                     <form action="{{ route('vendor.vendor-withdraw.store') }}" method="POST">
                                         @csrf
-
                                         <div class="form-group wsus__input">
                                             <label>Method</label>
                                             <select name="method" id="method" class="form-control">
@@ -64,7 +63,7 @@
                     url: "{{ route('vendor.vendor-withdraw.show', ':id') }}".replace(':id', id),
                     success: function(response) {
                         $('.account_area_info').html(`
-                        <h3>Payout Range: ${response.minimum_amount} - ${response.maximum_amount}</h3><br>
+                        <h3>Payout Range: {{$settings->currency_icon}}${response.minimum_amount} - {{$settings->currency_icon}}${response.maximum_amount}</h3><br>
                         <h3>Withdraw Charge: ${response.withdraw_charge}%</h3>
                         <p>${response.description ? response.description : ''}</p>
                         `)

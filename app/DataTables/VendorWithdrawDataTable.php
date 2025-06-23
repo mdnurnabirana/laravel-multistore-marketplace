@@ -6,6 +6,7 @@ use App\Models\VendorWithdraw;
 use App\Models\WithDrawMethod;
 use App\Models\WithdrawRequest;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
@@ -37,6 +38,15 @@ class VendorWithdrawDataTable extends DataTable
                     return "<span class='badge bg-danger'>Declined</span>";
                 }
             })
+            ->addColumn('total_amount', function ($query) {
+                return getCurrencyIcon() . $query->total_amount;
+            })
+            ->addColumn('withdraw_amount', function ($query) {
+                return getCurrencyIcon() . $query->withdraw_amount;
+            })
+            ->addColumn('withdraw_charge', function ($query) {
+                return getCurrencyIcon() . $query->withdraw_charge;
+            })
             ->rawColumns(['status', 'action'])
             ->setRowId('id');
     }
@@ -46,7 +56,7 @@ class VendorWithdrawDataTable extends DataTable
      */
     public function query(WithdrawRequest $model): QueryBuilder
     {
-        return $model->newQuery()->where('vendor_id', auth()->user()->id);
+        return $model->newQuery()->where('vendor_id', Auth::user()->id);
     }
 
     /**

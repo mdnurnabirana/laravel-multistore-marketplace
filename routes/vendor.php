@@ -53,6 +53,6 @@ Route::middleware(['auth', 'role:vendor'])->prefix('vendor')->as('vendor.')->gro
         Route::get('reviews', [VendorProductReviewController::class, 'index'])->name('reviews.index');
 
         // Vendor Withdraw
-        Route::get('vendor-withdraw/{id}', [VendorWithdrawController::class, 'showRequest'])->name('vendor-withdraw-request');
+        Route::get('vendor-withdraw-request/{id}', [VendorWithdrawController::class, 'showRequest'])->name('vendor-withdraw-request');
         Route::resource('vendor-withdraw', VendorWithdrawController::class);
 });

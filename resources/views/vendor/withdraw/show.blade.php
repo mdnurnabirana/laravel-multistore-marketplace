@@ -27,11 +27,11 @@
                                             </tr>
                                             <tr>
                                                 <td>Withdraw Charge Amount</td>
-                                                <td>{{$requests->withdraw_charge}}</td>
+                                                <td>{{$settings->currency_icon}} {{$requests->withdraw_charge}}</td>
                                             </tr>
                                             <tr>
                                                 <td>Total Amount</td>
-                                                <td>{{$requests->total_amount}}</td>
+                                                <td>{{$settings->currency_icon}} {{$requests->total_amount}}</td>
                                             </tr>
                                             <tr>
                                                 <td>Status</td>
