@@ -44,6 +44,7 @@ use App\Http\Controllers\Backend\TransactionController;
 use App\Http\Controllers\Backend\VendorConditionController;
 use App\Http\Controllers\Backend\VendorListController;
 use App\Http\Controllers\Backend\VendorRequestController;
+use App\Http\Controllers\Backend\WithdrawController;
 use App\Http\Controllers\Backend\WithDrawMethodController;
 use App\Models\WithDrawMethod;
 use Symfony\Component\Routing\Route as RoutingRoute;
@@ -235,4 +236,5 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin') ->as('admin.') ->grou
 
         // WithDraw Method
         Route::resource('withdraw-method', WithDrawMethodController::class);
+        Route::get('withdraw', [WithdrawController::class, 'index'])->name('withdraw.index');
 });

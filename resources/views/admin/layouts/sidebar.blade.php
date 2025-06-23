@@ -98,11 +98,14 @@
             </li>
 
             <!-- Manage Withdraw Methods -->
-            <li class="dropdown {{ setActive(['admin.withdraw-method.*']) }}">
+            <li class="dropdown {{ setActive(['admin.withdraw-method.*', 'admin.withdraw.*']) }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
                     <i class="fas fa-money-check-alt"></i> <span>WithDraw Payments</span></a>
                 <ul class="dropdown-menu">
                     <li class="{{ setActive(['admin.withdraw-method.index']) }}"><a class="nav-link" href="{{ route('admin.withdraw-method.index') }}">WithDraw Method</a></li>
+                </ul>
+                <ul class="dropdown-menu">
+                    <li class="{{ setActive(['admin.withdraw.index']) }}"><a class="nav-link" href="{{ route('admin.withdraw.index') }}">WithDraw List</a></li>
                 </ul>
             </li>
 
