@@ -16,30 +16,30 @@
                                 <div
                                     class="wsus__dashboard_item bg-warning d-flex flex-column align-items-center text-center w-100 py-3">
                                     <div>
-                                        <i class="fas fa-clock mb-2"></i>
+                                        <i class="fas fa-money-bill-wave mb-2"></i>
                                         <p class="mb-1">Current Balance</p>
                                     </div>
-                                    <h5 class="text-white mt-auto"></h5>
+                                    <h5 class="text-white mt-auto">{{$totalEarnings}}</h5>
                                 </div>
                             </div>
                             <div class="col-xl-4 col-6 col-md-4 d-flex">
                                 <div
                                     class="wsus__dashboard_item bg-warning d-flex flex-column align-items-center text-center w-100 py-3">
                                     <div>
-                                        <i class="fas fa-clock mb-2"></i>
+                                        <i class="fas fa-hourglass-half mb-2"></i>
                                         <p class="mb-1">Pending Amount</p>
                                     </div>
-                                    <h5 class="text-white mt-auto"></h5>
+                                    <h5 class="text-white mt-auto">{{$totalWithdraw}}</h5>
                                 </div>
                             </div>
                             <div class="col-xl-4 col-6 col-md-4 d-flex">
                                 <div
                                     class="wsus__dashboard_item bg-warning d-flex flex-column align-items-center text-center w-100 py-3">
                                     <div>
-                                        <i class="fas fa-clock mb-2"></i>
+                                        <i class="fas fa-wallet mb-2"></i>
                                         <p class="mb-1">Total Withdraw</p>
                                     </div>
-                                    <h5 class="text-white mt-auto"></h5>
+                                    <h5 class="text-white mt-auto">{{$totalEarnings}}</h5>
                                 </div>
                             </div>
                         </div>

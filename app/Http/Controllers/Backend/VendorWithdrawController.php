@@ -4,13 +4,13 @@ namespace App\Http\Controllers\Backend;
 
 use App\DataTables\VendorWithdrawDataTable;
 use App\Http\Controllers\Controller;
+use App\Models\OrderProduct;
 use App\Models\WithDrawMethod;
 use App\Models\WithdrawRequest;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Auth as FacadesAuth;
-use Illuminate\Support\Facades\Auth as SupportFacadesAuth;
+use Illuminate\Support\Facades\DB;
 
 class VendorWithdrawController extends Controller
 {
@@ -19,7 +19,17 @@ class VendorWithdrawController extends Controller
      */
     public function index(VendorWithdrawDataTable $dataTable)
     {
-        return $dataTable->render('vendor.withdraw.index');
+        $totalEarnings = OrderProduct::where('vendor_id', Auth::user()->id)
+            ->whereHas('order', function($query){
+                $query->where('payment_status', 1)
+                    ->where('order_status', 'delivered');
+            })
+            ->sum(DB::raw('unit_price * qty'));
+        $totalWithdraw = WithdrawRequest::where('status', 'paid')
+            ->where('vendor_id', Auth::user()->id)
+            ->sum('withdraw_amount');
+        $currentBalance = $totalEarnings - $totalWithdraw;
+        return $dataTable->render('vendor.withdraw.index', compact('totalEarnings', 'totalWithdraw', 'currentBalance'));
     }
 
     /**
