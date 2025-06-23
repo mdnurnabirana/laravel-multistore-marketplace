@@ -23,11 +23,14 @@ class WithdrawRequestDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('action', function($query) {
-                $showBtn = "<a href='".route('vendor.vendor-withdraw-request', $query->id)."' class='btn btn-primary'><i class='far fa-eye'></i></a>";
+                $showBtn = "<a href='".route('admin.withdraw.show', $query->id)."' class='btn btn-primary'><i class='far fa-eye'></i></a>";
                 return $showBtn;
             })
             ->addColumn('vendor', function ($query) {
                 return $query->vendor->shop_name;
+            })
+            ->addColumn('date', function ($query) {
+                return $query->created_at->format('d M Y');
             })
             ->addColumn('status', function ($query) {
                 if ($query->status == 'pending') {
@@ -93,7 +96,8 @@ class WithdrawRequestDataTable extends DataTable
             Column::make('total_amount')->addClass('text-center'),
             Column::make('withdraw_amount')->addClass('text-center'),
             Column::make('withdraw_charge')->addClass('text-center'),
-            Column::make('status'),
+            Column::make('status')->addClass('text-center'),
+            Column::make('date')->addClass('text-center'),
             Column::computed('action')
                   ->exportable(false)
                   ->printable(false)

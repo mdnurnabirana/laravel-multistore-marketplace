@@ -237,4 +237,6 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin') ->as('admin.') ->grou
         // WithDraw Method
         Route::resource('withdraw-method', WithDrawMethodController::class);
         Route::get('withdraw', [WithdrawController::class, 'index'])->name('withdraw.index');
+        Route::get('withdraw/{id}', [WithdrawController::class, 'show'])->name('withdraw.show');
+        Route::put('withdraw/{id}', [WithdrawController::class, 'update'])->name('withdraw.update');
 });
