@@ -13,10 +13,10 @@
             </div>
         </div>
         <div class="row flash_sell_slider">
-            @foreach ($flashSaleItems as $item)
-                @php
-                    $product = \App\Models\Product::with(['reviews', 'variants', 'category'])->find($item->product_id);
-                @endphp
+            @php
+                $products = \App\Models\Product::withAvg('reviews', 'rating')->withCount('reviews')->with(['variants', 'category', 'productImageGalleries'])->whereIn('id', $flashSaleItems)->get();
+            @endphp
+            @foreach ($products as $product)
                 <div class="col-xl-3 col-sm-6 col-lg-4">
                     <div class="wsus__product_item">
                         <span class="wsus__new">{{ productType($product->product_type) }}</span>
@@ -45,21 +45,19 @@
                         <div class="wsus__product_details">
                             <a class="wsus__category" href="#">{{ $product->category->name }} </a>
                             <p class="wsus__pro_rating">
-                                @php
+                                {{-- @php
                                     $avgRating = $product->reviews()->avg('rating');
                                     $fullRating = floor($avgRating);
                                     $halfRating = $avgRating - $fullRating >= 0.5;
-                                @endphp
+                                @endphp --}}
                                 @for ($i = 1; $i <= 5; $i++)
-                                    @if ($i <= $fullRating)
+                                    @if ($i <= $product->reviews_avg_rating)
                                         <i class="fas fa-star"></i>
-                                    @elseif ($i == $fullRating + 1 && $halfRating)
-                                        <i class="fas fa-star-half-alt"></i>
                                     @else
                                         <i class="far fa-star"></i>
                                     @endif
                                 @endfor
-                                <span>( {{count($product->reviews)}} review)</span>
+                                <span>( {{$product->reviews_count}} review)</span>
                             </p>
                             <a class="wsus__pro_name"
                                 href="{{ route('product-detail', $product->slug) }}">{{ limitText($product->name, 50) }}</a>
