@@ -1,4 +1,4 @@
-<div class="col-xl-3 col-sm-6 col-lg-4">
+<div class="col-xl-3 col-sm-6 col-lg-4 {{@$key}}">
     <div class="wsus__product_item">
         <span class="wsus__new">{{ productType($product->product_type) }}</span>
         @if (checkDiscount($product))
