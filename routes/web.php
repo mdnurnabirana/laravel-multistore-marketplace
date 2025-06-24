@@ -84,6 +84,9 @@ Route::get('blogs', [BlogController::class, 'blog'])->name('blog');
 // WishList
 Route::get('wishlist/add-product', [WishlistController::class, 'addToWishlist'])->name('wishlist.store');
 
+// Product Route
+Route::get('show-product-modal/{id}', [HomeController::class, 'showProductModal'])->name('show-product-modal');
+
 Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 'user.'], function () {
     Route::get('dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
     Route::get('profile', [UserProfileController::class, 'index'])->name('profile');

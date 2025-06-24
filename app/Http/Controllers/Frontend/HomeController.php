@@ -16,6 +16,7 @@ use App\Models\Product;
 use App\Models\SubCategory;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 
 use function PHPSTORM_META\map;
 
@@ -98,5 +99,14 @@ class HomeController extends Controller
         $brands = Brand::where('status', 1)->get();
         $vendor = Vendor::findOrFail($id);
         return view('frontend.pages.vendor-products', compact('products', 'categories', 'brands', 'vendor'));
+    }
+
+    public function showProductModal(string $id)
+    {
+        $product = Product::findOrFail($id);
+
+        $content = view('frontend.layouts.modal', compact('product'))->render();
+
+        return Response::make($content, 200, ['Content-Type' => 'text/html']);
     }
 }

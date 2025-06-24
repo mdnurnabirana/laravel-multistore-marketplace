@@ -197,5 +197,26 @@
                 }
             })
         })
+
+        $('.show_product_modal').on('click', function(){
+            let id = $(this).data('id');
+
+            $.ajax({
+                method: 'GET',
+                url: "{{route('show-product-modal', ':id')}}".replace(":id", id),
+                beforeSend: function(){
+                    
+                },
+                success: function(){
+                    
+                },
+                error: function(){
+
+                },
+                complete: function(){
+
+                }
+            })
+        })
     })
 </script>
