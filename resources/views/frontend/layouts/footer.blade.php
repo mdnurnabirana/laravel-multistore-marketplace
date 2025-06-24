@@ -1,9 +1,26 @@
 @php
-    $footerInfo = \App\Models\FooterInfo::first();
-    $footerSocial= \App\Models\FooterSocial::where('status', 1)->get();
-    $footerGridTwoLinks = \App\Models\FooterGridTwo::where('status', 1)->get();
-    $footerGridThreeLinks = \App\Models\FooterGridThree::where('status', 1)->get();
-    $footerTitle = \App\Models\FooterTitle::first();
+    use Illuminate\Support\Facades\Cache;
+    use App\Models\FooterInfo;
+    use App\Models\FooterSocial;
+    use App\Models\FooterGridTwo;
+    use App\Models\FooterGridThree;
+    use App\Models\FooterTitle;
+
+    $footerInfo = Cache::rememberForever('footer_info', function () {
+        return FooterInfo::first();
+    });
+    $footerSocial = Cache::rememberForever('footer_social', function () {
+        return FooterSocial::where('status', 1)->get();
+    });
+    $footerGridTwoLinks = Cache::rememberForever('footer_grid_two_links', function () {
+        return FooterGridTwo::where('status', 1)->get();
+    });
+    $footerGridThreeLinks = Cache::rememberForever('footer_grid_three_links', function () {
+        return FooterGridThree::where('status', 1)->get();
+    });
+    $footerTitle = Cache::rememberForever('footer_title', function () {
+        return FooterTitle::first();
+    });
 @endphp
 <footer class="footer_2">
     <div class="container">

@@ -6,6 +6,7 @@ use App\DataTables\SliderDataTable;
 use App\Traits\ImageUploadTrait;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class SliderController extends Controller
 {
@@ -55,6 +56,7 @@ class SliderController extends Controller
         $slider-> type = $request->type;
         $slider->save();
 
+        Cache::forget('sliders');
         toastr('Created Succesfully!', 'success');
 
         return redirect()->back();
@@ -106,7 +108,7 @@ class SliderController extends Controller
         $slider-> status = $request->status;
         $slider-> type = $request->type;
         $slider->save();
-
+        Cache::forget('sliders');
         toastr('Updated Succesfully!', 'success');
 
         return redirect()->route('admin.slider.index');

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\FooterGridTwo;
 use App\Models\FooterTitle;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class FooterGridTwoController extends Controller
 {
@@ -43,7 +44,7 @@ class FooterGridTwoController extends Controller
         $footer->url = $request->url;
         $footer->status = $request->status;
         $footer->save();
-
+        Cache::forget('footer_grid_two_links');
         toastr('Created Successfully!', 'success');
         return redirect()->route('admin.footer-grid-two.index');
     }
@@ -81,7 +82,7 @@ class FooterGridTwoController extends Controller
         $footer->url = $request->url;
         $footer->status = $request->status;
         $footer->save();
-
+        Cache::forget('footer_grid_two_links');
         toastr('Updated Successfully!', 'success');
         return redirect()->route('admin.footer-grid-two.index');
     }
@@ -93,7 +94,7 @@ class FooterGridTwoController extends Controller
     {
         $footer = FooterGridTwo::findOrFail($id);
         $footer->delete();
-
+        Cache::forget('footer_grid_two_links');
         return response(['status' => 'success', 'message' => 'Deleted Successfully!']);
     }
 
@@ -102,7 +103,7 @@ class FooterGridTwoController extends Controller
         $footer = FooterGridTwo::findOrFail($request->id);
         $footer->status = $request->status == 'true' ? 1 : 0;
         $footer->save();
-
+        Cache::forget('footer_grid_two_links');
         return response(['message' => 'Status has been updated!']);
     }
 
@@ -116,7 +117,7 @@ class FooterGridTwoController extends Controller
             ['id' => 1],
             ['footer_grid_two_title' => $request->title]
         );
-
+        Cache::forget('footer_grid_two_links');
         toastr('Updated Successfully', 'success');
         return redirect()->back();
     }

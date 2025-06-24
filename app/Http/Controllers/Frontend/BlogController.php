@@ -15,7 +15,7 @@ class BlogController extends Controller
         if($request->has('search'))
         {
             $search = $request->input('search');
-            $blogs = Blog::where('status', 1)
+            $blogs = Blog::with('category')->where('status', 1)
                 ->where(function($query) use ($search) {
                     $query->where('title', 'like', "%{$search}%")
                           ->orWhere('description', 'like', "%{$search}%");
@@ -24,12 +24,12 @@ class BlogController extends Controller
                 ->paginate(12);
         } elseif($request->has('category')) {
             $category =  BlogCategory::where('slug', $request->category)->where('status', 1)->firstOrFail();
-            $blogs = Blog::where('status', 1)
+            $blogs = Blog::with('category')->where('status', 1)
                 ->where('category_id', $category->id)
                 ->orderBy('id', 'desc')
                 ->paginate(12);
         } else {
-            $blogs = Blog::where('status', 1)->orderBy('id', 'desc')->paginate(12);
+            $blogs = Blog::with('category')->where('status', 1)->orderBy('id', 'desc')->paginate(12);
         }
         
         return view('frontend.pages.blog', compact('blogs'));
