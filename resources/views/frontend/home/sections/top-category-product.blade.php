@@ -5,7 +5,7 @@
 <section id="wsus__monthly_top" class="wsus__monthly_top_2">
     <div class="container">
         <div class="row">
-            @if ($homepage_section_banner_one->banner_one->status == 1)
+            @if (@$homepage_section_banner_one->banner_one->status == 1)
                 <div class="col-xl-12 col-lg-12">
                     <div class="wsus__monthly_top_banner">
                         <div class="wsus__monthly_top_banner_img">

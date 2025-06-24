@@ -59,7 +59,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin') ->as('admin.') ->grou
         Route::resource('slider', SliderController::class);
 
         // Category
-        Route::put('change-status', [CategoryController::class, 'changeStatus'])->name('category.change-status');
+        Route::put('category/change-status', [CategoryController::class, 'changeStatus'])->name('category.change-status');
         Route::resource('category', CategoryController::class);
 
         // Sub Category
@@ -162,14 +162,14 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin') ->as('admin.') ->grou
         
         // Footer Routes
         Route::resource('footer-info', FooterInfoController::class);
-        Route::put('change-status', [FooterSocialController::class, 'changeStatus'])->name('footer-socials.change-status');
+        Route::put('footer-socials/change-status', [FooterSocialController::class, 'changeStatus'])->name('footer-socials.change-status');
         Route::resource('footer-socials', FooterSocialController::class);
-        Route::put('change-status', [FooterGridTwoController::class, 'changeStatus'])->name('footer-grid-two.change-status');
-        Route::put('change-title', [FooterGridTwoController::class, 'changeTitle'])->name('footer-grid-two.change-title');
+        Route::put('footer-grid-two/change-status', [FooterGridTwoController::class, 'changeStatus'])->name('footer-grid2.change-status');
+        Route::put('footer-grid-two/change-title', [FooterGridTwoController::class, 'changeTitle'])->name('footer-grid-two.change-title');
         Route::resource('footer-grid-two', FooterGridTwoController::class);
 
-        Route::put('change-status', [FooterGridThreeController::class, 'changeStatus'])->name('footer-grid-three.change-status');
-        Route::put('change-title', [FooterGridThreeController::class, 'changeTitle'])->name('footer-grid-three.change-title');
+        Route::put('footer-grid-three/change-status', [FooterGridThreeController::class, 'changeStatus'])->name('footer-grid-three.change-status');
+        Route::put('footer-grid-three/change-title', [FooterGridThreeController::class, 'changeTitle'])->name('footer-grid-three.change-title');
         Route::resource('footer-grid-three', FooterGridThreeController::class);
 
        // Subscriber Routes

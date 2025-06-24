@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="cl-xl-12">
-                @if ($homepage_section_banner_four->banner_one->status == 1)
+                @if (@$homepage_section_banner_four->banner_one->status == 1)
                     <div class="wsus__large_banner_content" style="background: url({{ asset($homepage_section_banner_four->banner_one->banner_image ?? 'images/large_banner_img.jpg') }});">
                         <div class="wsus__large_banner_content_overlay">
                             <div class="row">

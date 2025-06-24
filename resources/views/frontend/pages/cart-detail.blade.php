@@ -13,9 +13,9 @@
                     <div class="col-12">
                         <h4>cart View</h4>
                         <ul>
-                            <li><a href="#">home</a></li>
-                            <li><a href="#">product</a></li>
-                            <li><a href="#">cart view</a></li>
+                            <li><a href="{{route('home')}}">home</a></li>
+                            <li><a href="javascript:;">product</a></li>
+                            <li><a href="javascript:;">cart view</a></li>
                         </ul>
                     </div>
                 </div>
@@ -141,24 +141,24 @@
     <section id="wsus__single_banner">
         <div class="container">
             <div class="row">
-                @if ($cart_page_banner->banner_one->status == 1)
+                @if (@$cart_page_banner->banner_one->status == 1)
                     <div class="col-xl-6 col-lg-6">
                         <div class="wsus__single_banner_content">
                             <div class="wsus__single_banner_img">
                                 <a href="{{ $cart_page_banner->banner_one->banner_url ?? '#' }}">
-                                    <img src="{{ asset($cart_page_banner->banner_one->banner_image ?? 'images/single_banner_2.jpg') }}" alt="banner" class="img-fluid w-100">
+                                    <img src="{{ asset(@$cart_page_banner->banner_one->banner_image ?? 'images/single_banner_2.jpg') }}" alt="banner" class="img-fluid w-100">
                                 </a>
                             </div>
                         </div>
                     </div>
                 @endif
     
-                @if ($cart_page_banner->banner_two->status == 1)
+                @if (@$cart_page_banner->banner_two->status == 1)
                     <div class="col-xl-6 col-lg-6">
                         <div class="wsus__single_banner_content single_banner_2">
                             <div class="wsus__single_banner_img">
                                 <a href="{{ $cart_page_banner->banner_two->banner_url ?? '#' }}">
-                                    <img src="{{ asset($cart_page_banner->banner_two->banner_image ?? 'images/single_banner_3.jpg') }}" alt="banner" class="img-fluid w-100">
+                                    <img src="{{ asset(@$cart_page_banner->banner_two->banner_image ?? 'images/single_banner_3.jpg') }}" alt="banner" class="img-fluid w-100">
                                 </a>
                             </div>
                         </div>

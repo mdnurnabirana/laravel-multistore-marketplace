@@ -63,7 +63,7 @@
                 let id = $(this).data('id');
 
                 $.ajax({
-                    url: "{{ route('admin.footer-grid-two.change-status') }}",
+                    url: "{{ route('admin.footer-grid2.change-status') }}",
                     method: 'PUT',
                     data: {
                         status: isChecked,
