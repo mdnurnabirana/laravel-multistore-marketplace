@@ -20,8 +20,14 @@
         </div>
         <div class="col-xl-6 col-12 col-sm-12 col-md-12 col-lg-6">
             <div class="wsus__pro_details_text">
-                <a class="title" href="#">{{limitText($product->name, 150)}}</a>
-                <p class="wsus__stock_area"><span class="in_stock">in stock</span> (167 item)</p>
+                <a class="title" href="#">{{ limitText($product->name, 150) }}</a>
+                @if ($product->qty > 0)
+                    <p class="wsus__stock_area"><span class="in_stock">in stock</span> ({{ $product->qty }}
+                        Item)</p>
+                @elseif ($product->qty == 0)
+                    <p class="wsus__stock_area"><span class="in_stock"> stock out</span> ({{ $product->qty }}
+                        Item)</p>
+                @endif
                 @if (checkDiscount($product))
                     <h4>{{ $settings->currency_icon }}{{ $product->offer_price }}
                         <del>{{ $settings->currency_icon }}{{ $product->price }}</del>
