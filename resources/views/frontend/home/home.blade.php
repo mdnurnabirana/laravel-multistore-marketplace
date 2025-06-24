@@ -94,7 +94,7 @@
         WEEKLY BEST ITEM END 
     ==============================-->
 
-    {{-- @include('frontend.home.sections.services') --}}
+    @include('frontend.home.sections.services')
     <!--============================
       HOME SERVICES START
     ==============================-->

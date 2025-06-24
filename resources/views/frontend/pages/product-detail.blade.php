@@ -166,8 +166,8 @@
                         <h4>products details</h4>
                         <ul>
                             <li><a href="{{route('home')}}">home</a></li>
-                            <li><a href="{{javascript:;}}">peoduct</a></li>
-                            <li><a href="{{javascript:;}}">product details</a></li>
+                            <li><a href="javascript:;">product</a></li>
+                            <li><a href="javascript:;">product details</a></li>
                         </ul>
                     </div>
                 </div>
